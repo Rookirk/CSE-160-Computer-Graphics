@@ -3,14 +3,29 @@
 <head>
     <meta charset="UTF-8" />
 
-    <title>Painting</title>
-    <script type="text/javascript" src="main.js"></script>
+    <script src="main.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Painting</title>
 </head>
 <body onload="main()">
     <canvas id="webgl" width="400" height="400">
     </canvas>
+    <br>
+	<input id="clearCanvas"
+	       type="button"
+	       value="Clear Canvas">
+	<br>
+	Drawing Mode:
+	<br>
+	<input id="squaresButton"
+	       type="button"
+	       value="Squares">
+	<input id="trianglesButton"
+	       type="button"
+	       value="Triangles">
+	<input id="circlesButton"
+	       type="button"
+	       value="Circles">
 
     <script src="webgl-utils.js"></script>
     <script src="webgl-debug.js"></script>
