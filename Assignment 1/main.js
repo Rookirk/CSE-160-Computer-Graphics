@@ -275,7 +275,7 @@ function initVertexBuffers(gl, vertices, a_Position, a_Color) {
     gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, FSIZE * 5, 0); // multiple times // mess with params for mutliple points
     gl.enableVertexAttribArray(a_Position); // multiple times
 
-    gl.vertexAttribPointer(a_Color, 2, gl.FLOAT, false, FSIZE * 5, FSIZE * 2);
+    gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, FSIZE * 5, FSIZE * 2);
     gl.enableVertexAttribArray(a_Color);
 }
 
