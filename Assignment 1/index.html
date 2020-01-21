@@ -27,22 +27,26 @@
 	       type="button"
 	       value="Circles">
 	<br>
+	<input id="starsButton"
+	       type="button"
+	       value="Stars">
+	<br>
 	Shape Color:
 	<br>
 	<div>
 		<label for="red">Red</label>
 		<input type="range" id="redSlider" name="red"
-			min="0" max="255" step="1" value="255">
+			min="0" max="1" step=".01" value="1">
 	</div>
 	<div>
 		<label for="green">Green</label>
 		<input type="range" id="greenSlider" name="green"
-			min="0" max="255" step="1" value="0">
+			min="0" max="1" step=".01" value="0">
 	</div>
 	<div>
 		<label for="blue">Blue</label>
 		<input type="range" id="blueSlider" name="blue"
-			min="0" max="255" step="1" value="0">
+			min="0" max="1" step=".01" value="0">
 	</div>
 	<div>
 		<label for="size">Shape Size:</label>
@@ -50,9 +54,14 @@
 			min=".01" max="1" step=".01" value=".1">
 	</div>
 	<div>
-		<label for="segment">(Circles) Segment Count:</label>
+		<label for="segment">(Circles/Stars) Segment Count:</label>
 		<input type="range" id="segmentSlider" name="segment"
 			min="3" max="30" step="1" value="20">
+	</div>
+	<div>
+		<label for="innerRadius">(Stars) Inner Radius:</label>
+		<input type="range" id="innerRadiusSlider" name="innerRadius"
+			min=".01" max="1" step=".01" value=".5">
 	</div>
 
     <script src="webgl-utils.js"></script>
