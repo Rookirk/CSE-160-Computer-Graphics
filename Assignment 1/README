@@ -6,3 +6,4 @@ Assignment 1
 Awesome things I did:
 I added a star brush that goes with the Circles segment slider and has its own slider for determining the second radius
 I added a rainbow brush with a slider that determines how fast it transitions colors
+I added display indicators that display all input values

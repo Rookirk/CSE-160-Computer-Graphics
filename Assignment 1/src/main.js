@@ -109,7 +109,7 @@ function main() {
         return;
     }
     var a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-    if (!a_Color) {
+    if (a_Color < 0) {
         console.log('Failed to get the storage location of a_Color');
         return;
     }
