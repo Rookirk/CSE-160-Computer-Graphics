@@ -35,6 +35,9 @@ function main() {
     var greenSlider = document.getElementById('greenSlider');
     var blueSlider = document.getElementById('blueSlider');
 
+    var rainbowButton = document.getElementById('rainbowButton');
+    var rainbowSpeedSlider = document.getElementById('rainbowSpeedSlider');
+
     var sizeSlider = document.getElementById('sizeSlider');
     var segmentSlider = document.getElementById('segmentSlider');
     var innerRadiusSlider = document.getElementById('innerRadiusSlider');
@@ -43,6 +46,9 @@ function main() {
         r : 0,
         g : 0,
         b : 0,
+        rainbow : false,
+        rainbowSpeed : 1,
+        rainbowCounter : 0,
         brush : "Triangles",
         size : .1,
         segments : 3,
@@ -110,6 +116,11 @@ function main() {
         brushSettings.brush = "Stars";
     });
 
+    rainbowButton.addEventListener('click', function(){
+        brushSettings.rainbow = !brushSettings.rainbow;
+    });
+    rainbowSpeedSlider.oninput = function(ev) { brushSettings.rainbowSpeed = Number(rainbowSpeedSlider.value); };
+
     redSlider.oninput = function(ev) { brushSettings.r = Number(redSlider.value); };
     greenSlider.oninput = function(ev) { brushSettings.g = Number(greenSlider.value); };
     blueSlider.oninput = function(ev) { brushSettings.b = Number(blueSlider.value); };
@@ -137,6 +148,19 @@ function createShape(coords, centerX, centerY, brushSettings){
     var size = brushSettings.size;
     var segments = brushSettings.segments;
     var innerRadius = brushSettings.innerRadius;
+
+    var colors = {r:-1,g:-1,b:-1};
+    if(brushSettings.rainbow){
+        brushSettings.rainbowCounter += brushSettings.rainbowSpeed;
+        brushSettings.rainbowCounter = brushSettings.rainbowCounter % 360;
+        colors = hsvToRGB(brushSettings.rainbowCounter);
+    }
+    else{
+        colors.r = brushSettings.r;
+        colors.g = brushSettings.g;
+        colors.b = brushSettings.b;
+    }
+
     switch(brush){
         case "Triangles":
             coords.x[0] = centerX - size;
@@ -149,9 +173,9 @@ function createShape(coords, centerX, centerY, brushSettings){
             coords.y[2] = centerY - size;
 
             for(let j = 0; j < 3; j++){
-                coords.r[j] = brushSettings.r;
-                coords.g[j] = brushSettings.g;
-                coords.b[j] = brushSettings.b;
+                coords.r[j] = colors.r;
+                coords.g[j] = colors.g;
+                coords.b[j] = colors.b;
             }
             break;
         case "Squares":
@@ -174,9 +198,9 @@ function createShape(coords, centerX, centerY, brushSettings){
             coords.y[5] = centerY - size;
 
             for(let j = 0; j < 6; j++){
-                coords.r[j] = brushSettings.r;
-                coords.g[j] = brushSettings.g;
-                coords.b[j] = brushSettings.b;
+                coords.r[j] = colors.r;
+                coords.g[j] = colors.g;
+                coords.b[j] = colors.b;
             }
             break;
         case "Circles":
@@ -193,9 +217,9 @@ function createShape(coords, centerX, centerY, brushSettings){
                 coords.y[i+2] = centerY;
 
                 for(let j = i; j < i+3; j++){
-                    coords.r[j] = brushSettings.r;
-                    coords.g[j] = brushSettings.g;
-                    coords.b[j] = brushSettings.b;
+                    coords.r[j] = colors.r;
+                    coords.g[j] = colors.g;
+                    coords.b[j] = colors.b;
                 }
             }
             break;
@@ -222,9 +246,9 @@ function createShape(coords, centerX, centerY, brushSettings){
                 coords.y[i+5] = centerY;
 
                 for(let j = i; j < i+6; j++){
-                    coords.r[j] = brushSettings.r;
-                    coords.g[j] = brushSettings.g;
-                    coords.b[j] = brushSettings.b;
+                    coords.r[j] = colors.r;
+                    coords.g[j] = colors.g;
+                    coords.b[j] = colors.b;
                 }
             }
             break;
@@ -232,29 +256,27 @@ function createShape(coords, centerX, centerY, brushSettings){
 }
 
 // Algorithm from https://www.rapidtables.com/convert/color/hsv-to-rgb.html
-function hsvToRGB(h, s, v) {
-    let C = v * s;
-    let X = C * ( 1 - Math.abs( (h/60) % 2 - 1) );
-    let m = v - C;
+function hsvToRGB(hue) {
+    let X = 1 * ( 1 - Math.abs( (hue/60) % 2 - 1) );
 
     let rgb = {r : -1, g : -1, b : -1};
-    if(0 <= h && h < 60){
-        rgb = {r : C, g : X, b : 0};
+    if(0 <= hue && hue < 60){
+        rgb = {r : 1, g : X, b : 0};
     }
-    else if(60 <= h && h < 120){
-        rgb = {r : X, g : C, b : 0};
+    else if(60 <= hue && hue < 120){
+        rgb = {r : X, g : 1, b : 0};
     }
-    else if(120 <= h && h < 180){
-        rgb = {r : 0, g : C, b : X};
+    else if(120 <= hue && hue < 180){
+        rgb = {r : 0, g : 1, b : X};
     }
-    else if(180 <= h && h < 240){
-        rgb = {r : 0, g : X, b : C};
+    else if(180 <= hue && hue < 240){
+        rgb = {r : 0, g : X, b : 1};
     }
-    else if(240 <= h && h < 300){
-        rgb = {r : X, g : 0, b : C};
+    else if(240 <= hue && hue < 300){
+        rgb = {r : X, g : 0, b : 1};
     }
-    else if(300 <= h && h < 360){
-        rgb = {r : C, g : 0, b : X};
+    else if(300 <= hue && hue < 360){
+        rgb = {r : 1, g : 0, b : X};
     }
 
     return rgb;
