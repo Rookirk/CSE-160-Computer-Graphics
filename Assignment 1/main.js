@@ -85,9 +85,9 @@ function main() {
 
     rainbowSpeedDisplay.innerHTML = brushSettings.rainbowSpeed;
 
-    sizeDisplay.innerHTML = brushSettings.size;
+    sizeDisplay.innerHTML = (brushSettings.size*canvas.width).toFixed(0);
     segmentDisplay.innerHTML = brushSettings.segments;
-    innerRadiusDisplay.innerHTML = brushSettings.innerRadius.toFixed(2);
+    innerRadiusDisplay.innerHTML = (brushSettings.innerRadius*brushSettings.size*canvas.width).toFixed(0);
 
     // Get the rendering context for WebGL
     var gl = getWebGLContext(canvas, false);
@@ -171,7 +171,8 @@ function main() {
     };
     sizeSlider.oninput = function(ev) {
         brushSettings.size = Number(sizeSlider.value);
-        sizeDisplay.innerHTML = brushSettings.size.toFixed(2);
+        sizeDisplay.innerHTML = (brushSettings.size*canvas.width).toFixed(0);
+        innerRadiusDisplay.innerHTML = (brushSettings.innerRadius*brushSettings.size*canvas.width).toFixed(0);
     };
     segmentSlider.oninput = function(ev) {
         brushSettings.segments = Number(segmentSlider.value);
@@ -179,7 +180,7 @@ function main() {
     };
     innerRadiusSlider.oninput = function(ev) {
         brushSettings.innerRadius = Number(innerRadiusSlider.value);
-        innerRadiusDisplay.innerHTML = brushSettings.innerRadius.toFixed(2);
+        innerRadiusDisplay.innerHTML = (brushSettings.innerRadius*brushSettings.size*canvas.width).toFixed(0);
     };
 
     // Specify the color for clearing <canvas>
