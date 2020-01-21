@@ -26,6 +26,8 @@ function main() {
 
     var clearButton = document.getElementById('clearCanvas');
 
+    var brushDisplay = document.getElementById('brushDisplay');
+
     var squaresButton = document.getElementById('squaresButton');
     var trianglesButton = document.getElementById('trianglesButton');
     var circlesButton = document.getElementById('circlesButton');
@@ -35,12 +37,22 @@ function main() {
     var greenSlider = document.getElementById('greenSlider');
     var blueSlider = document.getElementById('blueSlider');
 
+    var redDisplay = document.getElementById('redDisplay');
+    var greenDisplay = document.getElementById('greenDisplay');
+    var blueDisplay = document.getElementById('blueDisplay');
+
     var rainbowButton = document.getElementById('rainbowButton');
     var rainbowSpeedSlider = document.getElementById('rainbowSpeedSlider');
+
+    var rainbowSpeedDisplay = document.getElementById('rainbowSpeedDisplay');
 
     var sizeSlider = document.getElementById('sizeSlider');
     var segmentSlider = document.getElementById('segmentSlider');
     var innerRadiusSlider = document.getElementById('innerRadiusSlider');
+
+    var sizeDisplay = document.getElementById('sizeDisplay');
+    var segmentDisplay = document.getElementById('segmentDisplay');
+    var innerRadiusDisplay = document.getElementById('innerRadiusDisplay');
 
     var brushSettings = {
         r : 0,
@@ -58,9 +70,24 @@ function main() {
     brushSettings.r = Number(redSlider.value);
     brushSettings.g = Number(greenSlider.value);
     brushSettings.b = Number(blueSlider.value);
+
+    brushSettings.rainbowSpeed = Number(rainbowSpeedSlider.value);
+
     brushSettings.size = Number(sizeSlider.value);
     brushSettings.segments = Number(segmentSlider.value);
     brushSettings.innerRadius = Number(innerRadiusSlider.value);
+
+    brushDisplay.innerHTML = brushSettings.brush;
+
+    redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
+    greenDisplay.innerHTML = (brushSettings.g*255).toFixed(0);
+    blueDisplay.innerHTML = (brushSettings.b*255).toFixed(0);
+
+    rainbowSpeedDisplay.innerHTML = brushSettings.rainbowSpeed;
+
+    sizeDisplay.innerHTML = brushSettings.size;
+    segmentDisplay.innerHTML = brushSettings.segments;
+    innerRadiusDisplay.innerHTML = brushSettings.innerRadius.toFixed(2);
 
     // Get the rendering context for WebGL
     var gl = getWebGLContext(canvas, false);
@@ -105,28 +132,55 @@ function main() {
 
     squaresButton.addEventListener('click', function(){
         brushSettings.brush = "Squares";
+        brushDisplay.innerHTML = "Squares";
     });
     trianglesButton.addEventListener('click', function(){
         brushSettings.brush = "Triangles";
+        brushDisplay.innerHTML = "Triangles";
     });
     circlesButton.addEventListener('click', function(){
         brushSettings.brush = "Circles";
+        brushDisplay.innerHTML = "Circles";
     });
     starsButton.addEventListener('click', function(){
         brushSettings.brush = "Stars";
+        brushDisplay.innerHTML = "Stars";
     });
 
     rainbowButton.addEventListener('click', function(){
         brushSettings.rainbow = !brushSettings.rainbow;
+        if(brushSettings.rainbow) rainbowButton.value = "Rainbow: On";
+        else rainbowButton.value = "Rainbow: Off";
     });
-    rainbowSpeedSlider.oninput = function(ev) { brushSettings.rainbowSpeed = Number(rainbowSpeedSlider.value); };
+    rainbowSpeedSlider.oninput = function(ev) {
+        brushSettings.rainbowSpeed = Number(rainbowSpeedSlider.value);
+        rainbowSpeedDisplay.innerHTML = brushSettings.rainbowSpeed;
+    };
 
-    redSlider.oninput = function(ev) { brushSettings.r = Number(redSlider.value); };
-    greenSlider.oninput = function(ev) { brushSettings.g = Number(greenSlider.value); };
-    blueSlider.oninput = function(ev) { brushSettings.b = Number(blueSlider.value); };
-    sizeSlider.oninput = function(ev) { brushSettings.size = Number(sizeSlider.value); };
-    segmentSlider.oninput = function(ev) { brushSettings.segments = Number(segmentSlider.value); };
-    innerRadiusSlider.oninput = function(ev) { brushSettings.innerRadius = Number(innerRadiusSlider.value); };
+    redSlider.oninput = function(ev) {
+        brushSettings.r = Number(redSlider.value);
+        redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
+    };
+    greenSlider.oninput = function(ev) {
+        brushSettings.g = Number(greenSlider.value);
+        greenDisplay.innerHTML = (brushSettings.g*255).toFixed(0);
+    };
+    blueSlider.oninput = function(ev) {
+        brushSettings.b = Number(blueSlider.value);
+        blueDisplay.innerHTML = (brushSettings.b*255).toFixed(0);
+    };
+    sizeSlider.oninput = function(ev) {
+        brushSettings.size = Number(sizeSlider.value);
+        sizeDisplay.innerHTML = brushSettings.size.toFixed(2);
+    };
+    segmentSlider.oninput = function(ev) {
+        brushSettings.segments = Number(segmentSlider.value);
+        segmentDisplay.innerHTML = brushSettings.segments;
+    };
+    innerRadiusSlider.oninput = function(ev) {
+        brushSettings.innerRadius = Number(innerRadiusSlider.value);
+        innerRadiusDisplay.innerHTML = brushSettings.innerRadius.toFixed(2);
+    };
 
     // Specify the color for clearing <canvas>
     gl.clearColor(0.0, 0.0, 0.0, 1.0);

@@ -16,6 +16,7 @@
 	       value="Clear Canvas">
 	<br>
 	Drawing Mode:
+	<label id="brushDisplay">Triangles</label>
 	<br>
 	<div>
 		<input id="squaresButton"
@@ -33,6 +34,11 @@
 	</div>
 	<br>
 	Shape Color:
+	(
+	<label id="redDisplay">255</label>,
+	<label id="greenDisplay">0</label>,
+	<label id="blueDisplay">0</label>
+	)
 	<br>
 	<div>
 		<label for="red">Red</label>
@@ -48,25 +54,29 @@
 	<div>
 		<input id="rainbowButton"
 	       type="button"
-	       value="Rainbow">
+	       value="Rainbow: Off">
 	    <label for="rainbowSpeed">Rainbow Speed</label>
 		<input type="range" id="rainbowSpeedSlider" name="rainbowSpeed"
 			min="1" max="20" step="1" value="1">
+		<label id="rainbowSpeedDisplay">1</label>
 	</div>
 	<div>
 		<label for="size">Shape Size:</label>
 		<input type="range" id="sizeSlider" name="size"
 			min=".01" max="1" step=".01" value=".1">
+		<label id="sizeDisplay">.10</label>
 	</div>
 	<div>
 		<label for="segment">(Circles/Stars) Segment Count:</label>
 		<input type="range" id="segmentSlider" name="segment"
 			min="3" max="30" step="1" value="20">
+		<label id="segmentDisplay">20</label>
 	</div>
 	<div>
 		<label for="innerRadius">(Stars) Inner Radius:</label>
 		<input type="range" id="innerRadiusSlider" name="innerRadius"
 			min=".01" max="1" step=".01" value=".5">
+		<label id="innerRadiusDisplay">.50</label>
 	</div>
 
     <script src="webgl-utils.js"></script>
