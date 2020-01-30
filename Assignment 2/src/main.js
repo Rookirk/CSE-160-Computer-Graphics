@@ -1,4 +1,10 @@
-// ClickedPints.js (c) 2012 matsuda
+// Component refers to x,y,z,r,g,b
+// Vertex refers to a point in 3d space
+// Triangle refers to 3 vertices
+// Face refers to multiple triangles that share the same normal
+// Shape refers to primitives
+// Part refers to collection of parts to form a limb
+
 // Vertex shader program
 var VSHADER_SOURCE = `
     attribute vec4 a_Position;
@@ -20,7 +26,6 @@ var FSHADER_SOURCE = `
       gl_FragColor = v_Color;
     }`;
 
-var canvas;
 var gl;
 var a_Position;
 var a_Color;
@@ -28,7 +33,7 @@ var u_ModelMatrix;
 
 var vertexArr;
 var vertsPerShapeArr;
-var shapesPerPartArr;
+var partDataArr;
 
 var modelMatrix;
 var rotationMatrix;
@@ -37,7 +42,7 @@ var translateMatrix;
 
 function main() {
     // Retrieve HTML elements
-    canvas = document.getElementById('webgl');
+    var canvas = document.getElementById('webgl');
     // Get the rendering context for WebGL
     gl = getWebGLContext(canvas, false);
     if (!gl) {
@@ -76,16 +81,32 @@ function main() {
     translateMatrix = new Matrix4();
 
     vertsPerShapeArr = [];
-    shapesPerPartArr = [2,3];
+    partDataArr = [];
 
+    let currPartIndex = 0;
+
+    partDataArr[currPartIndex] = {
+        shapeNum: 2,
+        originX: 0,
+        originY: 0,
+        originZ: 0
+    }
     createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
     createCube(  .1, .25,  .1,   .1,   .1,   .1,255,255,  0); // yellow
+    currPartIndex++;
 
+    partDataArr[currPartIndex] = {
+        shapeNum: 3,
+        originX: .2,
+        originY: .2,
+        originZ: .2
+    }
     createCube( -.2,  .3, -.4,   .1,   .2,  .15,  0,255,255); // cyan
     createCube(  .1,-.25, -.1,   .1,   .1,   .1,255,  0,255); // magenta
     createCube( -.3, -.1,  .2,   .1,   .1,   .1,  0,255,  0); // green
+    currPartIndex++;
 
-    update(gl);
+    update();
 }
 
 function createCube(x, y, z, l, w, h, r, g, b){
@@ -138,13 +159,13 @@ function drawGeometry() {
 
     let beginningIndex = 0; // number of vertices
     // iterate per part
-    for(let i = 0; i < shapesPerPartArr.length; i++){
+    for(let i = 0; i < partDataArr.length; i++){
         gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexArr), gl.STATIC_DRAW);
 
         let amountOfVerts = 0;
         // iterate through all shapes in that part
-        for(let j = 0; j < shapesPerPartArr[i]; j++){
+        for(let j = 0; j < partDataArr[i].shapeNum; j++){
             // obtain how many verts to draw
             amountOfVerts += vertsPerShapeArr[j];
         }
