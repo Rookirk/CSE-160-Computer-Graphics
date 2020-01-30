@@ -19,7 +19,7 @@ function drawGeometry() {
 
         let amountOfVerts = 0;
         // iterate through all shapes in that part
-        for(let j = 0; j < part.shapeNum; j++){
+        for(let j = 0; j < part.vertsPerShape.length; j++){
             // obtain how many verts to draw
             amountOfVerts += part.vertsPerShape[j];
         }

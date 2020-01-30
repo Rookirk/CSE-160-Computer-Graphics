@@ -1,5 +1,18 @@
 var vertexArr;
 var partDataArr;
+/*
+    every member of partDataArr contains:
+        vertsPerShape[] // how many verts are in each shape, each elem is a shape
+        children[] // indices of children parts to this one
+        originX // unmodified origin points
+        originY
+        originZ
+
+        transformMat
+        transformX // modified origin points after parent transformations
+        transformY
+        transformZ
+*/
 
 var currPartIndex;
 
@@ -9,22 +22,26 @@ function createAnimal(){
     currPartIndex = 0;
 
     partDataArr[currPartIndex] = {
-        shapeNum: 2,
+        vertsPerShape: [],
+        children: [1],
         originX: 0,
         originY: 0,
         originZ: 0,
-        vertsPerShape: []
+
+        transformMat: new Matrix4()
     }
     createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
     createCube(  .2,  .2,  .2,   .1,   .1,   .1,255,255,  0); // yellow
     currPartIndex++;
 
     partDataArr[currPartIndex] = {
-        shapeNum: 3,
+        vertsPerShape: [],
+        children: [],
         originX: .2,
         originY: .2,
         originZ: .2,
-        vertsPerShape: []
+
+        transformMat: new Matrix4()
     }
     createCube( -.2,  .2, -.2,   .1,   .1,   .1,  0,255,255); // cyan
     createCube(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255); // magenta
