@@ -19,7 +19,7 @@ function drawGeometry() {
         // iterate through all shapes in that part
         for(let j = 0; j < partDataArr[i].shapeNum; j++){
             // obtain how many verts to draw
-            amountOfVerts += vertsPerShapeArr[j];
+            amountOfVerts += partDataArr[i].vertsPerShape[j];
         }
         gl.drawArrays(gl.TRIANGLES, beginningIndex, amountOfVerts);
         beginningIndex += amountOfVerts;
@@ -32,12 +32,12 @@ function initMatrices() {
     //modelMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
     
     rotationMatrix = new Matrix4();
-    rotationMatrix.setRotate(-25,1,0,0);
-    modelMatrix.multiply(rotationMatrix);
 
     scaleMatrix = new Matrix4();
 
     translateMatrix = new Matrix4();
+
+    transformMatrices();
 }
 
 function resetMatrices() {

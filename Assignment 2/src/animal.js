@@ -1,18 +1,19 @@
 var vertexArr;
-var vertsPerShapeArr;
 var partDataArr;
 
+var currPartIndex;
+
 function createAnimal(){
-    vertsPerShapeArr = [];
     partDataArr = [];
 
-    let currPartIndex = 0;
+    currPartIndex = 0;
 
     partDataArr[currPartIndex] = {
         shapeNum: 2,
         originX: 0,
         originY: 0,
-        originZ: 0
+        originZ: 0,
+        vertsPerShape: []
     }
     createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
     createCube(  .2,  .2,  .2,   .1,   .1,   .1,255,255,  0); // yellow
@@ -22,7 +23,8 @@ function createAnimal(){
         shapeNum: 3,
         originX: .2,
         originY: .2,
-        originZ: .2
+        originZ: .2,
+        vertsPerShape: []
     }
     createCube( -.2,  .2, -.2,   .1,   .1,   .1,  0,255,255); // cyan
     createCube(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255); // magenta
@@ -72,5 +74,5 @@ function createCube(x, y, z, l, w, h, r, g, b){
     }
 
     // cubes have 36 verts
-    vertsPerShapeArr.push(36);
+    partDataArr[currPartIndex].vertsPerShape.push(36);
 }
