@@ -40,9 +40,16 @@ var rotationMatrix;
 var scaleMatrix;
 var translateMatrix;
 
+var globalRotation;
+
 function main() {
     // Retrieve HTML elements
     var canvas = document.getElementById('webgl');
+    var rotationSlider = document.getElementById('rotationSlider');
+    rotationSlider.oninput = function(ev) {
+        globalRotation = Number(rotationSlider.value);
+    }
+
     // Get the rendering context for WebGL
     gl = getWebGLContext(canvas, false);
     if (!gl) {
@@ -68,12 +75,13 @@ function main() {
     gl.enable(gl.DEPTH_TEST);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+    globalRotation = 0;
     modelMatrix = new Matrix4();
     //modelMatrix.setPerspective(30, 1, 1, 100);
     //modelMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
     
     rotationMatrix = new Matrix4();
-    rotationMatrix.setRotate(-45,1,0,0);
+    rotationMatrix.setRotate(-25,1,0,0);
     modelMatrix.multiply(rotationMatrix);
 
     scaleMatrix = new Matrix4();
@@ -92,7 +100,7 @@ function main() {
         originZ: 0
     }
     createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
-    createCube(  .1, .25,  .1,   .1,   .1,   .1,255,255,  0); // yellow
+    createCube(  .2,  .2,  .2,   .1,   .1,   .1,255,255,  0); // yellow
     currPartIndex++;
 
     partDataArr[currPartIndex] = {
@@ -101,9 +109,9 @@ function main() {
         originY: .2,
         originZ: .2
     }
-    createCube( -.2,  .3, -.4,   .1,   .2,  .15,  0,255,255); // cyan
-    createCube(  .1,-.25, -.1,   .1,   .1,   .1,255,  0,255); // magenta
-    createCube( -.3, -.1,  .2,   .1,   .1,   .1,  0,255,  0); // green
+    createCube( -.2,  .2, -.2,   .1,   .1,   .1,  0,255,255); // cyan
+    createCube(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255); // magenta
+    createCube( -.2, -.2,  .2,   .1,   .1,   .1,  0,255,  0); // green
     currPartIndex++;
 
     update();
@@ -160,6 +168,7 @@ function drawGeometry() {
     let beginningIndex = 0; // number of vertices
     // iterate per part
     for(let i = 0; i < partDataArr.length; i++){
+        // apply the matrix to the vertices for this part
         gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexArr), gl.STATIC_DRAW);
 
@@ -214,8 +223,17 @@ function initVertexBuffers() {
     //gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
 }
 
+function resetMatrices() {
+    modelMatrix.setIdentity();
+    rotationMatrix.setIdentity();
+    scaleMatrix.setIdentity();
+    translateMatrix.setIdentity();
+}
+
 function update() {
-    rotationMatrix.setRotate(1,0,1,0);
+    resetMatrices();
+    rotationMatrix.setRotate(-25,1,0,0);
+    rotationMatrix.rotate(globalRotation + 45,0,1,0);
     modelMatrix.multiply(rotationMatrix);
 
     // Clear <canvas>
