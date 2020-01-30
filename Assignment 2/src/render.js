@@ -25,6 +25,8 @@ function drawGeometry() {
         }
         gl.drawArrays(gl.TRIANGLES, beginningIndex, amountOfVerts);
         beginningIndex += amountOfVerts;
+
+
     }
 }
 
@@ -39,7 +41,7 @@ function initMatrices() {
 
     translateMatrix = new Matrix4();
 
-    transformMatrices();
+    transformModelMatrix();
 }
 
 function resetMatrices() {
@@ -49,7 +51,7 @@ function resetMatrices() {
     translateMatrix.setIdentity();
 }
 
-function transformMatrices() {
+function transformModelMatrix() {
     resetMatrices();
     rotationMatrix.setRotate(-25,1,0,0);
     rotationMatrix.rotate(globalRotation,0,1,0);
