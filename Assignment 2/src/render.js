@@ -11,15 +11,17 @@ function drawGeometry() {
     let beginningIndex = 0; // number of vertices
     // iterate per part
     for(let i = 0; i < partDataArr.length; i++){
+        let part = partDataArr[i];
+
         // apply the matrix to the vertices for this part
         gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexArr), gl.STATIC_DRAW);
 
         let amountOfVerts = 0;
         // iterate through all shapes in that part
-        for(let j = 0; j < partDataArr[i].shapeNum; j++){
+        for(let j = 0; j < part.shapeNum; j++){
             // obtain how many verts to draw
-            amountOfVerts += partDataArr[i].vertsPerShape[j];
+            amountOfVerts += part.vertsPerShape[j];
         }
         gl.drawArrays(gl.TRIANGLES, beginningIndex, amountOfVerts);
         beginningIndex += amountOfVerts;
