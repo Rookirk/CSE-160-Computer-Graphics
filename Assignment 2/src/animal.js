@@ -10,9 +10,6 @@ var partDataArr;
 
         initMatrix // the initial transform matrix; does not affect children
         animMatrix // the animated matrix; affects children
-        transformX // modified origin points after parent transformations
-        transformY
-        transformZ
 */
 
 var currPartIndex;
@@ -79,7 +76,7 @@ function createAnimal(){
     part.initMatrix.translate(-part.originX,-part.originY,-part.originZ);
     part.animMatrix.set(part.initMatrix);
     currPartIndex++;
-    
+
     // 3
     partDataArr[currPartIndex] = {
         vertsPerShape: [],
