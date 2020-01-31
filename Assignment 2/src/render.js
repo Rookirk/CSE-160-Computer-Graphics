@@ -4,6 +4,8 @@ var scaleMatrix;
 var translateMatrix;
 
 var globalRotation;
+var globalTime = Date.now();
+var deltaTime;
 
 function drawGeometry() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -14,7 +16,10 @@ function drawGeometry() {
         let part = partDataArr[i];
 
         // apply the matrix to the vertices for this part
-        gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
+        let indivMatrix = new Matrix4();
+        indivMatrix.set(modelMatrix);
+        indivMatrix.multiply(part.animMatrix);
+        gl.uniformMatrix4fv(u_ModelMatrix, false, indivMatrix.elements);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexArr), gl.STATIC_DRAW);
 
         let amountOfVerts = 0;
@@ -24,9 +29,7 @@ function drawGeometry() {
             amountOfVerts += part.vertsPerShape[j];
         }
         gl.drawArrays(gl.TRIANGLES, beginningIndex, amountOfVerts);
-        beginningIndex += amountOfVerts;
-
-
+        beginningIndex += amountOfVerts;        
     }
 }
 
@@ -51,9 +54,25 @@ function resetMatrices() {
     translateMatrix.setIdentity();
 }
 
+function transformAnimalMatrices() {
+    /*for(let i = 0; i < partDataArr.length; i++){
+        let part = partDataArr[i];
+
+    }*/
+    currPartIndex = 1;
+    let part = partDataArr[currPartIndex];
+
+}
+
 function transformModelMatrix() {
     resetMatrices();
     rotationMatrix.setRotate(-25,1,0,0);
     rotationMatrix.rotate(globalRotation,0,1,0);
     modelMatrix.multiply(rotationMatrix);
+}
+
+function updateTime() {
+    let now = Date.now();
+    deltaTime = now - globalTime;
+    globalTime = now;
 }
