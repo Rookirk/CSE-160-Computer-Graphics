@@ -31,6 +31,9 @@ var a_Position;
 var a_Color;
 var u_ModelMatrix;
 
+var enableInit = true;
+var enableAnim = true;
+
 function main() {
     // Retrieve HTML elements
     var canvas = document.getElementById('webgl');
@@ -84,7 +87,7 @@ function main() {
 function update() {
     updateTime();
 
-    transformAnimalMatrices();
+    if(enableAnim) transformAnimalMatrices();
     transformModelMatrix();
 
     // Clear <canvas>

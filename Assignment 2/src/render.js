@@ -55,13 +55,21 @@ function resetMatrices() {
 }
 
 function transformAnimalMatrices() {
-    /*for(let i = 0; i < partDataArr.length; i++){
+    for(let i = 0; i < partDataArr.length; i++){
         let part = partDataArr[i];
 
-    }*/
-    currPartIndex = 1;
-    let part = partDataArr[currPartIndex];
+        let fn = part.transformFunc;
 
+        if(fn === 0) continue; // if no such function exists, move on
+        // align the animMatrix with the correct initMatrix
+        if(part.parent != -1)
+            part.animMatrix.set(partDataArr[part.parent].animMatrix);
+        else
+            part.animMatrix.set(part.initMatrix);
+        part.animMatrix.translate(part.originX,part.originY,part.originZ);
+        window[fn](part);
+        part.animMatrix.translate(-part.originX,-part.originY,-part.originZ);
+    }
 }
 
 function transformModelMatrix() {
@@ -69,10 +77,4 @@ function transformModelMatrix() {
     rotationMatrix.setRotate(-25,1,0,0);
     rotationMatrix.rotate(globalRotation,0,1,0);
     modelMatrix.multiply(rotationMatrix);
-}
-
-function updateTime() {
-    let now = Date.now();
-    deltaTime = now - globalTime;
-    globalTime = now;
 }
