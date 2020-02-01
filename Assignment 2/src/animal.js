@@ -13,8 +13,9 @@ function createAnimal(){
 
             transformFunc: -1
         },
-        function() {
-            animal.createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
+        function(armature) {
+            //armature.createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
+            armature.createZCylinder(   0,   0,   0,   .1,   .1,   .3,255,255,255,20); // white)
         }
     );
 
@@ -28,12 +29,12 @@ function createAnimal(){
 
             transformFunc: -1
         },
-        function() {
-            animal.createCube(  .2,  .2,  .2,   .1,   .1,   .1,255,255,  0); // yellow
-            animal.createCube( -.2,  .2, -.2,   .1,   .1,   .1,  0,255,255); // cyan
+        function(armature) {
+            armature.createCube(  .2,  .2,  .2,   .1,   .1,   .1,255,255,  0); // yellow
+            armature.createCube( -.2,  .2, -.2,   .1,   .1,   .1,  0,255,255); // cyan
         },
-        function(part) {
-            part.initMatrix.rotate(45,1,0,0);
+        function(initMatrix) {
+            initMatrix.rotate(45,1,0,0);
         }
     );
 
@@ -47,12 +48,12 @@ function createAnimal(){
 
             transformFunc: "transformRing1"
         },
-        function() {
-            animal.createCube(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255); // magenta
-            animal.createCube( -.2, -.2,  .2,   .1,   .1,   .1,  0,255,  0); // green
+        function(armature) {
+            armature.createCube(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255); // magenta
+            armature.createCube( -.2, -.2,  .2,   .1,   .1,   .1,  0,255,  0); // green
         },
-        function(part) {
-            part.initMatrix.rotate(0,0,1,0);
+        function(initMatrix) {
+            initMatrix.rotate(0,0,1,0);
         }
     );
 
@@ -66,11 +67,11 @@ function createAnimal(){
 
             transformFunc: "transformRing2"
         },
-        function() {
-            animal.createCube(  .4, -.2, -.4,   .1,   .1,   .1,255,  0,  0); // red
+        function(armature) {
+            armature.createCube(  .4, -.2, -.4,   .1,   .1,   .1,255,  0,  0); // red
         },
-        function(part) {
-            part.initMatrix.rotate(0,0,1,0);
+        function(initMatrix) {
+            initMatrix.rotate(0,0,1,0);
         }
     );
 }
@@ -98,14 +99,14 @@ function testMatrices(value, value2){
     mat3.translate(-part3.originX,-part3.originY,-part3.originZ);
 }
 
-function transformRing1(part) {
+function transformRing1(animMatrix) {
     let angle = (globalTime/10) % 360;
-    part.animMatrix.rotate(angle,1,0,0);
+    animMatrix.rotate(angle,1,0,0);
 }
 
-function transformRing2(part) {
+function transformRing2(animMatrix) {
     let angle = (globalTime/5) % 360;
-    part.animMatrix.rotate(angle,0,1,0);
+    animMatrix.rotate(angle,0,1,0);
 }
 
 function updateTime() {

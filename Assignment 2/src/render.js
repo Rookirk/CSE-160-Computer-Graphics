@@ -67,7 +67,7 @@ Armature.prototype.transformAnimalMatrices = function() {
         else
             part.animMatrix.set(part.initMatrix);
         part.animMatrix.translate(part.originX,part.originY,part.originZ);
-        window[fn](part);
+        window[fn](part.animMatrix);
         part.animMatrix.translate(-part.originX,-part.originY,-part.originZ);
     }
 }
