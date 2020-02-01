@@ -67,9 +67,6 @@ function main() {
 
     getStorageLocations();
 
-    // Initialize vertex arrays
-    vertexArr = [];
-
     initVertexBuffers();
 
     // Specify the color for clearing <canvas>
@@ -87,7 +84,7 @@ function main() {
 function update() {
     updateTime();
 
-    if(enableAnim) transformAnimalMatrices();
+    if(enableAnim) animal.transformAnimalMatrices();
     transformModelMatrix();
 
     // Clear <canvas>

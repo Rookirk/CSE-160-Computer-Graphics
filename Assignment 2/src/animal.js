@@ -1,6 +1,9 @@
+var animal;
+
 function createAnimal(){
-    // 0
-    addBodyPart(
+    animal = new Armature();
+
+    animal.addBodyPart(
         {
             name: "core",
             parent: -1,
@@ -11,12 +14,11 @@ function createAnimal(){
             transformFunc: -1
         },
         function() {
-            createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
+            animal.createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
         }
     );
 
-    // 1
-    addBodyPart(
+    animal.addBodyPart(
         {
             name: "ring1",
             parent: "core",
@@ -27,16 +29,15 @@ function createAnimal(){
             transformFunc: -1
         },
         function() {
-            createCube(  .2,  .2,  .2,   .1,   .1,   .1,255,255,  0); // yellow
-            createCube( -.2,  .2, -.2,   .1,   .1,   .1,  0,255,255); // cyan
+            animal.createCube(  .2,  .2,  .2,   .1,   .1,   .1,255,255,  0); // yellow
+            animal.createCube( -.2,  .2, -.2,   .1,   .1,   .1,  0,255,255); // cyan
         },
         function(part) {
             part.initMatrix.rotate(45,1,0,0);
         }
     );
 
-    // 2
-    addBodyPart(
+    animal.addBodyPart(
         {
             name: "ring2",
             parent: "core",
@@ -47,16 +48,15 @@ function createAnimal(){
             transformFunc: "transformRing1"
         },
         function() {
-            createCube(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255); // magenta
-            createCube( -.2, -.2,  .2,   .1,   .1,   .1,  0,255,  0); // green
+            animal.createCube(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255); // magenta
+            animal.createCube( -.2, -.2,  .2,   .1,   .1,   .1,  0,255,  0); // green
         },
         function(part) {
             part.initMatrix.rotate(0,0,1,0);
         }
     );
 
-    // 3
-    addBodyPart(
+    animal.addBodyPart(
         {
             name: "ring3",
             parent: "ring2",
@@ -67,7 +67,7 @@ function createAnimal(){
             transformFunc: "transformRing2"
         },
         function() {
-            createCube(  .4, -.2, -.4,   .1,   .1,   .1,255,  0,  0); // red
+            animal.createCube(  .4, -.2, -.4,   .1,   .1,   .1,255,  0,  0); // red
         },
         function(part) {
             part.initMatrix.rotate(0,0,1,0);
@@ -91,7 +91,7 @@ function testMatrices(value, value2){
 
     let part3 = partData[3];
     let mat3 = partData[3].animMatrix;
-    mat3.set(partData[part3.parent].initMatrix);
+    mat3.set(partData[part3.parentIndex].initMatrix);
     mat3.multiply(part2.animMatrix);
     mat3.translate(part3.originX,part3.originY,part3.originZ);
     mat3.rotate(value2*360,0,1,0);

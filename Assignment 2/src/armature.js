@@ -1,6 +1,3 @@
-var vertexArr;
-var partData = [];
-var partName = [];
 /*
     every member of partData contains:
         vertsPerShape[] // how many verts are in each shape, each elem is a shape
@@ -13,16 +10,22 @@ var partName = [];
         animMatrix // the animated matrix; affects children
 */
 
-function addBodyPart(part, shapeFunc, initMatrixFunc) {
-    partData.push(part);
-    partName.push(part.name);
+var Armature = function() {
+    this.vertexArr = [];
+    this.partData = [];
+    this.partName = [];
+}
+
+Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
+    this.partData.push(part);
+    this.partName.push(part.name);
 
     part.vertsPerShape = [];
     part.initMatrix = new Matrix4();
     part.animMatrix = new Matrix4();
 
     if(part.parent !== -1)
-        part.parentIndex = partName.indexOf(part.parent);
+        part.parentIndex = this.partName.indexOf(part.parent);
     else{
         part.parentIndex = -1;
     }
@@ -38,7 +41,7 @@ function addBodyPart(part, shapeFunc, initMatrixFunc) {
     }
 }
 
-function createCube(x, y, z, l, w, h, r, g, b){
+Armature.prototype.createCube = function(x, y, z, l, w, h, r, g, b){
     //    v6----- v5
     //   /|      /|
     //  v1------v0|
@@ -71,14 +74,51 @@ function createCube(x, y, z, l, w, h, r, g, b){
     for(let i = 0; i < cubeIndices.length; i++){
         let indexVal = cubeIndices[i];
         // push the x, y, z, r, g, b with appropriate transforms
-        vertexArr.push( x + cubeVertices[indexVal][0] * l );
-        vertexArr.push( y + cubeVertices[indexVal][1] * w );
-        vertexArr.push( z + cubeVertices[indexVal][2] * h );
-        vertexArr.push( r );
-        vertexArr.push( g );
-        vertexArr.push( b );
+        this.vertexArr.push( x + cubeVertices[indexVal][0] * l );
+        this.vertexArr.push( y + cubeVertices[indexVal][1] * w );
+        this.vertexArr.push( z + cubeVertices[indexVal][2] * h );
+        this.vertexArr.push( r );
+        this.vertexArr.push( g );
+        this.vertexArr.push( b );
     }
 
     // cubes have 36 verts
-    partData[partData.length - 1].vertsPerShape.push(36);
+    let endIndex = this.partData.length - 1;
+    this.partData[endIndex].vertsPerShape.push(36);
+}
+
+Armature.prototype.createCylinder = function(x, y, z, l, w, h, r, g, b, segments){
+    var circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments*3; i+=3){
+        let j = i/3;
+        coords.x[i] = centerX + size*Math.cos((j+1)*circleRotationTheta);
+        coords.y[i] = centerY + size*Math.sin((j+1)*circleRotationTheta);
+
+        coords.x[i+1] = centerX + size*Math.cos(j*circleRotationTheta);
+        coords.y[i+1] = centerY + size*Math.sin(j*circleRotationTheta);
+
+        coords.x[i+2] = centerX;
+        coords.y[i+2] = centerY;
+
+        for(let j = i; j < i+3; j++){
+            coords.r[j] = colors.r;
+            coords.g[j] = colors.g;
+            coords.b[j] = colors.b;
+        }
+    }
+    // Iterate through all vertices
+    for(let i = 0; i < cubeIndices.length; i++){
+        let indexVal = cubeIndices[i];
+        // push the x, y, z, r, g, b with appropriate transforms
+        this.vertexArr.push( x + cubeVertices[indexVal][0] * l );
+        this.vertexArr.push( y + cubeVertices[indexVal][1] * w );
+        this.vertexArr.push( z + cubeVertices[indexVal][2] * h );
+        this.vertexArr.push( r );
+        this.vertexArr.push( g );
+        this.vertexArr.push( b );
+    }
+
+    // cubes have 36 verts
+    let endIndex = this.partData.length - 1;
+    this.partData[endIndex].vertsPerShape.push(36);
 }

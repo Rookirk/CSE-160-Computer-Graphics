@@ -12,15 +12,15 @@ function drawGeometry() {
 
     let beginningIndex = 0; // number of vertices
     // iterate per part
-    for(let i = 0; i < partData.length; i++){
-        let part = partData[i];
+    for(let i = 0; i < animal.partData.length; i++){
+        let part = animal.partData[i];
 
         // apply the matrix to the vertices for this part
         let indivMatrix = new Matrix4();
         indivMatrix.set(modelMatrix);
         indivMatrix.multiply(part.animMatrix);
         gl.uniformMatrix4fv(u_ModelMatrix, false, indivMatrix.elements);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertexArr), gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(animal.vertexArr), gl.STATIC_DRAW);
 
         let amountOfVerts = 0;
         // iterate through all shapes in that part
@@ -54,16 +54,16 @@ function resetMatrices() {
     translateMatrix.setIdentity();
 }
 
-function transformAnimalMatrices() {
-    for(let i = 0; i < partData.length; i++){
-        let part = partData[i];
+Armature.prototype.transformAnimalMatrices = function() {
+    for(let i = 0; i < this.partData.length; i++){
+        let part = this.partData[i];
 
         let fn = part.transformFunc;
 
         if(fn === -1) continue; // if no such function exists, move on
         // align the animMatrix with the correct initMatrix
         if(part.parentIndex != -1)
-            part.animMatrix.set(partData[part.parentIndex].animMatrix);
+            part.animMatrix.set(this.partData[part.parentIndex].animMatrix);
         else
             part.animMatrix.set(part.initMatrix);
         part.animMatrix.translate(part.originX,part.originY,part.originZ);
