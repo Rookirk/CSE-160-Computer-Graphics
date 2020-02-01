@@ -19,7 +19,7 @@ function createAnimal(){
     addBodyPart(
         {
             name: "ring1",
-            parent: 0,
+            parent: "core",
             originX: 0,
             originY: 0,
             originZ: 0,
@@ -39,7 +39,7 @@ function createAnimal(){
     addBodyPart(
         {
             name: "ring2",
-            parent: 0,
+            parent: "core",
             originX: -.2,
             originY: -.2,
             originZ: .2,
@@ -59,7 +59,7 @@ function createAnimal(){
     addBodyPart(
         {
             name: "ring3",
-            parent: 2,
+            parent: "ring2",
             originX: .3,
             originY: -.2,
             originZ: -.3,

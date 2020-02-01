@@ -62,8 +62,8 @@ function transformAnimalMatrices() {
 
         if(fn === -1) continue; // if no such function exists, move on
         // align the animMatrix with the correct initMatrix
-        if(part.parent != -1)
-            part.animMatrix.set(partData[part.parent].animMatrix);
+        if(part.parentIndex != -1)
+            part.animMatrix.set(partData[part.parentIndex].animMatrix);
         else
             part.animMatrix.set(part.initMatrix);
         part.animMatrix.translate(part.originX,part.originY,part.originZ);

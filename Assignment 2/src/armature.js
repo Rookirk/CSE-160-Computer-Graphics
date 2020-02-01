@@ -14,13 +14,18 @@ var partName = [];
 */
 
 function addBodyPart(part, shapeFunc, initMatrixFunc) {
-    part.vertsPerShape = [];
+    partData.push(part);
+    partName.push(part.name);
 
+    part.vertsPerShape = [];
     part.initMatrix = new Matrix4();
     part.animMatrix = new Matrix4();
 
-    partData.push(part);
-    partName.push(part.name);
+    if(part.parent !== -1)
+        part.parentIndex = partName.indexOf(part.parent);
+    else{
+        part.parentIndex = -1;
+    }
 
     shapeFunc();
 
