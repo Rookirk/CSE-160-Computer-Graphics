@@ -12,8 +12,8 @@ function drawGeometry() {
 
     let beginningIndex = 0; // number of vertices
     // iterate per part
-    for(let i = 0; i < partDataArr.length; i++){
-        let part = partDataArr[i];
+    for(let i = 0; i < partData.length; i++){
+        let part = partData[i];
 
         // apply the matrix to the vertices for this part
         let indivMatrix = new Matrix4();
@@ -55,15 +55,15 @@ function resetMatrices() {
 }
 
 function transformAnimalMatrices() {
-    for(let i = 0; i < partDataArr.length; i++){
-        let part = partDataArr[i];
+    for(let i = 0; i < partData.length; i++){
+        let part = partData[i];
 
         let fn = part.transformFunc;
 
-        if(fn === 0) continue; // if no such function exists, move on
+        if(fn === -1) continue; // if no such function exists, move on
         // align the animMatrix with the correct initMatrix
         if(part.parent != -1)
-            part.animMatrix.set(partDataArr[part.parent].animMatrix);
+            part.animMatrix.set(partData[part.parent].animMatrix);
         else
             part.animMatrix.set(part.initMatrix);
         part.animMatrix.translate(part.originX,part.originY,part.originZ);

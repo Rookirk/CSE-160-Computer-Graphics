@@ -1,7 +1,8 @@
 var vertexArr;
-var partDataArr;
+var partData = [];
+var partName = [];
 /*
-    every member of partDataArr contains:
+    every member of partData contains:
         vertsPerShape[] // how many verts are in each shape, each elem is a shape
         parent // index of the parent part; -1 if none
         originX // unmodified origin points
@@ -12,14 +13,24 @@ var partDataArr;
         animMatrix // the animated matrix; affects children
 */
 
-var currPartIndex = 0;
+function addBodyPart(part, shapeFunc, initMatrixFunc) {
+    part.vertsPerShape = [];
 
-var Armature = function() {
-	partDataArr = [];
-}
+    part.initMatrix = new Matrix4();
+    part.animMatrix = new Matrix4();
 
-Armature.prototype.addBodyPart = function() {
+    partData.push(part);
+    partName.push(part.name);
 
+    shapeFunc();
+
+    if(initMatrixFunc && enableInit){
+        part.initMatrix.setTranslate(part.originX,part.originY,part.originZ);
+        initMatrixFunc(part);
+        part.initMatrix.translate(-part.originX,-part.originY,-part.originZ);
+
+        part.animMatrix.set(part.initMatrix);
+    }
 }
 
 function createCube(x, y, z, l, w, h, r, g, b){
@@ -64,5 +75,5 @@ function createCube(x, y, z, l, w, h, r, g, b){
     }
 
     // cubes have 36 verts
-    partDataArr[currPartIndex].vertsPerShape.push(36);
+    partData[partData.length - 1].vertsPerShape.push(36);
 }
