@@ -171,61 +171,15 @@ Armature.prototype.createYCylinder = function(x, y, z, l, w, h, r, g, b, segment
 }
 
 Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segments){
+    const vertices = this.getCylinderVertices(x,y,z,l,w,h,segments);
+
+    for(let i = 0; i < vertices.length; i++){
+        const vertex = vertices[i];
+        this.pushVert(vertex[0], vertex[1], vertex[2],r,g,b);
+    }
+
     let endIndex = this.partData.length - 1;
-    x = x + this.partData[endIndex].originX;
-    y = y + this.partData[endIndex].originY;
-    z = z + this.partData[endIndex].originZ;
-
-    let xcoords = [];
-    let ycoords = [];
-    let vertexCount = 0;
-
-    // Finds the coords of the circle
-    let circleRotationTheta = 2*Math.PI/segments;
-    for(let i = 0; i < segments; i++){
-        xcoords[i] = x + l*Math.cos(i*circleRotationTheta);
-        ycoords[i] = y + w*Math.sin(i*circleRotationTheta);
-    }
-
-    // Add one more at the end so that it is circular
-    xcoords.push(xcoords[0]);
-    ycoords.push(ycoords[0]);
-
-    // Iterate through the top
-    for(let i = 0; i < xcoords.length - 1; i++){
-        this.pushVert( xcoords[i], ycoords[i], z + h, r,g,b);
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
-        this.pushVert( x, y, z + h, r,g,b);
-
-        vertexCount += 3;
-    }
-
-    // Iterate through the sides
-    for(let i = 0; i < xcoords.length - 1; i++){
-        //top left triangle
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
-        this.pushVert( xcoords[i], ycoords[i], z + h, r,g,b);
-        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
-
-        // bottom right triangle
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
-        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z - h, r,g,b);
-
-        vertexCount += 6;
-    }
-
-    // Iterate through the bottom
-    for(let i = 0; i < xcoords.length - 1; i++){
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z - h, r,g,b);
-        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
-        this.pushVert( x, y, z - h, r,g,b);
-
-        vertexCount += 3;
-    }
-
-    // Add how many vertices were added
-    this.partData[endIndex].vertsPerShape.push(vertexCount);
+    this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
 Armature.prototype.createSphere = function(x, y, z, l, w, h, r, g, b, segments){
