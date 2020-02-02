@@ -4,8 +4,8 @@ var scaleMatrix;
 var translateMatrix;
 
 var globalRotation;
-var globalTime = Date.now();
-var deltaTime;
+var startTime = Date.now();
+var globalTime = 0;
 
 function drawGeometry() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -58,7 +58,7 @@ Armature.prototype.transformAnimalMatrices = function() {
     for(let i = 0; i < this.partData.length; i++){
         let part = this.partData[i];
 
-        let fn = part.transformFunc;
+        let fn = part.animFunc;
 
         if(fn === -1) continue; // if no such function exists, move on
         // align the animMatrix with the correct initMatrix
@@ -67,14 +67,26 @@ Armature.prototype.transformAnimalMatrices = function() {
         else
             part.animMatrix.set(part.initMatrix);
         part.animMatrix.translate(part.originX,part.originY,part.originZ);
-        window[fn](part.animMatrix);
+
+        let animArgs = part.animArgs.slice();
+        animArgs.unshift(part.animMatrix);
+        window[fn].apply(null,animArgs);
+
         part.animMatrix.translate(-part.originX,-part.originY,-part.originZ);
     }
 }
 
 function transformModelMatrix() {
     resetMatrices();
+    translateMatrix.setTranslate(0,0,.3);
+    modelMatrix.multiply(translateMatrix);
     rotationMatrix.setRotate(-25,1,0,0);
     rotationMatrix.rotate(globalRotation,0,1,0);
     modelMatrix.multiply(rotationMatrix);
+}
+
+function updateTime() {
+    let now = Date.now();
+    //deltaTime = now - globalTime;
+    globalTime = now - startTime;
 }

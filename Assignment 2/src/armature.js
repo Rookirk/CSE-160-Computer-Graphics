@@ -321,7 +321,7 @@ Armature.prototype.pushVert = function(x,y,z,r,g,b){
     this.vertexArr.push( x );
     this.vertexArr.push( y );
     this.vertexArr.push( z );
-    this.vertexArr.push( r );
-    this.vertexArr.push( g );
-    this.vertexArr.push( b );
+    this.vertexArr.push( r/255 );
+    this.vertexArr.push( g/255 );
+    this.vertexArr.push( b/255 );
 }

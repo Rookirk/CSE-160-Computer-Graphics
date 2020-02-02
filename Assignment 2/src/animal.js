@@ -11,7 +11,7 @@ function createAnimal(){
             originY: 0,
             originZ: 0,
 
-            transformFunc: -1
+            animFunc: -1
         },
         function(armature) {
             armature.createSphere(   0,   0,   0,   .1,   .1,   .1,255,255,255, 10); // white
@@ -26,7 +26,7 @@ function createAnimal(){
             originY: 0,
             originZ: 0,
 
-            transformFunc: -1
+            animFunc: -1
         },
         function(armature) {
             armature.createCube(  .2,  .2,  .2,   .1,   .1,   .1,255,255,  0); // yellow
@@ -45,7 +45,7 @@ function createAnimal(){
             originY: -.2,
             originZ: .2,
 
-            transformFunc: "transformRing1"
+            animFunc: -1
         },
         function(armature) {
             armature.createSphere(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255, 10); // magenta
@@ -64,7 +64,8 @@ function createAnimal(){
             originY: -.2,
             originZ: -.3,
 
-            transformFunc: "transformRing2"
+            animFunc: "transformSpine",
+            animArgs: [15, 270]
         },
         function(armature) {
             armature.createCube(  .4, -.2, -.4,   .1,   .1,   .1,255,  0,  0); // red
@@ -73,6 +74,68 @@ function createAnimal(){
             initMatrix.rotate(0,0,1,0);
         }
     );
+
+    animal.addBodyPart(
+        {
+            name: "ring4",
+            parent: "ring3",
+            originX: .5,
+            originY: -.2,
+            originZ: -.5,
+
+            animFunc: "transformSpine",
+            animArgs: [35, 180]
+        },
+        function(armature) {
+            armature.createCube(  .6, -.2, -.6,   .1,   .1,   .1,210,  0,  0); // red
+        },
+        function(initMatrix) {
+            initMatrix.rotate(0,0,1,0);
+        }
+    );
+
+    animal.addBodyPart(
+        {
+            name: "ring5",
+            parent: "ring4",
+            originX: .7,
+            originY: -.2,
+            originZ: -.7,
+
+            animFunc: "transformSpine",
+            animArgs: [50, 90]
+        },
+        function(armature) {
+            armature.createCube(  .8, -.2, -.8,   .1,   .1,   .1,170,  0,  0); // red
+        },
+        function(initMatrix) {
+            initMatrix.rotate(0,0,1,0);
+        }
+    );
+
+    animal.addBodyPart(
+        {
+            name: "ring6",
+            parent: "ring5",
+            originX: .9,
+            originY: -.2,
+            originZ: -.9,
+
+            animFunc: "transformSpine",
+            animArgs: [60, 0]
+        },
+        function(armature) {
+            armature.createCube(  1, -.2, -1,   .1,   .1,   .1,130,0,  0); // red
+        },
+        function(initMatrix) {
+            initMatrix.rotate(0,0,1,0);
+        }
+    );
+}
+
+// Taken from: https://stackoverflow.com/questions/5649803/remap-or-map-function-in-javascript
+function linearMap(value, low1, high1, low2, high2) {
+    return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 }
 
 function testMatrices(value, value2){
@@ -99,17 +162,25 @@ function testMatrices(value, value2){
 }
 
 function transformRing1(animMatrix) {
-    let angle = (globalTime/10) % 360;
-    animMatrix.rotate(angle,1,0,0);
+    templateSpin(animMatrix, .1, 1, 0, 0);
 }
 
 function transformRing2(animMatrix) {
-    let angle = (globalTime/5) % 360;
-    animMatrix.rotate(angle,0,1,0);
+    templateSpin(animMatrix, .2, 0, 1, 0);
 }
 
-function updateTime() {
-    let now = Date.now();
-    deltaTime = now - globalTime;
-    globalTime = now;
+function transformSpine(animMatrix, angle, offset) {
+    templateOscillate(animMatrix, .004, offset, 0, 1, 0, -angle, angle);
+}
+
+function templateOscillate(animMatrix, rate, offset, x, y, z, angle1, angle2) {
+    let influence = Math.cos((rate*globalTime + offset) % 360);
+    let angle = linearMap(influence, -1, 1, angle2, angle1);
+    animMatrix.rotate(angle,x,y,z);
+    console.log(angle);
+}
+
+function templateSpin(animMatrix, rate, x, y, z){
+    let angle = (rate*globalTime) % 360;
+    animMatrix.rotate(angle,x,y,z);
 }
