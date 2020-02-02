@@ -14,8 +14,7 @@ function createAnimal(){
             transformFunc: -1
         },
         function(armature) {
-            //armature.createCube(   0,   0,   0,   .1,   .1,   .1,255,255,255); // white
-            armature.createZCylinder(   0,   0,   0,   .1,   .1,   .3,255,255,255,20); // white)
+            armature.createSphere(   0,   0,   0,   .1,   .1,   .1,255,255,255, 10); // white
         }
     );
 
@@ -49,8 +48,8 @@ function createAnimal(){
             transformFunc: "transformRing1"
         },
         function(armature) {
-            armature.createCube(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255); // magenta
-            armature.createCube( -.2, -.2,  .2,   .1,   .1,   .1,  0,255,  0); // green
+            armature.createSphere(  .2, -.2, -.2,   .1,   .1,   .1,255,  0,255, 10); // magenta
+            armature.createXCylinder( -.2, -.2,  .2,   .1,   .1,   .1,  0,255,  0, 10); // green
         },
         function(initMatrix) {
             initMatrix.rotate(0,0,1,0);

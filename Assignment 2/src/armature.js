@@ -74,15 +74,123 @@ Armature.prototype.createCube = function(x, y, z, l, w, h, r, g, b){
     for(let i = 0; i < cubeIndices.length; i++){
         let indexVal = cubeIndices[i];
         // push the x, y, z, r, g, b with appropriate transforms
-        this.vertexArr.push( x + cubeVertices[indexVal][0] * l );
-        this.vertexArr.push( y + cubeVertices[indexVal][1] * w );
-        this.vertexArr.push( z + cubeVertices[indexVal][2] * h );
-        this.pushColor(r,g,b);
+        this.pushVert( x + cubeVertices[indexVal][0] * l,
+                       y + cubeVertices[indexVal][1] * w,
+                       z + cubeVertices[indexVal][2] * h ,
+                       r,g,b);
     }
 
     // cubes have 36 verts
     let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(36);
+}
+
+Armature.prototype.createXCylinder = function(x, y, z, l, w, h, r, g, b, segments){
+    let ycoords = [];
+    let zcoords = [];
+    let vertexCount = 0;
+
+    // Finds the coords of the circle
+    let circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments; i++){
+        ycoords[i] = y + w*Math.cos(i*circleRotationTheta);
+        zcoords[i] = z + h*Math.sin(i*circleRotationTheta);
+    }
+
+    // Add one more at the end so that it is circular
+    ycoords.push(ycoords[0]);
+    zcoords.push(zcoords[0]);
+
+    // Iterate through the top
+    for(let i = 0; i < ycoords.length - 1; i++){
+        this.pushVert( x + l, ycoords[i], zcoords[i], r,g,b);
+        this.pushVert( x + l, ycoords[i + 1], zcoords[i + 1], r,g,b);
+        this.pushVert( x + l, y, z, r,g,b);
+
+        vertexCount += 3;
+    }
+
+    // Iterate through the sides
+    for(let i = 0; i < ycoords.length - 1; i++){
+        //top left triangle
+        this.pushVert( x + l, ycoords[i + 1], zcoords[i + 1], r,g,b);
+        this.pushVert( x + l, ycoords[i], zcoords[i], r,g,b);
+        this.pushVert( x - l, ycoords[i], zcoords[i], r,g,b);
+
+        // bottom right triangle
+        this.pushVert( x + l, ycoords[i + 1], zcoords[i + 1], r,g,b);
+        this.pushVert( x - l, ycoords[i], zcoords[i], r,g,b);
+        this.pushVert( x - l, ycoords[i + 1], zcoords[i + 1], r,g,b);
+
+        vertexCount += 6;
+    }
+
+    // Iterate through the bottom
+    for(let i = 0; i < ycoords.length - 1; i++){
+        this.pushVert( x - l, ycoords[i + 1], zcoords[i + 1], r,g,b);
+        this.pushVert( x - l, ycoords[i], zcoords[i], r,g,b);
+        this.pushVert( x - l, y, z, r,g,b);
+
+        vertexCount += 3;
+    }
+
+    // Add how many vertices were added
+    let endIndex = this.partData.length - 1;
+    this.partData[endIndex].vertsPerShape.push(vertexCount);
+}
+
+Armature.prototype.createYCylinder = function(x, y, z, l, w, h, r, g, b, segments){
+    let xcoords = [];
+    let zcoords = [];
+    let vertexCount = 0;
+
+    // Finds the coords of the circle
+    let circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments; i++){
+        xcoords[i] = x + l*Math.cos(i*circleRotationTheta);
+        zcoords[i] = z + h*Math.sin(i*circleRotationTheta);
+    }
+
+    // Add one more at the end so that it is circular
+    xcoords.push(xcoords[0]);
+    zcoords.push(zcoords[0]);
+
+    // Iterate through the top
+    for(let i = 0; i < xcoords.length - 1; i++){
+        this.pushVert( xcoords[i], y + w , zcoords[i], r,g,b);
+        this.pushVert( xcoords[i + 1], y + w, zcoords[i + 1], r,g,b);
+        this.pushVert( x, y + w, z, r,g,b);
+
+        vertexCount += 3;
+    }
+
+    // Iterate through the sides
+    for(let i = 0; i < xcoords.length - 1; i++){
+        //top left triangle
+        this.pushVert( xcoords[i + 1], y + w, zcoords[i + 1], r,g,b);
+        this.pushVert( xcoords[i], y + w, zcoords[i], r,g,b);
+        this.pushVert( xcoords[i], y - w, zcoords[i], r,g,b);
+
+        // bottom right triangle
+        this.pushVert( xcoords[i + 1], y + w, zcoords[i + 1], r,g,b);
+        this.pushVert( xcoords[i], y - w, zcoords[i], r,g,b);
+        this.pushVert( xcoords[i + 1], y - w, zcoords[i + 1], r,g,b);
+
+        vertexCount += 6;
+    }
+
+    // Iterate through the bottom
+    for(let i = 0; i < xcoords.length - 1; i++){
+        this.pushVert( xcoords[i + 1], y - w, zcoords[i + 1], r,g,b);
+        this.pushVert( xcoords[i], y - w, zcoords[i], r,g,b);
+        this.pushVert( x, y - w, z, r,g,b);
+
+        vertexCount += 3;
+    }
+
+    // Add how many vertices were added
+    let endIndex = this.partData.length - 1;
+    this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
 Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segments){
@@ -103,20 +211,9 @@ Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segment
 
     // Iterate through the top
     for(let i = 0; i < xcoords.length - 1; i++){
-        this.vertexArr.push( xcoords[i] );
-        this.vertexArr.push( ycoords[i] );
-        this.vertexArr.push( z + h );
-        this.pushColor(r,g,b);
-
-        this.vertexArr.push( xcoords[i + 1] );
-        this.vertexArr.push( ycoords[i + 1] );
-        this.vertexArr.push( z + h );
-        this.pushColor(r,g,b);
-
-        this.vertexArr.push( x );
-        this.vertexArr.push( y );
-        this.vertexArr.push( z + h );
-        this.pushColor(r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z + h, r,g,b);
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
+        this.pushVert( x, y, z + h, r,g,b);
 
         vertexCount += 3;
     }
@@ -124,56 +221,23 @@ Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segment
     // Iterate through the sides
     for(let i = 0; i < xcoords.length - 1; i++){
         //top left triangle
-        this.vertexArr.push( xcoords[i + 1] );
-        this.vertexArr.push( ycoords[i + 1] );
-        this.vertexArr.push( z + h );
-        this.pushColor(r,g,b);
-
-        this.vertexArr.push( xcoords[i] );
-        this.vertexArr.push( ycoords[i] );
-        this.vertexArr.push( z + h );
-        this.pushColor(r,g,b);
-
-        this.vertexArr.push( xcoords[i] );
-        this.vertexArr.push( ycoords[i] );
-        this.vertexArr.push( z - h );
-        this.pushColor(r,g,b);
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z + h, r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
 
         // bottom right triangle
-        this.vertexArr.push( xcoords[i + 1] );
-        this.vertexArr.push( ycoords[i + 1] );
-        this.vertexArr.push( z + h );
-        this.pushColor(r,g,b);
-
-        this.vertexArr.push( xcoords[i] );
-        this.vertexArr.push( ycoords[i] );
-        this.vertexArr.push( z - h );
-        this.pushColor(r,g,b);
-
-        this.vertexArr.push( xcoords[i + 1] );
-        this.vertexArr.push( ycoords[i + 1] );
-        this.vertexArr.push( z - h );
-        this.pushColor(r,g,b);
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z - h, r,g,b);
 
         vertexCount += 6;
     }
 
     // Iterate through the bottom
     for(let i = 0; i < xcoords.length - 1; i++){
-        this.vertexArr.push( xcoords[i + 1] );
-        this.vertexArr.push( ycoords[i + 1] );
-        this.vertexArr.push( z - h );
-        this.pushColor(r,g,b);
-
-        this.vertexArr.push( xcoords[i] );
-        this.vertexArr.push( ycoords[i] );
-        this.vertexArr.push( z - h );
-        this.pushColor(r,g,b);
-
-        this.vertexArr.push( x );
-        this.vertexArr.push( y );
-        this.vertexArr.push( z - h );
-        this.pushColor(r,g,b);
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z - h, r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
+        this.pushVert( x, y, z - h, r,g,b);
 
         vertexCount += 3;
     }
@@ -183,7 +247,80 @@ Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segment
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
-Armature.prototype.pushColor = function(r,g,b){
+Armature.prototype.createSphere = function(x, y, z, l, w, h, r, g, b, segments){
+    if(segments < 3){
+        console.log("Cannot have less than 3 segments in sphere");
+        return;
+    }
+
+    let xcoords = [];
+    let zcoords = [];
+    let vertexCount = 0;
+
+    // Finds the coords of the circle
+    let circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments; i++){
+        xcoords[i] = l*Math.cos(i*circleRotationTheta);
+        zcoords[i] = h*Math.sin(i*circleRotationTheta);
+    }
+
+    // Add one more at the end so that it is circular
+    xcoords.push(xcoords[0]);
+    zcoords.push(zcoords[0]);
+
+    let hemisphereTheta = Math.PI/segments;
+    // Iterate through the top
+    let yHeight = w*Math.cos(hemisphereTheta);
+    let horizRadius = Math.sin(hemisphereTheta);
+    for(let i = 0; i < xcoords.length - 1; i++){
+        this.pushVert( x + horizRadius*xcoords[i], y + yHeight , z + horizRadius*zcoords[i], r,g,b);
+        this.pushVert( x + horizRadius*xcoords[i + 1], y + yHeight, z + horizRadius*zcoords[i + 1], r,g,b);
+        this.pushVert( x, y + w, z, r,g,b);
+
+        vertexCount += 3;
+    }
+
+    // Iterate through horizontal rings
+    for(let i = 1; i < segments - 1; i++){
+        yHeight = w*Math.cos(i*hemisphereTheta);
+        let yHeight2 = w*Math.cos((i+1)*hemisphereTheta);
+        horizRadius = Math.sin(i*hemisphereTheta);
+        let horizRadius2 = Math.sin((i+1)*hemisphereTheta);
+        for(let j = 0; j < xcoords.length - 1; j++){
+            //top left trjangle
+            this.pushVert( x + horizRadius*xcoords[j + 1], y + yHeight, z + horizRadius*zcoords[j + 1], r,g,b);
+            this.pushVert( x + horizRadius*xcoords[j], y + yHeight, z + horizRadius*zcoords[j], r,g,b);
+            this.pushVert( x + horizRadius2*xcoords[j], y + yHeight2, z + horizRadius2*zcoords[j], r,g,b);
+
+            // bottom rjght trjangle
+            this.pushVert( x + horizRadius*xcoords[j + 1], y + yHeight, z + horizRadius*zcoords[j + 1], r,g,b);
+            this.pushVert( x + horizRadius2*xcoords[j], y + yHeight2, z + horizRadius2*zcoords[j], r,g,b);
+            this.pushVert( x + horizRadius2*xcoords[j + 1], y + yHeight2, z + horizRadius2*zcoords[j + 1], r,g,b);
+
+            vertexCount += 6;
+        }
+    }
+
+    // Iterate through the bottom
+    yHeight = w*Math.cos(hemisphereTheta);
+    horizRadius = Math.sin(hemisphereTheta);
+    for(let i = 0; i < xcoords.length - 1; i++){
+        this.pushVert( x + horizRadius*xcoords[i + 1], y - yHeight, z + horizRadius*zcoords[i + 1], r,g,b);
+        this.pushVert( x + horizRadius*xcoords[i], y - yHeight, z + horizRadius*zcoords[i], r,g,b);
+        this.pushVert( x, y - w, z, r,g,b);
+
+        vertexCount += 3;
+    }
+
+    // Add how many vertices were added
+    let endIndex = this.partData.length - 1;
+    this.partData[endIndex].vertsPerShape.push(vertexCount);
+}
+
+Armature.prototype.pushVert = function(x,y,z,r,g,b){
+    this.vertexArr.push( x );
+    this.vertexArr.push( y );
+    this.vertexArr.push( z );
     this.vertexArr.push( r );
     this.vertexArr.push( g );
     this.vertexArr.push( b );
