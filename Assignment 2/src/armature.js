@@ -28,9 +28,18 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
         part.parentIndex = this.partName.indexOf(part.parent);
 
         let parent = this.partData[part.parentIndex];
+
+        let parentVec = new Vector3(parent.originX, parent.originY, parent.originZ);
+        let parentAnimMat = new Matrix4();
+        parentAnimMat.set(parent.animMatrix);
+        let newOrigin = parentAnimMat.multiplyVector3(parentVec);
+        console.log(newOrigin);
+
         part.originX += parent.originX;
         part.originY += parent.originY;
         part.originZ += parent.originZ;
+
+        part.initMatrix.set(parent.animMatrix);
     }
     else{
         part.parentIndex = -1;
@@ -39,12 +48,11 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
     shapeFunc(this);
 
     if(initMatrixFunc && enableInit){
-        part.initMatrix.setTranslate(part.originX,part.originY,part.originZ);
+        part.initMatrix.translate(part.originX,part.originY,part.originZ);
         initMatrixFunc(part.initMatrix);
         part.initMatrix.translate(-part.originX,-part.originY,-part.originZ);
-
-        part.animMatrix.set(part.initMatrix);
     }
+    part.animMatrix.set(part.initMatrix);
 }
 
 Armature.prototype.createCube = function(x0, y0, z0, l, w, h, r, g, b){

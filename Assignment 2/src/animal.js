@@ -34,6 +34,9 @@ function createAnimal(){
         },
         function(armature) {
             armature.createSphere(   0,   0,   0,   .1,   .1,   .1,255,255,255, 10); // white
+        },
+        function(initMatrix) {
+            initMatrix.rotate(45,1,0,0);
         }
     );
 
@@ -51,9 +54,9 @@ function createAnimal(){
             armature.createCube( .2, .2, .2, .1, .1, .1,255,255,  0); // yellow
             armature.createCube( -.2, .2, -.2,   .1,   .1, .1,  0,255,255); // cyan
         },
-        function(initMatrix) {
+        /*function(initMatrix) {
             initMatrix.rotate(45,1,0,0);
-        }
+        }*/
     );
 
     rig.addBodyPart(
@@ -64,7 +67,7 @@ function createAnimal(){
             originY: -.2,
             originZ: .2,
 
-            animFunc: "transformRing1"
+            animFunc: -1
         },
         function(armature) {
             armature.createSphere(  .4, 0, -.4,   .1,   .1,   .1,255,  0,255, 10); // magenta
