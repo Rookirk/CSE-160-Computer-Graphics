@@ -65,7 +65,7 @@ function main() {
         return;
     }
 
-    getStorageLocations();
+    assignStorageLocations();
 
     initVertexBuffers();
 
@@ -96,7 +96,7 @@ function update() {
     requestAnimationFrame(update);
 }
 
-function getStorageLocations() {
+function assignStorageLocations() {
     // // Get the storage location of attributes
     a_Position = gl.getAttribLocation(gl.program, 'a_Position');
     if (a_Position < 0) {
