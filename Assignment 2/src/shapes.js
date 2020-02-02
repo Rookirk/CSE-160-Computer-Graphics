@@ -7,11 +7,15 @@ Armature.prototype.pushVert = function(x,y,z,r,g,b){
     this.vertexArr.push( b/255 );
 }
 
-Armature.prototype.createCube = function(x, y, z, l, w, h, r, g, b){
-    let endIndex = this.partData.length - 1;
-    x = x + this.partData[endIndex].originX;
-    y = y + this.partData[endIndex].originY;
-    z = z + this.partData[endIndex].originZ;
+Armature.prototype.createCube = function(coords, size, color){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0] + this.partData[endIndex].originX,
+          y = coords[1] + this.partData[endIndex].originY,
+          z = coords[2] + this.partData[endIndex].originZ;
+    const l = size[0], w = size[1], h = size[2];
+    const r = color[0], g = color[1], b = color[2];
+
     //    v6----- v5
     //   /|      /|
     //  v1------v0|
@@ -54,8 +58,16 @@ Armature.prototype.createCube = function(x, y, z, l, w, h, r, g, b){
     this.partData[endIndex].vertsPerShape.push(36);
 }
 
-Armature.prototype.createXCylinder = function(x, y, z, l, w, h, r, g, b, segments){
-    const vertices = this.getCylinderVertices(x,y,z,h,w,l,segments);
+Armature.prototype.createXCylinder = function(coords, size, color, segments){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0] + this.partData[endIndex].originX,
+          y = coords[1] + this.partData[endIndex].originY,
+          z = coords[2] + this.partData[endIndex].originZ;
+    const l = size[0], w = size[1], h = size[2];
+    const r = color[0], g = color[1], b = color[2];
+
+    const vertices = this.getCylinderVertices(coords,[h,w,l],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -69,12 +81,19 @@ Armature.prototype.createXCylinder = function(x, y, z, l, w, h, r, g, b, segment
         this.pushVert(elem[0], elem[1], elem[2],r,g,b);
     }
 
-    let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createYCylinder = function(x, y, z, l, w, h, r, g, b, segments){
-    const vertices = this.getCylinderVertices(x,y,z,l,h,w,segments);
+Armature.prototype.createYCylinder = function(coords, size, color, segments){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0] + this.partData[endIndex].originX,
+          y = coords[1] + this.partData[endIndex].originY,
+          z = coords[2] + this.partData[endIndex].originZ;
+    const l = size[0], w = size[1], h = size[2];
+    const r = color[0], g = color[1], b = color[2];
+
+    const vertices = this.getCylinderVertices(coords,[l,h,w],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -88,32 +107,41 @@ Armature.prototype.createYCylinder = function(x, y, z, l, w, h, r, g, b, segment
         this.pushVert(elem[0], elem[1], elem[2],r,g,b);
     }
 
-    let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segments){
-    const vertices = this.getCylinderVertices(x,y,z,l,w,h,segments);
+Armature.prototype.createZCylinder = function(coords, size, color, segments){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0] + this.partData[endIndex].originX,
+          y = coords[1] + this.partData[endIndex].originY,
+          z = coords[2] + this.partData[endIndex].originZ;
+    const l = size[0], w = size[1], h = size[2];
+    const r = color[0], g = color[1], b = color[2];
+
+    const vertices = this.getCylinderVertices(coords,[l,w,h],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
         this.pushVert(vertex[0], vertex[1], vertex[2],r,g,b);
     }
 
-    let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createSphere = function(x, y, z, l, w, h, r, g, b, segments){
+Armature.prototype.createSphere = function(coords, size, color, segments){
     if(segments < 3){
         console.log("Cannot have less than 3 segments in sphere");
         return;
     }
 
-    let endIndex = this.partData.length - 1;
-    x = x + this.partData[endIndex].originX;
-    y = y + this.partData[endIndex].originY;
-    z = z + this.partData[endIndex].originZ;
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0] + this.partData[endIndex].originX,
+          y = coords[1] + this.partData[endIndex].originY,
+          z = coords[2] + this.partData[endIndex].originZ;
+    const l = size[0], w = size[1], h = size[2];
+    const r = color[0], g = color[1], b = color[2];
 
     let xcoords = [];
     let zcoords = [];
@@ -178,13 +206,16 @@ Armature.prototype.createSphere = function(x, y, z, l, w, h, r, g, b, segments){
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
-Armature.prototype.createFin = function(x, y, z, xfin, zfin, l, w, h, r, g, b, segments){
-    let endIndex = this.partData.length - 1;
-    x = x + this.partData[endIndex].originX;
-    y = y + this.partData[endIndex].originY;
-    z = z + this.partData[endIndex].originZ;
-    xfin = xfin + this.partData[endIndex].originX;
-    zfin = zfin + this.partData[endIndex].originZ;
+Armature.prototype.createFin = function(coords, finCoords, size, color, segments){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0] + this.partData[endIndex].originX,
+          y = coords[1] + this.partData[endIndex].originY,
+          z = coords[2] + this.partData[endIndex].originZ;
+    const xfin = finCoords[0] + this.partData[endIndex].originX,
+          zfin = finCoords[1] + this.partData[endIndex].originZ;
+    const l = size[0], w = size[1], h = size[2];
+    const r = color[0], g = color[1], b = color[2];
 
     let xcoords = [];
     let zcoords = [];
@@ -214,11 +245,13 @@ Armature.prototype.createFin = function(x, y, z, xfin, zfin, l, w, h, r, g, b, s
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
-Armature.prototype.getCylinderVertices = function(x, y, z, l, w, h, segments){
-    let endIndex = this.partData.length - 1;
-    x = x + this.partData[endIndex].originX;
-    y = y + this.partData[endIndex].originY;
-    z = z + this.partData[endIndex].originZ;
+Armature.prototype.getCylinderVertices = function(coords, size, segments){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0] + this.partData[endIndex].originX,
+          y = coords[1] + this.partData[endIndex].originY,
+          z = coords[2] + this.partData[endIndex].originZ;
+    const l = size[0], w = size[1], h = size[2];
 
     let xcoords = [];
     let ycoords = [];
