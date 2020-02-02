@@ -76,6 +76,7 @@ function main() {
 
     initMatrices();
 
+    rig = new Armature();
     createAnimal();
 
     update();
@@ -84,7 +85,7 @@ function main() {
 function update() {
     updateTime();
 
-    if(enableAnim) animal.transformAnimalMatrices();
+    if(enableAnim) rig.transformRigMatrices();
     transformModelMatrix();
 
     // Clear <canvas>

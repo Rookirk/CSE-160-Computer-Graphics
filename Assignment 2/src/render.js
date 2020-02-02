@@ -4,7 +4,7 @@ var scaleMatrix;
 var translateMatrix;
 
 var globalRotation;
-var startTime = Date.now();
+var startTime = performance.now();
 var globalTime = 0;
 
 function drawGeometry() {
@@ -12,15 +12,15 @@ function drawGeometry() {
 
     let beginningIndex = 0; // number of vertices
     // iterate per part
-    for(let i = 0; i < animal.partData.length; i++){
-        let part = animal.partData[i];
+    for(let i = 0; i < rig.partData.length; i++){
+        let part = rig.partData[i];
 
         // apply the matrix to the vertices for this part
         let indivMatrix = new Matrix4();
         indivMatrix.set(modelMatrix);
         indivMatrix.multiply(part.animMatrix);
         gl.uniformMatrix4fv(u_ModelMatrix, false, indivMatrix.elements);
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(animal.vertexArr), gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(rig.vertexArr), gl.STATIC_DRAW);
 
         let amountOfVerts = 0;
         // iterate through all shapes in that part
@@ -54,7 +54,7 @@ function resetMatrices() {
     translateMatrix.setIdentity();
 }
 
-Armature.prototype.transformAnimalMatrices = function() {
+Armature.prototype.transformRigMatrices = function() {
     for(let i = 0; i < this.partData.length; i++){
         let part = this.partData[i];
 
@@ -78,15 +78,15 @@ Armature.prototype.transformAnimalMatrices = function() {
 
 function transformModelMatrix() {
     resetMatrices();
-    translateMatrix.setTranslate(0,0,.3);
-    modelMatrix.multiply(translateMatrix);
+    //translateMatrix.setTranslate(0,0,.3);
+    //modelMatrix.multiply(translateMatrix);
     rotationMatrix.setRotate(-25,1,0,0);
     rotationMatrix.rotate(globalRotation,0,1,0);
     modelMatrix.multiply(rotationMatrix);
 }
 
 function updateTime() {
-    let now = Date.now();
+    let now = performance.now();
     //deltaTime = now - globalTime;
     globalTime = now - startTime;
 }
