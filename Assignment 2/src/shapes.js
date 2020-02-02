@@ -346,7 +346,7 @@ Armature.prototype.getCylinderVertices = function(x, y, z, l, w, h, segments){
 
     let xcoords = [];
     let ycoords = [];
-    let vertexCount = 0;
+    let vertices = [];
 
     // Finds the coords of the circle
     let circleRotationTheta = 2*Math.PI/segments;
@@ -361,37 +361,30 @@ Armature.prototype.getCylinderVertices = function(x, y, z, l, w, h, segments){
 
     // Iterate through the top
     for(let i = 0; i < xcoords.length - 1; i++){
-        this.pushVert( xcoords[i], ycoords[i], z + h, r,g,b);
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
-        this.pushVert( x, y, z + h, r,g,b);
-
-        vertexCount += 3;
+        vertices.push([xcoords[i], ycoords[i], z + h]);
+        vertices.push([xcoords[i + 1], ycoords[i + 1], z + h]);
+        vertices.push([x, y, z + h]);
     }
 
     // Iterate through the sides
     for(let i = 0; i < xcoords.length - 1; i++){
         //top left triangle
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
-        this.pushVert( xcoords[i], ycoords[i], z + h, r,g,b);
-        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
+        vertices.push([xcoords[i + 1], ycoords[i + 1], z + h]);
+        vertices.push([xcoords[i], ycoords[i], z + h]);
+        vertices.push([xcoords[i], ycoords[i], z - h]);
 
         // bottom right triangle
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
-        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z - h, r,g,b);
-
-        vertexCount += 6;
+        vertices.push([xcoords[i + 1], ycoords[i + 1], z + h]);
+        vertices.push([xcoords[i], ycoords[i], z - h]);
+        vertices.push([xcoords[i + 1], ycoords[i + 1], z - h]);
     }
 
     // Iterate through the bottom
     for(let i = 0; i < xcoords.length - 1; i++){
-        this.pushVert( xcoords[i + 1], ycoords[i + 1], z - h, r,g,b);
-        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
-        this.pushVert( x, y, z - h, r,g,b);
-
-        vertexCount += 3;
+        vertices.push([xcoords[i + 1], ycoords[i + 1], z - h]);
+        vertices.push([xcoords[i], ycoords[i], z - h]);
+        vertices.push([x, y, z - h]);
     }
 
-    // Add how many vertices were added
-    this.partData[endIndex].vertsPerShape.push(vertexCount);
+    return vertices;
 }
