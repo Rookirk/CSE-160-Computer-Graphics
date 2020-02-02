@@ -11,8 +11,10 @@ function transformRing2(animMatrix) {
     templateSpin(animMatrix, .2, 0, 1, 0);
 }
 
+// angle is in degrees
+// offset is in time, but also in radians
 function transformSpine(animMatrix, angle, offset) {
-    templateOscillate(animMatrix, .004, offset, 0, 1, 0, -angle, angle);
+    templateOscillate(animMatrix, .002, offset, 1, 0, 0, -angle, angle);
 }
 
 function templateOscillate(animMatrix, rate, offset, x, y, z, angle1, angle2) {

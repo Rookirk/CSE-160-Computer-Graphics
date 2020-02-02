@@ -29,12 +29,6 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
 
         let parent = this.partData[part.parentIndex];
 
-        let parentVec = new Vector3(parent.originX, parent.originY, parent.originZ);
-        let parentAnimMat = new Matrix4();
-        parentAnimMat.set(parent.animMatrix);
-        let newOrigin = parentAnimMat.multiplyVector3(parentVec);
-        console.log(newOrigin);
-
         part.originX += parent.originX;
         part.originY += parent.originY;
         part.originZ += parent.originZ;
@@ -53,6 +47,15 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
         part.initMatrix.translate(-part.originX,-part.originY,-part.originZ);
     }
     part.animMatrix.set(part.initMatrix);
+}
+
+Armature.prototype.pushVert = function(x,y,z,r,g,b){
+    this.vertexArr.push( x );
+    this.vertexArr.push( y );
+    this.vertexArr.push( z );
+    this.vertexArr.push( r/255 );
+    this.vertexArr.push( g/255 );
+    this.vertexArr.push( b/255 );
 }
 
 Armature.prototype.createCube = function(x0, y0, z0, l, w, h, r, g, b){
@@ -350,11 +353,47 @@ Armature.prototype.createSphere = function(x0, y0, z0, l, w, h, r, g, b, segment
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
-Armature.prototype.pushVert = function(x,y,z,r,g,b){
-    this.vertexArr.push( x );
-    this.vertexArr.push( y );
-    this.vertexArr.push( z );
-    this.vertexArr.push( r/255 );
-    this.vertexArr.push( g/255 );
-    this.vertexArr.push( b/255 );
+Armature.prototype.createFin = function(x0, y0, z0, xfin, zfin, l, w, h, r, g, b, segments){
+    let endIndex = this.partData.length - 1;
+    let x = x0 + this.partData[endIndex].originX;
+    let y = y0 + this.partData[endIndex].originY;
+    let z = z0 + this.partData[endIndex].originZ;
+    xfin = xfin + this.partData[endIndex].originX;
+    zfin = zfin + this.partData[endIndex].originZ;
+
+    let xcoords = [];
+    let zcoords = [];
+    let vertexCount = 0;
+
+    // Finds the coords of the circle
+    let circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments; i++){
+        xcoords[i] = x + l*Math.cos(i*circleRotationTheta);
+        zcoords[i] = z + h*Math.sin(i*circleRotationTheta);
+    }
+
+    // Add one more at the end so that it is circular
+    xcoords.push(xcoords[0]);
+    zcoords.push(zcoords[0]);
+
+    // Iterate through the top
+    for(let i = 0; i < xcoords.length - 1; i++){
+        this.pushVert( xcoords[i], y - w , zcoords[i], r,g,b);
+        this.pushVert( xcoords[i + 1], y - w, zcoords[i + 1], r,g,b);
+        this.pushVert( x + l*xfin, y + w, z + h*zfin, r,g,b);
+
+        vertexCount += 3;
+    }
+
+    // Iterate through the bottom
+    /*for(let i = 0; i < xcoords.length - 1; i++){
+        this.pushVert( xcoords[i + 1], y - w, zcoords[i + 1], r,g,b);
+        this.pushVert( xcoords[i], y - w, zcoords[i], r,g,b);
+        this.pushVert( x, y - w, z, r,g,b);
+
+        vertexCount += 3;
+    }*/
+
+    // Add how many vertices were added
+    this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
