@@ -16,7 +16,7 @@ var Armature = function() {
     this.partName = [];
 }
 
-Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
+Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc, animMatrixFunc) {
     this.partData.push(part);
     this.partName.push(part.name);
 
@@ -41,10 +41,14 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
 
     shapeFunc(this);
 
-    if(initMatrixFunc && enableInit){
+    if(typeof initMatrixFunc !== 'undefined' && enableInit){
         part.initMatrix.translate(part.originX,part.originY,part.originZ);
         initMatrixFunc(part.initMatrix);
         part.initMatrix.translate(-part.originX,-part.originY,-part.originZ);
     }
     part.animMatrix.set(part.initMatrix);
+
+    if(typeof animMatrixFunc !== 'undefined'){
+        part.animMatrixFunc = animMatrixFunc;
+    }
 }

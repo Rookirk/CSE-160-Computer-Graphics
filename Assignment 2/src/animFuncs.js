@@ -3,29 +3,30 @@ function linearMap(value, low1, high1, low2, high2) {
     return low2 + (high2 - low2) * (value - low1) / (high1 - low1);
 }
 
-function transformRing1(animMatrix) {
-    templateSpin(animMatrix, .1, 1, 0, 0);
+Matrix4.prototype.transformRing1 = function() {
+    return this.templateSpin(.1, 1, 0, 0);
 }
 
-function transformRing2(animMatrix) {
-    templateSpin(animMatrix, .2, 0, 1, 0);
+Matrix4.prototype.transformRing2 = function() {
+    return this.templateSpin(.2, 0, 1, 0);
 }
 
 // angle is in degrees
 // offset is in time, but also in radians
-function transformSpine(animMatrix, angle, offset) {
-    templateOscillate(animMatrix, .002, offset, 1, 0, 0, -angle, angle);
+Matrix4.prototype.transformSpine = function(angle, offset) {
+    return this.templateOscillate(.002, offset, 1, 0, 0, -angle, angle);
 }
 
-function templateOscillate(animMatrix, rate, offset, x, y, z, angle1, angle2) {
+Matrix4.prototype.templateOscillate = function(rate, offset, x, y, z, angle1, angle2) {
     let influence = Math.cos(rate*globalTime + offset);
     let angle = linearMap(influence, -1, 1, angle2, angle1);
-    animMatrix.rotate(angle,x,y,z);
+
+    return this.rotate(angle,x,y,z);
 }
 
-function templateSpin(animMatrix, rate, x, y, z){
+Matrix4.prototype.templateSpin = function(rate, x, y, z){
     let angle = (rate*globalTime) % 360;
-    animMatrix.rotate(angle,x,y,z);
+    return this.rotate(angle,x,y,z);
 }
 
 function testMatrices(value, value2){

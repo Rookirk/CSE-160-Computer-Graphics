@@ -170,11 +170,11 @@ Armature.prototype.createYCylinder = function(x0, y0, z0, l, w, h, r, g, b, segm
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
-Armature.prototype.createZCylinder = function(x0, y0, z0, l, w, h, r, g, b, segments){
+Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segments){
     let endIndex = this.partData.length - 1;
-    let x = x0 + this.partData[endIndex].originX;
-    let y = y0 + this.partData[endIndex].originY;
-    let z = z0 + this.partData[endIndex].originZ;
+    x = x + this.partData[endIndex].originX;
+    y = y + this.partData[endIndex].originY;
+    z = z + this.partData[endIndex].originZ;
 
     let xcoords = [];
     let ycoords = [];
@@ -334,14 +334,63 @@ Armature.prototype.createFin = function(x0, y0, z0, xfin, zfin, l, w, h, r, g, b
         vertexCount += 3;
     }
 
-    // Iterate through the bottom
-    /*for(let i = 0; i < xcoords.length - 1; i++){
-        this.pushVert( xcoords[i + 1], y - w, zcoords[i + 1], r,g,b);
-        this.pushVert( xcoords[i], y - w, zcoords[i], r,g,b);
-        this.pushVert( x, y - w, z, r,g,b);
+    // Add how many vertices were added
+    this.partData[endIndex].vertsPerShape.push(vertexCount);
+}
+
+Armature.prototype.getCylinderVertices = function(x, y, z, l, w, h, segments){
+    let endIndex = this.partData.length - 1;
+    x = x + this.partData[endIndex].originX;
+    y = y + this.partData[endIndex].originY;
+    z = z + this.partData[endIndex].originZ;
+
+    let xcoords = [];
+    let ycoords = [];
+    let vertexCount = 0;
+
+    // Finds the coords of the circle
+    let circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments; i++){
+        xcoords[i] = x + l*Math.cos(i*circleRotationTheta);
+        ycoords[i] = y + w*Math.sin(i*circleRotationTheta);
+    }
+
+    // Add one more at the end so that it is circular
+    xcoords.push(xcoords[0]);
+    ycoords.push(ycoords[0]);
+
+    // Iterate through the top
+    for(let i = 0; i < xcoords.length - 1; i++){
+        this.pushVert( xcoords[i], ycoords[i], z + h, r,g,b);
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
+        this.pushVert( x, y, z + h, r,g,b);
 
         vertexCount += 3;
-    }*/
+    }
+
+    // Iterate through the sides
+    for(let i = 0; i < xcoords.length - 1; i++){
+        //top left triangle
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z + h, r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
+
+        // bottom right triangle
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z + h, r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z - h, r,g,b);
+
+        vertexCount += 6;
+    }
+
+    // Iterate through the bottom
+    for(let i = 0; i < xcoords.length - 1; i++){
+        this.pushVert( xcoords[i + 1], ycoords[i + 1], z - h, r,g,b);
+        this.pushVert( xcoords[i], ycoords[i], z - h, r,g,b);
+        this.pushVert( x, y, z - h, r,g,b);
+
+        vertexCount += 3;
+    }
 
     // Add how many vertices were added
     this.partData[endIndex].vertsPerShape.push(vertexCount);
