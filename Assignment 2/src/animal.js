@@ -41,9 +41,7 @@ function createDragon(){
                 armature.createSphere(0, 0, 0, .11, .11, .13, 204, 140, 20, 8)
             },
             function(initMatrix) {
-                console.log(initMatrix);
                 initMatrix.scale(.9,.9,1);
-                console.log(initMatrix);
             }
         );
     }
