@@ -68,8 +68,14 @@ Armature.prototype.transformRigMatrices = function() {
             part.animMatrix.set(part.initMatrix);
         part.animMatrix.translate(part.originX,part.originY,part.originZ);
 
-        let animArgs = part.animArgs.slice();
-        animArgs.unshift(part.animMatrix);
+        let animArgs = []
+        if(typeof part.animArgs !== 'undefined'){
+            animArgs = part.animArgs.slice();
+            animArgs.unshift(part.animMatrix);
+        }
+        else{
+            animArgs.push(part.animMatrix);
+        }
         window[fn].apply(null,animArgs);
 
         part.animMatrix.translate(-part.originX,-part.originY,-part.originZ);
@@ -78,8 +84,8 @@ Armature.prototype.transformRigMatrices = function() {
 
 function transformModelMatrix() {
     resetMatrices();
-    //translateMatrix.setTranslate(0,0,.3);
-    //modelMatrix.multiply(translateMatrix);
+    translateMatrix.setTranslate(0,0,.3);
+    modelMatrix.multiply(translateMatrix);
     rotationMatrix.setRotate(-25,1,0,0);
     rotationMatrix.rotate(globalRotation,0,1,0);
     modelMatrix.multiply(rotationMatrix);

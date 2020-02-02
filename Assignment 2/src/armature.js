@@ -24,8 +24,14 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
     part.initMatrix = new Matrix4();
     part.animMatrix = new Matrix4();
 
-    if(part.parent !== -1)
+    if(part.parent !== -1){
         part.parentIndex = this.partName.indexOf(part.parent);
+
+        let parent = this.partData[part.parentIndex];
+        part.originX += parent.originX;
+        part.originY += parent.originY;
+        part.originZ += parent.originZ;
+    }
     else{
         part.parentIndex = -1;
     }
@@ -41,7 +47,11 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc) {
     }
 }
 
-Armature.prototype.createCube = function(x, y, z, l, w, h, r, g, b){
+Armature.prototype.createCube = function(x0, y0, z0, l, w, h, r, g, b){
+    let endIndex = this.partData.length - 1;
+    let x = x0 + this.partData[endIndex].originX;
+    let y = y0 + this.partData[endIndex].originY;
+    let z = z0 + this.partData[endIndex].originZ;
     //    v6----- v5
     //   /|      /|
     //  v1------v0|
@@ -81,11 +91,15 @@ Armature.prototype.createCube = function(x, y, z, l, w, h, r, g, b){
     }
 
     // cubes have 36 verts
-    let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(36);
 }
 
-Armature.prototype.createXCylinder = function(x, y, z, l, w, h, r, g, b, segments){
+Armature.prototype.createXCylinder = function(x0, y0, z0, l, w, h, r, g, b, segments){
+    let endIndex = this.partData.length - 1;
+    let x = x0 + this.partData[endIndex].originX;
+    let y = y0 + this.partData[endIndex].originY;
+    let z = z0 + this.partData[endIndex].originZ;
+
     let ycoords = [];
     let zcoords = [];
     let vertexCount = 0;
@@ -135,11 +149,15 @@ Armature.prototype.createXCylinder = function(x, y, z, l, w, h, r, g, b, segment
     }
 
     // Add how many vertices were added
-    let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
-Armature.prototype.createYCylinder = function(x, y, z, l, w, h, r, g, b, segments){
+Armature.prototype.createYCylinder = function(x0, y0, z0, l, w, h, r, g, b, segments){
+    let endIndex = this.partData.length - 1;
+    let x = x0 + this.partData[endIndex].originX;
+    let y = y0 + this.partData[endIndex].originY;
+    let z = z0 + this.partData[endIndex].originZ;
+
     let xcoords = [];
     let zcoords = [];
     let vertexCount = 0;
@@ -189,11 +207,15 @@ Armature.prototype.createYCylinder = function(x, y, z, l, w, h, r, g, b, segment
     }
 
     // Add how many vertices were added
-    let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
-Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segments){
+Armature.prototype.createZCylinder = function(x0, y0, z0, l, w, h, r, g, b, segments){
+    let endIndex = this.partData.length - 1;
+    let x = x0 + this.partData[endIndex].originX;
+    let y = y0 + this.partData[endIndex].originY;
+    let z = z0 + this.partData[endIndex].originZ;
+
     let xcoords = [];
     let ycoords = [];
     let vertexCount = 0;
@@ -243,15 +265,19 @@ Armature.prototype.createZCylinder = function(x, y, z, l, w, h, r, g, b, segment
     }
 
     // Add how many vertices were added
-    let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
-Armature.prototype.createSphere = function(x, y, z, l, w, h, r, g, b, segments){
+Armature.prototype.createSphere = function(x0, y0, z0, l, w, h, r, g, b, segments){
     if(segments < 3){
         console.log("Cannot have less than 3 segments in sphere");
         return;
     }
+
+    let endIndex = this.partData.length - 1;
+    let x = x0 + this.partData[endIndex].originX;
+    let y = y0 + this.partData[endIndex].originY;
+    let z = z0 + this.partData[endIndex].originZ;
 
     let xcoords = [];
     let zcoords = [];
@@ -313,7 +339,6 @@ Armature.prototype.createSphere = function(x, y, z, l, w, h, r, g, b, segments){
     }
 
     // Add how many vertices were added
-    let endIndex = this.partData.length - 1;
     this.partData[endIndex].vertsPerShape.push(vertexCount);
 }
 
