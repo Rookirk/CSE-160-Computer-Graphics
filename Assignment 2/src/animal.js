@@ -3,17 +3,28 @@ var rig;
 function createDragon(){
     rig.addBodyPart(
         {
+            name: "Base",
+            parent: -1,
+            origin: [0,0,0]
+        },
+        function(armature) {
+            armature.createCube([0,0,0],[0,0,0],[255,255,255]);
+        },
+        function(initMatrix) {},
+        function(animMatrix) {}
+        )
+    rig.addBodyPart(
+        {
             name: "Torso1",
             parent: -1,
-            originX: 0,
-            originY: 0,
-            originZ: 0
+            origin: [0,0,0]
         },
         function(armature) {
             armature.createZCylinder( [0, 0, .1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
-            armature.createZCylinder( [0, -.03, .07], [.08, .08, .15], [239, 219, 131], 8); // Yellow underbelly
+            armature.createZCylinder( [0, -.03, .1], [.08, .08, .1], [239, 219, 131], 8); // Yellow underbelly
             armature.createFin([0, .16, .1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
-            armature.createSphere([0, 0, 0], [.11, .11, .13], [204, 140, 20], 8)
+            armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5);
+            armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5);
         },
         function(initMatrix) {},
         function(animMatrix) {
@@ -28,18 +39,19 @@ function createDragon(){
             {
                 name: "Torso" + currIndex,
                 parent: "Torso" + parentIndex,
-                originX: 0,
-                originY: 0,
-                originZ: .2
+                origin: [0,0,.2]
             },
             function(armature) {
                 armature.createZCylinder( [0, 0, .1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
-                armature.createZCylinder( [0, -.03, .07], [.08, .08, .15], [239, 219, 131], 8); // Yellow underbelly
+                armature.createZCylinder( [0, -.03, .1], [.08, .08, .1], [239, 219, 131], 8); // Yellow underbelly
                 armature.createFin([0, .16, .1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
-                armature.createSphere([0, 0, 0], [.11, .11, .13], [204, 140, 20], 8)
+                armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5);
+                armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5);
             },
             function(initMatrix) {
-                //initMatrix.scale(.9,.9,1);
+                initMatrix.rotate(25,1,0,0);
+                initMatrix.scale(.9,.9,1);
+                initMatrix.translate(0,-.2,0);
             },
             function(animMatrix) {
                 animMatrix.transformSpine(15,spineOffset);
@@ -47,6 +59,24 @@ function createDragon(){
         );
     }
     
+    rig.addBodyPart(
+        {
+            name: "Chest1",
+            parent: "Base",
+            origin: [0,0,-.2]
+        },
+        function(armature) {
+            armature.createZCylinder( [0, 0, .1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
+            armature.createZCylinder( [0, -.03, .1], [.08, .08, .1], [239, 219, 131], 8); // Yellow underbelly
+            armature.createFin([0, .16, .1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
+            armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5);
+            armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5)
+        },
+        function(initMatrix) {},
+        function(animMatrix) {
+            
+        }
+    );
 }
 
 function createAnimal(){
@@ -54,9 +84,7 @@ function createAnimal(){
         {
             name: "core",
             parent: -1,
-            originX: 0,
-            originY: 0,
-            originZ: 0
+            origin: [0,0,0]
         },
         function(armature) {
             armature.createSphere(   [0,   0,   0],   [.1,   .1,   .1],[255,255,255], 10); // white
@@ -70,9 +98,7 @@ function createAnimal(){
         {
             name: "ring1",
             parent: "core",
-            originX: 0,
-            originY: 0,
-            originZ: 0
+            origin: [0,0,0]
         },
         function(armature) {
             armature.createFin( [.2, .2, .2], [1, 0], [.1, .1, .1],[255,255,  0], 10); // yellow
@@ -90,9 +116,7 @@ function createAnimal(){
         {
             name: "ring2",
             parent: "core",
-            originX: -.2,
-            originY: -.2,
-            originZ: .2
+            origin: [-.2,-.2,.2]
         },
         function(armature) {
             armature.createYCylinder(  [.4, 0, -.4],   [.1,   .2,   .1],[255,  0,255], 10); // magenta
@@ -104,9 +128,7 @@ function createAnimal(){
         {
             name: "ring3",
             parent: "ring2",
-            originX: .5,
-            originY: 0,
-            originZ: -.5
+            origin: [.5,0,-.5]
         },
         function(armature) {
             armature.createZCylinder( [.1, 0, -.1], [.1,   .1,   .2],[255,  0,  0],10); // red
@@ -121,9 +143,7 @@ function createAnimal(){
         {
             name: "ring4",
             parent: "ring3",
-            originX: .2,
-            originY: 0,
-            originZ: -.2
+            origin: [.2,0,-.2]
         },
         function(armature) {
             armature.createCube( [.1, 0, -.1],   [.1,   .1,   .1],[210,  0,  0]); // red
@@ -138,9 +158,7 @@ function createAnimal(){
         {
             name: "ring5",
             parent: "ring4",
-            originX: .2,
-            originY: 0,
-            originZ: -.2
+            origin: [.2,0,-.2]
         },
         function(armature) {
             armature.createCube( [.1, 0, -.1],   [.1,   .1,   .1],[170,  0,  0]); // red
@@ -155,9 +173,7 @@ function createAnimal(){
         {
             name: "ring6",
             parent: "ring5",
-            originX: .2,
-            originY: 0,
-            originZ: -.2
+            origin: [.2,0,-.2]
         },
         function(armature) {
             armature.createCube( [.1, 0, -.1], [.1,   .1,   .1],[130,0,  0]); // red

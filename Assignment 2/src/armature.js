@@ -2,9 +2,7 @@
     every member of partData contains:
         vertsPerShape[] // how many verts are in each shape, each elem is a shape
         parent // index of the parent part; -1 if none
-        originX // unmodified origin points
-        originY
-        originZ
+        origin // unmodified origin points
 
         initMatrix // the initial transform matrix; does not affect children
         animMatrix // the animated matrix; affects children
@@ -29,9 +27,9 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc, animM
 
         let parent = this.partData[part.parentIndex];
 
-        part.originX += parent.originX;
-        part.originY += parent.originY;
-        part.originZ += parent.originZ;
+        part.origin[0] += parent.origin[0];
+        part.origin[1] += parent.origin[1];
+        part.origin[2] += parent.origin[2];
 
         part.initMatrix.set(parent.animMatrix);
     }
@@ -42,9 +40,9 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc, animM
     shapeFunc(this);
 
     if(typeof initMatrixFunc !== 'undefined' && enableInit){
-        part.initMatrix.translate(part.originX,part.originY,part.originZ);
+        part.initMatrix.translate(part.origin[0],part.origin[1],part.origin[2]);
         initMatrixFunc(part.initMatrix);
-        part.initMatrix.translate(-part.originX,-part.originY,-part.originZ);
+        part.initMatrix.translate(-part.origin[0],-part.origin[1],-part.origin[2]);
     }
     part.animMatrix.set(part.initMatrix);
 

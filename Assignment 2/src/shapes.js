@@ -10,9 +10,9 @@ Armature.prototype.pushVert = function(x,y,z,r,g,b){
 Armature.prototype.createCube = function(coords, size, color){
     const endIndex = this.partData.length - 1;
 
-    const x = coords[0] + this.partData[endIndex].originX,
-          y = coords[1] + this.partData[endIndex].originY,
-          z = coords[2] + this.partData[endIndex].originZ;
+    const x = coords[0] + this.partData[endIndex].origin[0],
+          y = coords[1] + this.partData[endIndex].origin[1],
+          z = coords[2] + this.partData[endIndex].origin[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
@@ -61,9 +61,9 @@ Armature.prototype.createCube = function(coords, size, color){
 Armature.prototype.createXCylinder = function(coords, size, color, segments){
     const endIndex = this.partData.length - 1;
 
-    const x = coords[0] + this.partData[endIndex].originX,
-          y = coords[1] + this.partData[endIndex].originY,
-          z = coords[2] + this.partData[endIndex].originZ;
+    const x = coords[0] + this.partData[endIndex].origin[0],
+          y = coords[1] + this.partData[endIndex].origin[1],
+          z = coords[2] + this.partData[endIndex].origin[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
@@ -87,9 +87,9 @@ Armature.prototype.createXCylinder = function(coords, size, color, segments){
 Armature.prototype.createYCylinder = function(coords, size, color, segments){
     const endIndex = this.partData.length - 1;
 
-    const x = coords[0] + this.partData[endIndex].originX,
-          y = coords[1] + this.partData[endIndex].originY,
-          z = coords[2] + this.partData[endIndex].originZ;
+    const x = coords[0] + this.partData[endIndex].origin[0],
+          y = coords[1] + this.partData[endIndex].origin[1],
+          z = coords[2] + this.partData[endIndex].origin[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
@@ -113,9 +113,9 @@ Armature.prototype.createYCylinder = function(coords, size, color, segments){
 Armature.prototype.createZCylinder = function(coords, size, color, segments){
     const endIndex = this.partData.length - 1;
 
-    const x = coords[0] + this.partData[endIndex].originX,
-          y = coords[1] + this.partData[endIndex].originY,
-          z = coords[2] + this.partData[endIndex].originZ;
+    const x = coords[0] + this.partData[endIndex].origin[0],
+          y = coords[1] + this.partData[endIndex].origin[1],
+          z = coords[2] + this.partData[endIndex].origin[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
@@ -137,9 +137,9 @@ Armature.prototype.createSphere = function(coords, size, color, segments){
 
     const endIndex = this.partData.length - 1;
 
-    const x = coords[0] + this.partData[endIndex].originX,
-          y = coords[1] + this.partData[endIndex].originY,
-          z = coords[2] + this.partData[endIndex].originZ;
+    const x = coords[0] + this.partData[endIndex].origin[0],
+          y = coords[1] + this.partData[endIndex].origin[1],
+          z = coords[2] + this.partData[endIndex].origin[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
@@ -209,11 +209,11 @@ Armature.prototype.createSphere = function(coords, size, color, segments){
 Armature.prototype.createFin = function(coords, finCoords, size, color, segments){
     const endIndex = this.partData.length - 1;
 
-    const x = coords[0] + this.partData[endIndex].originX,
-          y = coords[1] + this.partData[endIndex].originY,
-          z = coords[2] + this.partData[endIndex].originZ;
-    const xfin = finCoords[0] + this.partData[endIndex].originX,
-          zfin = finCoords[1] + this.partData[endIndex].originZ;
+    const x = coords[0] + this.partData[endIndex].origin[0],
+          y = coords[1] + this.partData[endIndex].origin[1],
+          z = coords[2] + this.partData[endIndex].origin[2];
+    const xfin = finCoords[0] + this.partData[endIndex].origin[0],
+          zfin = finCoords[1] + this.partData[endIndex].origin[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
@@ -248,9 +248,9 @@ Armature.prototype.createFin = function(coords, finCoords, size, color, segments
 Armature.prototype.getCylinderVertices = function(coords, size, segments){
     const endIndex = this.partData.length - 1;
 
-    const x = coords[0] + this.partData[endIndex].originX,
-          y = coords[1] + this.partData[endIndex].originY,
-          z = coords[2] + this.partData[endIndex].originZ;
+    const x = coords[0] + this.partData[endIndex].origin[0],
+          y = coords[1] + this.partData[endIndex].origin[1],
+          z = coords[2] + this.partData[endIndex].origin[2];
     const l = size[0], w = size[1], h = size[2];
 
     let xcoords = [];

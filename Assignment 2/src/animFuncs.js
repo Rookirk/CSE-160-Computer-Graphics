@@ -32,22 +32,22 @@ Matrix4.prototype.templateSpin = function(rate, x, y, z){
 function testMatrices(value, value2){
     /*let part = partData[1];
     let mat = partData[1].initMatrix;
-    mat.setTranslate(part.originX,part.originY,part.originZ);
+    mat.setTranslate(part.origin[0],part.origin[1],part.origin[2]);
     mat.rotate(value*360,1,0,0);
-    mat.translate(-part.originX,-part.originY,-part.originZ);*/
+    mat.translate(-part.origin[0],-part.origin[1],-part.origin[2]);*/
 
     let part2 = partData[2];
     let mat2 = partData[2].animMatrix;
     /*mat2.set(part2.initMatrix);
-    mat2.translate(part2.originX,part2.originY,part2.originZ);
+    mat2.translate(part2.origin[0],part2.origin[1],part2.origin[2]);
     mat2.rotate(value*360,1,0,0);
-    mat2.translate(-part2.originX,-part2.originY,-part2.originZ);*/
+    mat2.translate(-part2.origin[0],-part2.origin[1],-part2.origin[2]);*/
 
     let part3 = partData[3];
     let mat3 = partData[3].animMatrix;
     mat3.set(partData[part3.parentIndex].initMatrix);
     mat3.multiply(part2.animMatrix);
-    mat3.translate(part3.originX,part3.originY,part3.originZ);
+    mat3.translate(part3.origin[0],part3.origin[1],part3.origin[2]);
     mat3.rotate(value2*360,0,1,0);
-    mat3.translate(-part3.originX,-part3.originY,-part3.originZ);
+    mat3.translate(-part3.origin[0],-part3.origin[1],-part3.origin[2]);
 }
