@@ -96,7 +96,7 @@ function createAnimal(){
         },
         function(armature) {
             armature.createSphere(  .4, 0, -.4,   .1,   .1,   .1,255,  0,255, 10); // magenta
-            armature.createZCylinder( 0, 0,  0,   .1,   .1,   .1,  0,255,  0, 10); // green
+            armature.createYCylinder( 0, 0,  0,   .1,   .1,   .1,  0,255,  0, 10); // green
         }
     );
 
