@@ -31,10 +31,11 @@ function createDragon(){
             animMatrix.transformSpine(15,0);
         }
     );
-    for(let i = 0; i < 5; i++){
+    let totalSpineSegs = 7;
+    for(let i = 0; i < totalSpineSegs; i++){
         const currIndex = i + 2;
-        const parentIndex = i + 1;
-        const spineOffset = (5-i)/5*Math.PI;
+        const parentIndex = currIndex - 1;
+        const spineOffset = (totalSpineSegs-i)/totalSpineSegs*Math.PI;
         rig.addBodyPart(
             {
                 name: "Torso" + currIndex,
@@ -50,7 +51,7 @@ function createDragon(){
             },
             function(initMatrix) {
                 //initMatrix.rotate(25,1,0,0);
-                initMatrix.scale(.9,.9,1);
+                initMatrix.scale(.85,.85,1);
                 //initMatrix.translate(0,-.2,0);
             },
             function(animMatrix) {
@@ -66,15 +67,85 @@ function createDragon(){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.createZCylinder( [0, 0, .1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
-            armature.createZCylinder( [0, -.03, .1], [.08, .08, .1], [239, 219, 131], 8); // Yellow underbelly
-            armature.createFin([0, .16, .1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
-            armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5); // Golden scales
-            armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5); // yellow underbelly
+            armature.createZCylinder( [0, 0, -.1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
+            armature.createZCylinder( [0, -.03, -.1], [.08, .08, .12], [239, 219, 131], 8); // Yellow underbelly
+            armature.createFin([0, .16, -.1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
+            armature.createSphere([0, .01, -.2], [.11, .11, .13], [204, 140, 20], 5); // Golden scales
+            armature.createSphere([0, -.03, -.2], [.08, .08, .08], [239, 219, 131], 5); // yellow underbelly
         },
         function(initMatrix) {
             initMatrix.rotate(25,1,0,0);
-            initMatrix.translate(0,0,-.2);
+        },
+        function(animMatrix) {
+            //animMatrix.transformChest(5,0);
+        }
+    );
+
+    let totalChestSegsPerS = 4;
+    for(let i = 0; i < totalChestSegsPerS; i++){
+        const currIndex = i + 2;
+        const parentIndex = currIndex - 1;
+        //const spineOffset = (totalChestSegsPerS-i)/totalChestSegsPerS*Math.PI;
+        rig.addBodyPart(
+            {
+                name: "Chest" + currIndex,
+                parent: "Chest" + parentIndex,
+                origin: [0,0,-.2]
+            },
+            function(armature) {
+                armature.createZCylinder( [0, 0, -.1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
+                armature.createZCylinder( [0, -.03, -.1], [.08, .08, .12], [239, 219, 131], 8); // Yellow underbelly
+                armature.createFin([0, .16, -.1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
+                armature.createSphere([0, .01, -.2], [.11, .11, .13], [204, 140, 20], 5); // Golden scales
+                armature.createSphere([0, -.03, -.2], [.08, .08, .08], [239, 219, 131], 5); // yellow underbelly
+            },
+            function(initMatrix) {
+                initMatrix.rotate(35,1,0,0);
+            },
+            function(animMatrix) {
+                animMatrix.transformChest(5,0);
+            }
+        );
+    }
+
+    for(let i = 0; i < totalChestSegsPerS; i++){
+        const currIndex = i + 6;
+        const parentIndex = currIndex - 1;
+        //const spineOffset = (totalChestSegsPerS-i)/totalChestSegsPerS*Math.PI;
+        rig.addBodyPart(
+            {
+                name: "Chest" + currIndex,
+                parent: "Chest" + parentIndex,
+                origin: [0,0,-.2]
+            },
+            function(armature) {
+                armature.createZCylinder( [0, 0, -.1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
+                armature.createZCylinder( [0, -.03, -.1], [.08, .08, .12], [239, 219, 131], 8); // Yellow underbelly
+                armature.createFin([0, .16, -.1], [0, .7], [.03, .06, .14], [19, 84, 22], 8); // green fin
+                armature.createSphere([0, .01, -.2], [.11, .11, .13], [204, 140, 20], 5); // Golden scales
+                armature.createSphere([0, -.03, -.2], [.08, .08, .08], [239, 219, 131], 5); // yellow underbelly
+            },
+            function(initMatrix) {
+                initMatrix.rotate(-40,1,0,0);
+            },
+            function(animMatrix) {
+                animMatrix.transformChest(5,Math.PI);
+            }
+        )
+    }
+
+    let lastChest = (2*totalChestSegsPerS)+1;
+    rig.addBodyPart(
+        {
+            name: "Head",
+            parent: "Chest" + lastChest,
+            origin: [0,0,-.2]
+        },
+        function(armature) {
+            armature.createCube( [0, 0, -.1], [.1, .1, .1], [204, 140, 20]); // Golden scales
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-25,1,0,0);
         },
         function(animMatrix) {
             
