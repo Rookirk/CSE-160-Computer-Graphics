@@ -26,7 +26,9 @@ function createDragon(){
             armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5);
             armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5);
         },
-        function(initMatrix) {},
+        function(initMatrix) {
+            initMatrix.rotate(45,1,0,0);
+        },
         function(animMatrix) {
             animMatrix.transformSpine(15,0);
         }
@@ -49,9 +51,9 @@ function createDragon(){
                 armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5);
             },
             function(initMatrix) {
-                initMatrix.rotate(25,1,0,0);
-                initMatrix.scale(.9,.9,1);
-                initMatrix.translate(0,-.2,0);
+                //initMatrix.translate(0,-.2,0);
+                //initMatrix.scale(.9,.9,1);
+                //initMatrix.rotate(45,1,0,0);
             },
             function(animMatrix) {
                 animMatrix.transformSpine(15,spineOffset);
@@ -108,7 +110,7 @@ function createAnimal(){
             //initMatrix.rotate(45,1,0,0);
         },
         function(animMatrix) {
-            animMatrix.transformRing1();
+            animMatrix.transformRing2();
         }
     );
 
@@ -119,8 +121,12 @@ function createAnimal(){
             origin: [-.2,-.2,.2]
         },
         function(armature) {
-            armature.createYCylinder(  [.4, 0, -.4],   [.1,   .2,   .1],[255,  0,255], 10); // magenta
-            armature.createXCylinder( [0, 0,  0],   [.2,   .1,   .1],  [0,255,  0], 10); // green
+            armature.createYCylinder(  [.4, 0, -.4],   [.1,   .1,   .1],[255,  0,255], 10); // magenta
+            armature.createXCylinder( [0, 0,  0],   [.1,   .1,   .1],  [0,255,  0], 10); // green
+        },
+        function(initMatrix) {},
+        function(animMatrix) {
+            animMatrix.transformRing1();
         }
     );
 
@@ -131,7 +137,7 @@ function createAnimal(){
             origin: [.5,0,-.5]
         },
         function(armature) {
-            armature.createZCylinder( [.1, 0, -.1], [.1,   .1,   .2],[255,  0,  0],10); // red
+            armature.createZCylinder( [.1, 0, -.1], [.1,   .1,   .1],[255,  0,  0],10); // red
         },
         function(initMatrix) {},
         function(animMatrix) {

@@ -32,7 +32,7 @@ var a_Color;
 var u_ModelMatrix;
 
 var enableInit = true;
-var enableAnim = false;
+var enableAnim = true;
 
 function main() {
     // Retrieve HTML elements
@@ -77,7 +77,7 @@ function main() {
     initMatrices();
 
     rig = new Armature();
-    createDragon();
+    createAnimal();
 
     update();
 }
