@@ -31,6 +31,8 @@ var a_Position;
 var a_Color;
 var u_ModelMatrix;
 
+var rig;
+
 var enableInit = true;
 var enableAnim = true;
 
