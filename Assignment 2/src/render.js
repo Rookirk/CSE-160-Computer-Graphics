@@ -33,27 +33,6 @@ function drawGeometry() {
     }
 }
 
-function initMatrices() {
-    modelMatrix = new Matrix4();
-    //modelMatrix.setPerspective(30, 1, 1, 100);
-    //modelMatrix.lookAt(3, 3, 7, 0, 0, 0, 0, 1, 0);
-    
-    rotationMatrix = new Matrix4();
-
-    scaleMatrix = new Matrix4();
-
-    translateMatrix = new Matrix4();
-
-    transformModelMatrix();
-}
-
-function resetMatrices() {
-    modelMatrix.setIdentity();
-    rotationMatrix.setIdentity();
-    scaleMatrix.setIdentity();
-    translateMatrix.setIdentity();
-}
-
 Armature.prototype.transformRigMatrices = function() {
     for(let i = 0; i < this.partData.length; i++){
         let part = this.partData[i];
@@ -74,12 +53,11 @@ Armature.prototype.transformRigMatrices = function() {
 }
 
 function transformModelMatrix() {
-    resetMatrices();
-    //translateMatrix.setTranslate(0,0,.3);
-    //modelMatrix.multiply(translateMatrix);
-    rotationMatrix.setRotate(-25,1,0,0);
-    rotationMatrix.rotate(globalRotation,0,1,0);
-    modelMatrix.multiply(rotationMatrix);
+    modelMatrix.setIdentity();
+    modelMatrix.scale(.7,.7,.7);
+    modelMatrix.translate(0,-.6,-.4);
+    modelMatrix.rotate(globalRotation,0,1,0);
+    //modelMatrix.rotate(-15,1,0,0);
 }
 
 function updateTime() {
