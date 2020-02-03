@@ -1,11 +1,10 @@
 /*
     every member of partData contains:
         vertsPerShape[] // how many verts are in each shape, each elem is a shape
-        parent // index of the parent part; -1 if none
-        origin // unmodified origin points
+        parent // name of the parent part; -1 if none
+        origin // how much to offset it in the parent local space
         initMatrix // the initial transform matrix; does not affect children
         animMatrix // the animated matrix; affects children
-        globalOrigin // where the origin point is in global space
 */
 
 var Armature = function() {
