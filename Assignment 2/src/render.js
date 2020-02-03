@@ -62,17 +62,14 @@ Armature.prototype.transformRigMatrices = function() {
         if(part.parentIndex != -1)
             part.parentMatrix.set(this.partData[part.parentIndex].animMatrix);
 
-        this.updateGlobalOrigin(part);
-
-        part.animMatrix.set(part.initMatrix);
+        part.animMatrix.set(part.parentMatrix);
         part.animMatrix.translate(part.origin[0],part.origin[1],part.origin[2]);
 
-        let fn = part.animFunc;
-        if(typeof part.animMatrixFunc !== 'undefined' && fn !== -1){
-            part.animMatrixFunc(part.animMatrix);
+        if(typeof part.animMatrixFunc !== 'undefined'){
+            if(enableAnim) part.animMatrixFunc(part.animMatrix);
         }
 
-        part.animMatrix.multiply(part.parentMatrix);
+        part.animMatrix.multiply(part.initMatrix);
     }
 }
 

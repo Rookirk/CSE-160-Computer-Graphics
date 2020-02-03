@@ -63,7 +63,7 @@ Armature.prototype.createXCylinder = function(coords, size, color, segments){
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices(coords,[h,w,l],segments);
+    const vertices = this.getCylinderVertices([z,y,x],[h,w,l],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -87,7 +87,7 @@ Armature.prototype.createYCylinder = function(coords, size, color, segments){
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices(coords,[l,h,w],segments);
+    const vertices = this.getCylinderVertices([x,z,y],[l,h,w],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -111,7 +111,7 @@ Armature.prototype.createZCylinder = function(coords, size, color, segments){
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices(coords,[l,w,h],segments);
+    const vertices = this.getCylinderVertices([x,y,z],[l,w,h],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];

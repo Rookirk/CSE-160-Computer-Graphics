@@ -23,8 +23,8 @@ function createDragon(){
             armature.createZCylinder( [0, 0, .1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
             armature.createZCylinder( [0, -.03, .1], [.08, .08, .1], [239, 219, 131], 8); // Yellow underbelly
             armature.createFin([0, .16, .1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
-            armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5);
-            armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5);
+            armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5); // Golden scales
+            armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5); // yellow underbelly
         },
         function(initMatrix) {},
         function(animMatrix) {
@@ -45,8 +45,8 @@ function createDragon(){
                 armature.createZCylinder( [0, 0, .1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
                 armature.createZCylinder( [0, -.03, .1], [.08, .08, .1], [239, 219, 131], 8); // Yellow underbelly
                 armature.createFin([0, .16, .1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
-                armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5);
-                armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5);
+                armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5); // Golden scales
+                armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5); // yellow underbelly
             },
             function(initMatrix) {
                 //initMatrix.rotate(25,1,0,0);
@@ -63,17 +63,18 @@ function createDragon(){
         {
             name: "Chest1",
             parent: "Base",
-            origin: [0,0,-.1]
+            origin: [0,0,0]
         },
         function(armature) {
-            armature.createZCylinder( [0, 0, 0], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
-            armature.createZCylinder( [0, -.03, 0], [.08, .08, .1], [239, 219, 131], 8); // Yellow underbelly
-            armature.createFin([0, .16, 0], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
-            armature.createSphere([0, .01, -.1], [.11, .11, .13], [204, 140, 20], 5);
-            armature.createSphere([0, -.03, -.1], [.08, .08, .08], [239, 219, 131], 5)
+            armature.createZCylinder( [0, 0, .1], [.1, .1, .1], [204, 140, 20], 8); // Golden scales
+            armature.createZCylinder( [0, -.03, .1], [.08, .08, .1], [239, 219, 131], 8); // Yellow underbelly
+            armature.createFin([0, .16, .1], [0, .7], [.03, .06, .1], [19, 84, 22], 8); // green fin
+            armature.createSphere([0, .01, 0], [.11, .11, .13], [204, 140, 20], 5); // Golden scales
+            armature.createSphere([0, -.03, 0], [.08, .08, .08], [239, 219, 131], 5); // yellow underbelly
         },
         function(initMatrix) {
-            initMatrix.rotate(45,1,0,0);
+            initMatrix.rotate(25,1,0,0);
+            initMatrix.translate(0,0,-.2);
         },
         function(animMatrix) {
             
@@ -89,16 +90,19 @@ function createAnimal(){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.createSphere(   [0,   0,   0],   [.1,   .1,   .1],[255,255,255], 10); // white
+            armature.createZCylinder(   [0,   0,   0],   [.1,   .1,   .1],[255,255,255], 10); // white
         },
         function(initMatrix) {
             //initMatrix.rotate(45,1,0,0);
+        },
+        function(animMatrix) {
+            //animMatrix.transformRing1();
         }
     );
 
     rig.addBodyPart(
         {
-            name: "ring1",
+            name: "yellowCyan",
             parent: "core",
             origin: [0,0,0]
         },
@@ -116,7 +120,7 @@ function createAnimal(){
 
     rig.addBodyPart(
         {
-            name: "ring2",
+            name: "magentaGreen",
             parent: "core",
             origin: [-.2,-.2,.2]
         },
@@ -128,14 +132,14 @@ function createAnimal(){
 
         },
         function(animMatrix){
-            animMatrix.transformRing2();
+            //animMatrix.transformRing1();
         }
     );
 
     rig.addBodyPart(
         {
-            name: "ring3",
-            parent: "ring2",
+            name: "redTailBase",
+            parent: "magentaGreen",
             origin: [.5,0,-.5]
         },
         function(armature) {
@@ -143,14 +147,14 @@ function createAnimal(){
         },
         function(initMatrix) {},
         function(animMatrix) {
-            //animMatrix.transformSpine(35, 1.5*Math.PI);
+            animMatrix.transformSpine(35, 1.5*Math.PI);
         }
     );
 
-    /*rig.addBodyPart(
+    rig.addBodyPart(
         {
             name: "ring4",
-            parent: "ring3",
+            parent: "redTailBase",
             origin: [.2,0,-.2]
         },
         function(armature) {
@@ -192,5 +196,5 @@ function createAnimal(){
         function(animMatrix) {
             animMatrix.transformSpine(35, 0);
         }
-    );*/
+    );
 }
