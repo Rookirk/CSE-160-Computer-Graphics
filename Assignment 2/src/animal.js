@@ -11,7 +11,9 @@ function createDragon(){
             armature.createCube([0,0,0],[0,0,0],[255,255,255]);
         },
         function(initMatrix) {},
-        function(animMatrix) {}
+        function(animMatrix) {
+            animMatrix.transformBody();
+        }
         )
     rig.addBodyPart(
         {
@@ -129,7 +131,7 @@ function createDragon(){
                 initMatrix.rotate(-40,1,0,0);
             },
             function(animMatrix) {
-                animMatrix.transformChest(5,Math.PI);
+                animMatrix.transformChest(-10,Math.PI);
             }
         )
     }
@@ -139,16 +141,23 @@ function createDragon(){
         {
             name: "Head",
             parent: "Chest" + lastChest,
-            origin: [0,0,-.2]
+            origin: [0,0,-.3]
         },
         function(armature) {
-            armature.createCube( [0, 0, -.1], [.1, .1, .1], [204, 140, 20]); // Golden scales
+            armature.createSphere( [0, 0, 0], [.16, .15, .2], [204, 140, 20],6); // Skull
+            armature.createSphere( [0, -.08, -.15], [.1, .1, .2], [204, 140, 20],6); // Snout
+
+            armature.createSphere( [.06, .03, -.16], [.02, .02, .02], [21, 63, 46],5); // Eyes
+            armature.createSphere( [-.06, .03, -.16], [.02, .02, .02], [21, 63, 46],5); // Eyes
+
+            armature.createSphere( [.05, .05, -.16], [.02, .02, .02], [204, 140, 20],6); // Eyebrows
+            armature.createSphere( [-.05, .05, -.16], [.02, .02, .02], [204, 140, 20],6); // Eyes
         },
         function(initMatrix) {
             initMatrix.rotate(-25,1,0,0);
         },
         function(animMatrix) {
-            
+            animMatrix.transformChest(40,Math.PI);
         }
     );
 }
