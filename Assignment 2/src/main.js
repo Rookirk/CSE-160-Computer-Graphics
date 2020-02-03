@@ -77,7 +77,7 @@ function main() {
     initMatrices();
 
     rig = new Armature();
-    createDragon();
+    createAnimal();
 
     update();
 }

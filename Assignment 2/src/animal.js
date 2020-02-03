@@ -121,8 +121,14 @@ function createAnimal(){
             origin: [-.2,-.2,.2]
         },
         function(armature) {
-            armature.createYCylinder(  [.4, 0, -.4],   [.1,   .2,   .1],[255,  0,255], 10); // magenta
-            armature.createXCylinder( [0, 0,  0],   [.2,   .1,   .1],  [0,255,  0], 10); // green
+            armature.createYCylinder(  [.4, 0, -.4],   [.1,   .1,   .1],[255,  0,255], 10); // magenta
+            armature.createXCylinder( [0, 0,  0],   [.1,   .1,   .1],  [0,255,  0], 10); // green
+        },
+        function(initMatrix){
+
+        },
+        function(animMatrix){
+            animMatrix.transformRing2();
         }
     );
 
@@ -133,15 +139,15 @@ function createAnimal(){
             origin: [.5,0,-.5]
         },
         function(armature) {
-            armature.createZCylinder( [.1, 0, -.1], [.1,   .1,   .2],[255,  0,  0],10); // red
+            armature.createZCylinder( [.1, 0, -.1], [.1,   .1,   .1],[255,  0,  0],10); // red
         },
         function(initMatrix) {},
         function(animMatrix) {
-            animMatrix.transformSpine(35, 1.5*Math.PI);
+            //animMatrix.transformSpine(35, 1.5*Math.PI);
         }
     );
 
-    rig.addBodyPart(
+    /*rig.addBodyPart(
         {
             name: "ring4",
             parent: "ring3",
@@ -186,5 +192,5 @@ function createAnimal(){
         function(animMatrix) {
             animMatrix.transformSpine(35, 0);
         }
-    );
+    );*/
 }
