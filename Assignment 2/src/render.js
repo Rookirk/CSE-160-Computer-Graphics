@@ -41,13 +41,18 @@ Armature.prototype.transformRigMatrices = function() {
         if(part.parentIndex != -1)
             part.parentMatrix.set(this.partData[part.parentIndex].animMatrix);
 
+        // read in reverse
+        // bodyPark then undergoes parent transformations
         part.animMatrix.set(part.parentMatrix);
+        // bodyPart then offsets itself to parent
         part.animMatrix.translate(part.origin[0],part.origin[1],part.origin[2]);
 
+        // bodyPart then undergoes animation
         if(typeof part.animMatrixFunc !== 'undefined'){
             if(enableAnim) part.animMatrixFunc(part.animMatrix);
         }
 
+        // bodyPart first sets itself to initMatrix
         part.animMatrix.multiply(part.initMatrix);
     }
 }
