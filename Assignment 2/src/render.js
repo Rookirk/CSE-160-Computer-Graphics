@@ -53,7 +53,7 @@ Armature.prototype.transformRigMatrices = function() {
         }
 
         // bodyPart first sets itself to initMatrix
-        part.animMatrix.multiply(part.initMatrix);
+        //part.animMatrix.multiply(part.initMatrix);
     }
 }
 

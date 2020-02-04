@@ -81,6 +81,8 @@ function main() {
     rig = new Armature();
     createDragon();
 
+    //rig.modifyVerticesWithInit();
+
     if(!enableAnim) rig.transformRigMatrices();
 
     update();
