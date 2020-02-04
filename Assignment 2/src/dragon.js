@@ -31,7 +31,7 @@ function createDragon(){
     rig.drawDragonBody(totalChestSegsPerS);
 
     rig.drawDragonArms("left");
-    //rig.drawDragonArms("right");
+    rig.drawDragonArms("right");
 
     let lastChest = (2*totalChestSegsPerS)+1;
     rig.addBodyPart(
@@ -251,18 +251,20 @@ Armature.prototype.drawDragonArms = function(side){
         {
             name: prefix + "Arm1",
             parent: "Chest2",
-            origin: [.1*scaleOrientation,-.03,-.1]
+            origin: [.06*scaleOrientation,0,-.1]
         },
         function(armature) {
-            armature.createSphere( [0, 0, 0], [.05, .05, .05], armColor, 6);
-            armature.createXCylinder( [.1, 0, 0], [.1, .05, .05], armColor, 6);
+            armature.createSphere( [0, 0, 0], [.08, .08, .08], armColor, 6);
+            armature.createXTruncCylinder( [.1, 0, 0], [.1, .08, .08], [.1, .04, .04], armColor, 6);
         },
         function(initMatrix) {
             initMatrix.scale(1*scaleOrientation,1,1);
             initMatrix.rotate(-90,1,0,0); // how up the arms are
-            initMatrix.rotate(-65,0,0,1); //how inward the arms are
+            initMatrix.rotate(-45,0,0,1); //how inward the arms are
         },
-        function(animMatrix) {}
+        function(animMatrix) {
+            animMatrix.transformShoulder();
+        }
     );
     rig.addBodyPart(
         {
@@ -271,39 +273,44 @@ Armature.prototype.drawDragonArms = function(side){
             origin: [.2,0,0]
         },
         function(armature) {
-            armature.createSphere( [0, 0, 0], [.05, .05, .05], armColor, 6);
-            armature.createXCylinder( [.1, 0, 0], [.1, .04, .04], armColor, 6);
+            armature.createSphere( [0, 0, 0], [.04, .04, .04], armColor, 6);
+            armature.createXTruncCylinder( [.1, 0, 0], [.1, .04, .04], [.1, .03, .03], armColor, 6);
         },
         function(initMatrix) {
             initMatrix.rotate(90,0,1,0); // how up the arms are
         },
-        function(animMatrix) {}
+        function(animMatrix) {
+            animMatrix.transformElbow();
+        }
     );
     rig.addBodyPart(
         {
             name: prefix + "Palm",
             parent: prefix + "Arm2",
-            origin: [.25,0,0]
+            origin: [.2,0,0]
         },
         function(armature) {
-            armature.createSphere( [0, 0, 0], [.08, .02, .06], armColor2, 6);
+            armature.createXTruncCylinder( [.08, 0, 0], [.08, .02, .03], [.08, .02, .06], armColor2, 6);
         },
         function(initMatrix) {
-            
+            //initMatrix.rotate(0,1,0,0); // wrist action like queen wave
+            initMatrix.rotate(-45,0,0,1); // wrist action like pressing button
         },
-        function(animMatrix) {}
+        function(animMatrix) {
+            animMatrix.transformWrist();
+        }
     );
     rig.addBodyPart(
         {
             name: prefix + "Index1",
             parent: prefix + "Palm",
-            origin: [.05,0,.04]
+            origin: [.14,0,.04]
         },
         function(armature) {
             armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6);
         },
         function(initMatrix) {
-            
+            initMatrix.rotate(-45,0,0,1);
         },
         function(animMatrix) {}
     );
@@ -317,7 +324,7 @@ Armature.prototype.drawDragonArms = function(side){
             armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6);
         },
         function(initMatrix) {
-            
+            initMatrix.rotate(-45,0,0,1);
         },
         function(animMatrix) {}
     );
@@ -325,13 +332,13 @@ Armature.prototype.drawDragonArms = function(side){
         {
             name: prefix + "Middle1",
             parent: prefix + "Palm",
-            origin: [.08,0,0]
+            origin: [.16,0,0]
         },
         function(armature) {
             armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6);
         },
         function(initMatrix) {
-            
+            initMatrix.rotate(-45,0,0,1);
         },
         function(animMatrix) {}
     );
@@ -345,7 +352,7 @@ Armature.prototype.drawDragonArms = function(side){
             armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6);
         },
         function(initMatrix) {
-            
+            initMatrix.rotate(-45,0,0,1);
         },
         function(animMatrix) {}
     );
@@ -353,13 +360,13 @@ Armature.prototype.drawDragonArms = function(side){
         {
             name: prefix + "Ring1",
             parent: prefix + "Palm",
-            origin: [.05,0,-.04]
+            origin: [.14,0,-.04]
         },
         function(armature) {
             armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6);
         },
         function(initMatrix) {
-            
+            initMatrix.rotate(-45,0,0,1);
         },
         function(animMatrix) {}
     );
@@ -373,7 +380,7 @@ Armature.prototype.drawDragonArms = function(side){
             armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6);
         },
         function(initMatrix) {
-            
+            initMatrix.rotate(-45,0,0,1);
         },
         function(animMatrix) {}
     );
@@ -444,6 +451,14 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
 }
 
 Armature.prototype.drawDragonSpineSeg = function(offset, underbellyLength){
+    this.createZCylinder( [0, 0, .1 + offset], [.1, .1, .1], scaleColor, 8); // Golden scales
+    this.createZCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], bellyColor, 8); // Yellow underbelly
+    this.createFin([0, .16, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
+    this.createSphere([0, .01, 0 + offset], [.11, .11, .13], scaleColor, 5); // Golden scales
+    this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
+}
+
+Armature.prototype.drawDragonTruncSpineSeg = function(offset, underbellyLength){
     this.createZCylinder( [0, 0, .1 + offset], [.1, .1, .1], scaleColor, 8); // Golden scales
     this.createZCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], bellyColor, 8); // Yellow underbelly
     this.createFin([0, .16, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin

@@ -32,7 +32,32 @@ Armature.prototype.createXCylinder = function(coords, size, color, segments){
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices([z,y,x],[h,w,l],segments);
+    const vertices = this.getCylinderVertices([z,y,x],[h,w,l],[h,w,l],segments);
+
+    for(let i = 0; i < vertices.length; i++){
+        const vertex = vertices[i];
+
+        let oldVertex = new Vector3([vertex[0], vertex[1], vertex[2]]);
+        let rotMatrix = new Matrix4();
+        rotMatrix.setRotate(90,0,1,0);
+        let newVertex = rotMatrix.multiplyVector3(oldVertex);
+
+        let elem = newVertex.elements;
+        this.pushVert(elem[0], elem[1], elem[2],r,g,b);
+    }
+
+    this.partData[endIndex].vertsPerShape.push(vertices.length);
+}
+
+Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, segments){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0], y = coords[1], z = coords[2];
+    const lb = sizeB[0], wb = sizeB[1], hb = sizeB[2];
+    const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
+    const r = color[0], g = color[1], b = color[2];
+
+    const vertices = this.getCylinderVertices([z,y,x],[hb,wb,lb],[ht,wt,lt],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -56,7 +81,7 @@ Armature.prototype.createYCylinder = function(coords, size, color, segments){
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices([x,z,y],[l,h,w],segments);
+    const vertices = this.getCylinderVertices([x,z,y],[l,h,w],[l,h,w],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -80,7 +105,7 @@ Armature.prototype.createZCylinder = function(coords, size, color, segments){
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices([x,y,z],[l,w,h],segments);
+    const vertices = this.getCylinderVertices([x,y,z],[l,w,h],[l,w,h],segments);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -196,51 +221,59 @@ Armature.prototype.getCubeVertices = function(coords, size) {
     return vertices;
 }
 
-Armature.prototype.getCylinderVertices = function(coords, size, segments){
+Armature.prototype.getCylinderVertices = function(coords, sizeBase, sizeTop, segments){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
-    const l = size[0], w = size[1], h = size[2];
+    const lb = sizeBase[0], wb = sizeBase[1], h = sizeBase[2];
+    const lt = sizeTop[0], wt = sizeTop[1];
 
-    let xcoords = [];
-    let ycoords = [];
+    let xcoordsB = [];
+    let ycoordsB = [];
+    let xcoordsT = [];
+    let ycoordsT = [];
     let vertices = [];
 
     // Finds the coords of the circle
     let circleRotationTheta = 2*Math.PI/segments;
     for(let i = 0; i < segments; i++){
-        xcoords[i] = x + l*Math.cos(i*circleRotationTheta);
-        ycoords[i] = y + w*Math.sin(i*circleRotationTheta);
+        xcoordsB[i] = x + lb*Math.cos(i*circleRotationTheta);
+        ycoordsB[i] = y + wb*Math.sin(i*circleRotationTheta);
+
+        xcoordsT[i] = x + lt*Math.cos(i*circleRotationTheta);
+        ycoordsT[i] = y + wt*Math.sin(i*circleRotationTheta);
     }
 
     // Add one more at the end so that it is circular
-    xcoords.push(xcoords[0]);
-    ycoords.push(ycoords[0]);
+    xcoordsB.push(xcoordsB[0]);
+    ycoordsB.push(ycoordsB[0]);
+    xcoordsT.push(xcoordsT[0]);
+    ycoordsT.push(ycoordsT[0]);
 
     // Iterate through the top
-    for(let i = 0; i < xcoords.length - 1; i++){
-        vertices.push([xcoords[i], ycoords[i], z + h]);
-        vertices.push([xcoords[i + 1], ycoords[i + 1], z + h]);
+    for(let i = 0; i < xcoordsT.length - 1; i++){
+        vertices.push([xcoordsT[i], ycoordsT[i], z + h]);
+        vertices.push([xcoordsT[i + 1], ycoordsT[i + 1], z + h]);
         vertices.push([x, y, z + h]);
     }
 
     // Iterate through the sides
-    for(let i = 0; i < xcoords.length - 1; i++){
+    for(let i = 0; i < xcoordsT.length - 1; i++){
         //top left triangle
-        vertices.push([xcoords[i + 1], ycoords[i + 1], z + h]);
-        vertices.push([xcoords[i], ycoords[i], z + h]);
-        vertices.push([xcoords[i], ycoords[i], z - h]);
+        vertices.push([xcoordsT[i + 1], ycoordsT[i + 1], z + h]);
+        vertices.push([xcoordsT[i], ycoordsT[i], z + h]);
+        vertices.push([xcoordsB[i], ycoordsB[i], z - h]);
 
         // bottom right triangle
-        vertices.push([xcoords[i + 1], ycoords[i + 1], z + h]);
-        vertices.push([xcoords[i], ycoords[i], z - h]);
-        vertices.push([xcoords[i + 1], ycoords[i + 1], z - h]);
+        vertices.push([xcoordsT[i + 1], ycoordsT[i + 1], z + h]);
+        vertices.push([xcoordsB[i], ycoordsB[i], z - h]);
+        vertices.push([xcoordsB[i + 1], ycoordsB[i + 1], z - h]);
     }
 
     // Iterate through the bottom
-    for(let i = 0; i < xcoords.length - 1; i++){
-        vertices.push([xcoords[i + 1], ycoords[i + 1], z - h]);
-        vertices.push([xcoords[i], ycoords[i], z - h]);
+    for(let i = 0; i < xcoordsT.length - 1; i++){
+        vertices.push([xcoordsB[i + 1], ycoordsB[i + 1], z - h]);
+        vertices.push([xcoordsB[i], ycoordsB[i], z - h]);
         vertices.push([x, y, z - h]);
     }
 

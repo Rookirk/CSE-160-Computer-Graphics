@@ -15,7 +15,7 @@
 			"file": "Assignment 2/drive.html",
 			"settings":
 			{
-				"buffer_size": 812,
+				"buffer_size": 1144,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -24,16 +24,43 @@
 			"file": "Assignment 2/src/main.js",
 			"settings":
 			{
-				"buffer_size": 3186,
+				"buffer_size": 3704,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 2/src/animal.js",
+			"file": "Assignment 2/src/dragon.js",
 			"settings":
 			{
-				"buffer_size": 2717,
+				"buffer_size": 15671,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 2/src/animFuncs.js",
+			"settings":
+			{
+				"buffer_size": 1816,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 2/src/armature.js",
+			"settings":
+			{
+				"buffer_size": 1768,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 2/src/shapes.js",
+			"settings":
+			{
+				"buffer_size": 10697,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -42,7 +69,7 @@
 			"file": "Assignment 2/src/render.js",
 			"settings":
 			{
-				"buffer_size": 1573,
+				"buffer_size": 2349,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -52,6 +79,7 @@
 			"settings":
 			{
 				"buffer_size": 21233,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -97,6 +125,9 @@
 	"file_history":
 	[
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/src/main.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/animal.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/test.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/armature.js",
 		"/C/Users/Herman/Documents/School/CSE 111/10_17 Notes.txt",
 		"/C/Users/Herman/Documents/School/CSE 111/10_21_Notes.txt",
 		"/C/Users/Herman/Documents/School/CSE 111/10_23_Notes.txt",
@@ -220,10 +251,7 @@
 		"/C/Users/Herman/Documents/Anime Projects/Project Gemini/blueCat.json",
 		"/C/Users/Herman/Documents/Phaser/Project_Gemini/assets/img/cats/blueCat.json",
 		"/C/Users/Herman/Documents/Phaser/Project_Gemini/assets/img/cats/blueCatOld.json",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/assets/img/cats/redCat.json",
-		"/C/Users/Herman/Documents/Phaser/Don't Be Late/js/Prefabs/Player.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/index.html",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/States/Boot.js"
+		"/C/Users/Herman/Documents/Phaser/Project_Gemini/assets/img/cats/redCat.json"
 	],
 	"find":
 	{
@@ -234,6 +262,10 @@
 		"height": 131.0,
 		"where_history":
 		[
+			"",
+			"test.js",
+			"untitled",
+			""
 		]
 	},
 	"find_state":
@@ -241,6 +273,44 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Torso",
+			"scale",
+			"drawDraonSpineSeg",
+			"drawDragonSpine",
+			"globalOrigin",
+			"Vector3",
+			"getTransformedPartOrigin",
+			"Vector3",
+			"concat",
+			"multiply",
+			"translate",
+			"part.origin",
+			"animFunc",
+			"enableAnim",
+			"globalOrigin",
+			"updateTime",
+			"parent.origin",
+			"Vector3",
+			"parent.origin",
+			"origin",
+			"originX",
+			"Vertex3",
+			"Vector3",
+			"getStorageLocations",
+			"scale",
+			"Vector3",
+			"animal",
+			"transformFunc",
+			"i",
+			"vertexArr",
+			"partName",
+			"partData",
+			"vertexArr",
+			"partData",
+			"currPartIndex",
+			"partDataArr",
+			"g_Time",
+			"transformMat",
 			"vertsPerShape"
 		],
 		"highlight": true,
@@ -249,6 +319,15 @@
 		"regex": false,
 		"replace_history":
 		[
+			"Tail",
+			"drawDragonSpineSeg",
+			"drawDraonSpineSeg",
+			"assignStorageLocations",
+			"rig",
+			"j",
+			"partData",
+			"globalTime",
+			"initMatrix"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -259,7 +338,7 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -268,15 +347,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 812,
+						"buffer_size": 1144,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								480,
-								480
+								458,
+								458
 							]
 						],
 						"settings":
@@ -290,7 +369,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -299,15 +378,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3186,
+						"buffer_size": 3704,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								766,
-								766
+								822,
+								822
 							]
 						],
 						"settings":
@@ -320,58 +399,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 918.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Assignment 2/src/animal.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2717,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								316,
-								316
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 206.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "Assignment 2/src/render.js",
+					"buffer": 2,
+					"file": "Assignment 2/src/dragon.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1573,
+						"buffer_size": 15671,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								587,
-								587
+								8284,
+								8284
 							]
 						],
 						"settings":
@@ -382,14 +430,144 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1330.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
+					"buffer": 3,
+					"file": "Assignment 2/src/animFuncs.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1816,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								829,
+								829
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 270.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
 					"buffer": 4,
+					"file": "Assignment 2/src/armature.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1768,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								146,
+								146
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 162.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Assignment 2/src/shapes.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10697,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								10695,
+								10695
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1516.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Assignment 2/src/render.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2349,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2187,
+								2187
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 683.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
 					"file": "Assignment 2/lib/cuon-matrix.js",
 					"semi_transient": false,
 					"settings":
@@ -401,8 +579,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								12427,
+								12432
 							]
 						],
 						"settings":
@@ -415,10 +593,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 7298.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -490,12 +668,12 @@
 	},
 	"select_symbol":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"last_filter": "",
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 592.0
 	},
 	"selected_group": 0,
 	"settings":
