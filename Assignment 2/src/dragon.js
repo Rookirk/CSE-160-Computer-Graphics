@@ -25,7 +25,7 @@ function createDragon(){
 
     let totalSpineSegs = 7;
     rig.drawDragonTail(totalSpineSegs);
-    //rig.drawDragonTailPlume(totalSpineSegs);
+    rig.drawDragonTailPlume(totalSpineSegs);
 
     rig.drawDragonLegs("left");
     rig.drawDragonLegs("right");
@@ -632,12 +632,12 @@ Armature.prototype.drawDragonSpineSeg = function(offset, underbellyLength){
     this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
 }
 
-Armature.prototype.drawDragonTruncSpineSeg = function(offset, underbellyLength){
-    this.createZTruncCylinder( [0, 0, .1 + offset], [.1, .1, .1], [.1*.85, .1*.85, .1*.85], scaleColor, 8, true); // Golden scales
-    //this.createZTruncCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], [.08*.85, .08*.85, underbellyLength*.85], bellyColor, 8, true); // Yellow underbelly
-    //this.createFin([0, .16, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
-    //this.createSphere([0, .01, 0 + offset], [.11, .11, .13], scaleColor, 5); // Golden scales
-    //this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
+Armature.prototype.drawDragonTruncSpineSeg = function(offset, underbellyLength, finHeight, smallerSize){
+    this.createZTruncCylinder( [0, 0, .1 + offset], [.1, .1, .1], [.1*smallerSize, .1*smallerSize, .1*smallerSize], scaleColor, 8, true); // Golden scales
+    this.createZTruncCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], [.08*smallerSize, .08*smallerSize, underbellyLength*smallerSize], bellyColor, 8, true); // Yellow underbelly
+    this.createFin([0, finHeight, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
+    this.createSphere([0, .01, 0 + offset], [.11, .11, .13], scaleColor, 5); // Golden scales
+    this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
 }
 
 Armature.prototype.drawDragonTail = function(totalSpineSegs){
@@ -648,7 +648,7 @@ Armature.prototype.drawDragonTail = function(totalSpineSegs){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.drawDragonSpineSeg(0,.1);
+            armature.drawDragonTruncSpineSeg(0,.1, .14,.85);
         },
         function(initMatrix) {},
         function(animMatrix) {
@@ -667,7 +667,7 @@ Armature.prototype.drawDragonTail = function(totalSpineSegs){
                 origin: [0,0,.2]
             },
             function(armature) {
-                armature.drawDragonSpineSeg(0,.1);
+                armature.drawDragonTruncSpineSeg(0,.1, .14,.85);
             },
             function(initMatrix) {
                 initMatrix.scale(.85,.85,1);
@@ -685,36 +685,14 @@ Armature.prototype.drawDragonTailPlume = function(totalSpineSegs){
         {
             name: "TailPlume1",
             parent: "Tail" + lastTailSeg,
-            origin: [0,0,0]
+            origin: [0,0,.2]
         },
         function(armature) {
-            armature.drawDragonSpineSeg(0,.1);
+            armature.drawDragonTruncSpineSeg(0,.1, .04,0);
         },
         function(initMatrix) {},
         function(animMatrix) {
             animMatrix.transformSpine(15,0);
         }
     );
-    
-    for(let i = 0; i < totalSpineSegs; i++){
-        const currIndex = i + 2;
-        const parentIndex = currIndex - 1;
-        const spineOffset = (totalSpineSegs-i)/totalSpineSegs*Math.PI;
-        rig.addBodyPart(
-            {
-                name: "Tail" + currIndex,
-                parent: "Tail" + parentIndex,
-                origin: [0,0,.2]
-            },
-            function(armature) {
-                armature.drawDragonSpineSeg(0,.1);
-            },
-            function(initMatrix) {
-                initMatrix.scale(.85,.85,1);
-            },
-            function(animMatrix) {
-                animMatrix.transformSpine(15,spineOffset);
-            }
-        );
-    }
 }

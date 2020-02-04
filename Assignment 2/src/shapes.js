@@ -127,14 +127,7 @@ Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, 
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
-
-        let oldVertex = new Vector3([vertex[0], vertex[1], vertex[2]]);
-        let rotMatrix = new Matrix4();
-        rotMatrix.setRotate(90,0,1,0);
-        let newVertex = rotMatrix.multiplyVector3(oldVertex);
-
-        let elem = newVertex.elements;
-        this.pushVert(elem[0], elem[1], elem[2],r,g,b);
+        this.pushVert(vertex[0], vertex[1], vertex[2],r,g,b);
     }
 
     this.partData[endIndex].vertsPerShape.push(vertices.length);
