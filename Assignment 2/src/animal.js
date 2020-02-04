@@ -6,7 +6,7 @@ function createAnimal(){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.createZCylinder(   [0,   0,   0],   [.1,   .1,   .1],[255,255,255], 10, false); // white
+            armature.createZCylinder(   [0,   0,   0],   [.1,   .1,   .1],[255,255,255], 10); // white
         },
         function(initMatrix) {
             //initMatrix.rotate(45,1,0,0);
@@ -41,8 +41,8 @@ function createAnimal(){
             origin: [-.2,-.2,.2]
         },
         function(armature) {
-            armature.createYCylinder(  [.4, 0, -.4],   [.1,   .1,   .1],[255,  0,255], 10, false); // magenta
-            armature.createXCylinder( [0, 0,  0],   [.1,   .1,   .1],  [0,255,  0], 10, false); // green
+            armature.createYCylinder(  [.4, 0, -.4],   [.1,   .1,   .1],[255,  0,255], 10); // magenta
+            armature.createXCylinder( [0, 0,  0],   [.1,   .1,   .1],  [0,255,  0], 10); // green
         },
         function(initMatrix){
 
@@ -59,7 +59,7 @@ function createAnimal(){
             origin: [.5,0,-.5]
         },
         function(armature) {
-            armature.createZCylinder( [.1, 0, -.1], [.1,   .1,   .1],[255,  0,  0],10, false); // red
+            armature.createZCylinder( [.1, 0, -.1], [.1,   .1,   .1],[255,  0,  0],10); // red
         },
         function(initMatrix) {},
         function(animMatrix) {
