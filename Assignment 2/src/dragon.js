@@ -4,6 +4,8 @@ var eyeColor = [21, 63, 46];
 var finColor = [19, 84, 22];
 var scaleColor = [204, 140, 20];
 var armColor = [188,129,18];
+var armColor2 = [173,118,17];
+var armColor3 = [153,104,15];
 
 function createDragon(){
     rig.addBodyPart(
@@ -29,7 +31,7 @@ function createDragon(){
     rig.drawDragonBody(totalChestSegsPerS);
 
     rig.drawDragonArms("left");
-    rig.drawDragonArms("right");
+    //rig.drawDragonArms("right");
 
     let lastChest = (2*totalChestSegsPerS)+1;
     rig.addBodyPart(
@@ -249,16 +251,129 @@ Armature.prototype.drawDragonArms = function(side){
         {
             name: prefix + "Arm1",
             parent: "Chest2",
-            origin: [.05*scaleOrientation,0,0]
+            origin: [.1*scaleOrientation,-.03,-.1]
         },
         function(armature) {
-            armature.createYCylinder( [0, .1, 0], [.06, .1, .06], armColor, 6);
+            armature.createSphere( [0, 0, 0], [.05, .05, .05], armColor, 6);
+            armature.createXCylinder( [.1, 0, 0], [.1, .05, .05], armColor, 6);
         },
         function(initMatrix) {
             initMatrix.scale(1*scaleOrientation,1,1);
-            initMatrix.rotate(90,0,0,1);
-            initMatrix.rotate(-40,0,1,0); // how up the arms are
-            initMatrix.rotate(-55,1,0,0); //how inward the arms are
+            initMatrix.rotate(-90,1,0,0); // how up the arms are
+            initMatrix.rotate(-65,0,0,1); //how inward the arms are
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Arm2",
+            parent: prefix + "Arm1",
+            origin: [.2,0,0]
+        },
+        function(armature) {
+            armature.createSphere( [0, 0, 0], [.05, .05, .05], armColor, 6);
+            armature.createXCylinder( [.1, 0, 0], [.1, .04, .04], armColor, 6);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(90,0,1,0); // how up the arms are
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Palm",
+            parent: prefix + "Arm2",
+            origin: [.25,0,0]
+        },
+        function(armature) {
+            armature.createSphere( [0, 0, 0], [.08, .02, .06], armColor2, 6);
+        },
+        function(initMatrix) {
+            
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Index1",
+            parent: prefix + "Palm",
+            origin: [.05,0,.04]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6);
+        },
+        function(initMatrix) {
+            
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Index2",
+            parent: prefix + "Index1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6);
+        },
+        function(initMatrix) {
+            
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Middle1",
+            parent: prefix + "Palm",
+            origin: [.08,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6);
+        },
+        function(initMatrix) {
+            
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Middle2",
+            parent: prefix + "Middle1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6);
+        },
+        function(initMatrix) {
+            
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Ring1",
+            parent: prefix + "Palm",
+            origin: [.05,0,-.04]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6);
+        },
+        function(initMatrix) {
+            
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Ring2",
+            parent: prefix + "Ring1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6);
+        },
+        function(initMatrix) {
+            
         },
         function(animMatrix) {}
     );

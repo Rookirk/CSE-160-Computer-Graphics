@@ -63,7 +63,7 @@ function transformModelMatrix() {
     modelMatrix.translate(0,-.6,.4);
     modelMatrix.rotate(globalRotation,0,1,0);
     modelMatrix.translate(0,0,-.4);
-    //modelMatrix.rotate(-15,1,0,0);
+    //modelMatrix.rotate(-90,1,0,0);
 }
 
 function updateTime() {
