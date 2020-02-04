@@ -31,6 +31,22 @@ Matrix4.prototype.transformWrist = function() {
     return this.templateOscillate(.002, 0, [1, 0, 0], -15, 15);
 }
 
+Matrix4.prototype.transformLegJoint = function() {
+    return this.templateOscillate(.002, 0, [1, 0, 0], -45, 15);
+}
+
+Matrix4.prototype.transformKnee = function() {
+    return this.templateOscillate(.002, Math.PI, [1, 1, 0], -15, 65);
+}
+
+Matrix4.prototype.transformInnerKnee = function() {
+    return this.templateOscillate(.002, 0, [1, 0, 0], -15, 15);
+}
+
+Matrix4.prototype.transformAnkle = function() {
+    return this.templateOscillate(.002, 0, [1, 0, 0], -15, 15);
+}
+
 // angle is in degrees
 // offset is in time, but also in radians
 Matrix4.prototype.transformSpine = function(angle, offset) {

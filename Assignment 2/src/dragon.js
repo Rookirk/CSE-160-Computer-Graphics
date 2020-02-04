@@ -26,6 +26,9 @@ function createDragon(){
     let totalSpineSegs = 7;
     rig.drawDragonTail(totalSpineSegs);
     //rig.drawDragonTailPlume(totalSpineSegs);
+
+    rig.drawDragonLegs("left");
+    rig.drawDragonLegs("right");
     
     let totalChestSegsPerS = 4;
     rig.drawDragonBody(totalChestSegsPerS);
@@ -448,6 +451,177 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
             }
         )
     }
+}
+
+Armature.prototype.drawDragonLegs = function(side){
+    let scaleOrientation, prefix;
+    if(side === "left"){
+        scaleOrientation = 1;
+        prefix = "l";
+    }
+    else if(side === "right"){
+        scaleOrientation = -1;
+        prefix = "r";
+    }
+    else{
+        console.log("side can only be 'left' or 'right' in drawDragonAntlers");
+        return;
+    }
+    rig.addBodyPart(
+        {
+            name: prefix + "Leg1",
+            parent: "Tail5",
+            origin: [.06*scaleOrientation,0,-.1]
+        },
+        function(armature) {
+            armature.createSphere( [0, 0, 0], [.1, .1, .1], armColor, 6);
+            armature.createXTruncCylinder( [.12, 0, 0], [.12, .1, .1], [.1, .04, .04], armColor, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.scale(1*scaleOrientation,1,1);
+            initMatrix.rotate(35,1,0,0); // how up the arms are
+            initMatrix.rotate(-45,0,0,1); //how inward the arms are
+        },
+        function(animMatrix) {
+            animMatrix.transformLegJoint();
+        }
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Leg2",
+            parent: prefix + "Leg1",
+            origin: [.24,0,0]
+        },
+        function(armature) {
+            armature.createSphere( [0, 0, 0], [.04, .04, .04], armColor, 6);
+            armature.createXTruncCylinder( [.06, 0, 0], [.06, .04, .04], [.1, .03, .03], armColor, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-90,0,1,0); // how up the arms are
+        },
+        function(animMatrix) {
+            animMatrix.transformKnee();
+        }
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Leg3",
+            parent: prefix + "Leg2",
+            origin: [.12,0,0]
+        },
+        function(armature) {
+            armature.createSphere( [0, 0, 0], [.04, .04, .04], armColor, 6);
+            armature.createXTruncCylinder( [.1, 0, 0], [.1, .04, .04], [.1, .03, .03], armColor, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+            initMatrix.rotate(45,0,1,0); // how up the arms are
+        },
+        function(animMatrix) {
+            animMatrix.transformInnerKnee();
+        }
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Foot",
+            parent: prefix + "Leg3",
+            origin: [.2,0,0]
+        },
+        function(armature) {
+            armature.createXTruncCylinder( [.08, 0, 0], [.08, .02, .03], [.08, .02, .06], armColor2, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-120,1,0,0); // wrist action like queen wave
+            initMatrix.rotate(-45,0,0,1); // wrist action like pressing button
+        },
+        function(animMatrix) {
+            animMatrix.transformAnkle();
+        }
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeIndex1",
+            parent: prefix + "Foot",
+            origin: [.14,0,.04]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeIndex2",
+            parent: prefix + "ToeIndex1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6, false);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeMiddle1",
+            parent: prefix + "Foot",
+            origin: [.16,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeMiddle2",
+            parent: prefix + "ToeMiddle1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6, false);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeRing1",
+            parent: prefix + "Foot",
+            origin: [.14,0,-.04]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeRing2",
+            parent: prefix + "ToeRing1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6, false);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
 }
 
 Armature.prototype.drawDragonSpineSeg = function(offset, underbellyLength){
