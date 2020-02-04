@@ -55,25 +55,32 @@ Armature.prototype.addBodyPart = function(part, shapeFunc, initMatrixFunc, animM
 }
 
 Armature.prototype.modifyVerticesWithInit = function(){
+    let beginningIndex = 0; // number of vertices
+    // Iterate through all of the parts
     for(let i = 0; i < this.partData.length; i++){
         let part = this.partData[i];
 
-        // set the parentMatrix
-        if(part.parentIndex != -1)
-            part.parentMatrix.set(this.partData[part.parentIndex].animMatrix);
-
-        // read in reverse
-        // bodyPark then undergoes parent transformations
-        part.animMatrix.set(part.parentMatrix);
-        // bodyPart then offsets itself to parent
-        part.animMatrix.translate(part.origin[0],part.origin[1],part.origin[2]);
-
-        // bodyPart then undergoes animation
-        if(typeof part.animMatrixFunc !== 'undefined'){
-            if(enableAnim) part.animMatrixFunc(part.animMatrix);
+        let amountOfComponents = 0;
+        // iterate through all shapes in that part
+        for(let j = 0; j < part.vertsPerShape.length; j++){
+            // obtain how many verts to draw
+            amountOfComponents += part.vertsPerShape[j]*6;
         }
 
-        // bodyPart first sets itself to initMatrix
-        part.animMatrix.multiply(part.initMatrix);
+        for(let k = beginningIndex; k < beginningIndex + amountOfComponents; k += 6){
+            console.log(k);
+            let oldVertex = new Vector3([this.vertexArr[k], this.vertexArr[k+1], this.vertexArr[k+2]]);
+            let indivMatrix = new Matrix4();
+            indivMatrix.set(part.initMatrix);
+            let newVertex = indivMatrix.multiplyVector3(oldVertex);
+
+            let elem = newVertex.elements;
+
+            this.vertexArr[k] = elem[0];
+            this.vertexArr[k+1] = elem[1];
+            this.vertexArr[k+2] = elem[2];
+        }
+
+        beginningIndex += amountOfComponents;
     }
 }
