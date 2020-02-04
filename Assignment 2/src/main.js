@@ -10,9 +10,10 @@ var VSHADER_SOURCE = `
     attribute vec4 a_Position;
     attribute vec4 a_Color;
     uniform mat4 u_ModelMatrix;
+    uniform mat4 u_AnimMatrix;
     varying vec4 v_Color;
     void main() {
-      gl_Position = u_ModelMatrix * a_Position;
+      gl_Position = u_ModelMatrix * u_AnimMatrix * a_Position;
       v_Color = a_Color;
     }`;
 
@@ -30,6 +31,7 @@ var gl;
 var a_Position;
 var a_Color;
 var u_ModelMatrix;
+var u_AnimMatrix;
 
 var rig;
 
@@ -115,6 +117,11 @@ function assignStorageLocations() {
     u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
     if (!u_ModelMatrix) {
         console.log('Failed to get the storage location of u_ModelMatrix');
+        return;
+    }
+    u_AnimMatrix = gl.getUniformLocation(gl.program, 'u_AnimMatrix');
+    if (!u_AnimMatrix) {
+        console.log('Failed to get the storage location of u_AnimMatrix');
         return;
     }
 }

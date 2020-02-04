@@ -10,16 +10,15 @@ var globalTime = 0;
 function drawGeometry() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
+    gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
+
     let beginningIndex = 0; // number of vertices
     // iterate per part
     for(let i = 0; i < rig.partData.length; i++){
         let part = rig.partData[i];
 
         // apply the matrix to the vertices for this part
-        let indivMatrix = new Matrix4();
-        indivMatrix.set(modelMatrix);
-        indivMatrix.multiply(part.animMatrix);
-        gl.uniformMatrix4fv(u_ModelMatrix, false, indivMatrix.elements);
+        gl.uniformMatrix4fv(u_AnimMatrix, false, part.animMatrix.elements);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(rig.vertexArr), gl.STATIC_DRAW);
 
         let amountOfVerts = 0;
