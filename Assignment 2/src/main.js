@@ -45,14 +45,14 @@ function main() {
     }
     globalRotation = Number(rotationSlider.value);
 
-    var testSlider = document.getElementById('testSlider');
+    /*var testSlider = document.getElementById('testSlider');
     testSlider.oninput = function(ev) {
         testMatrices(Number(testSlider.value), Number(testSlider2.value));
     }
     var testSlider2 = document.getElementById('testSlider2');
     testSlider2.oninput = function(ev) {
         testMatrices(Number(testSlider.value), Number(testSlider2.value));
-    }
+    }*/
 
     // Get the rendering context for WebGL
     gl = getWebGLContext(canvas, false);

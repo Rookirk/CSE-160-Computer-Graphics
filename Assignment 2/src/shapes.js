@@ -115,6 +115,31 @@ Armature.prototype.createZCylinder = function(coords, size, color, segments){
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
+Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, segments){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0], y = coords[1], z = coords[2];
+    const lb = sizeB[0], wb = sizeB[1], hb = sizeB[2];
+    const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
+    const r = color[0], g = color[1], b = color[2];
+
+    const vertices = this.getCylinderVertices([x,y,z],[lb,wb,hb],[lt,wt,ht],segments);
+
+    for(let i = 0; i < vertices.length; i++){
+        const vertex = vertices[i];
+
+        let oldVertex = new Vector3([vertex[0], vertex[1], vertex[2]]);
+        let rotMatrix = new Matrix4();
+        rotMatrix.setRotate(90,0,1,0);
+        let newVertex = rotMatrix.multiplyVector3(oldVertex);
+
+        let elem = newVertex.elements;
+        this.pushVert(elem[0], elem[1], elem[2],r,g,b);
+    }
+
+    this.partData[endIndex].vertsPerShape.push(vertices.length);
+}
+
 Armature.prototype.createSphere = function(coords, size, color, segments){
     if(segments < 3){
         console.log("Cannot have less than 3 segments in sphere");
