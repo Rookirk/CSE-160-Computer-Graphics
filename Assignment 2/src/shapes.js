@@ -25,14 +25,14 @@ Armature.prototype.createCube = function(coords, size, color){
     this.partData[endIndex].vertsPerShape.push(36);
 }
 
-Armature.prototype.createXCylinder = function(coords, size, color, segments){
+Armature.prototype.createXCylinder = function(coords, size, color, segments, tube){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices([z,y,x],[h,w,l],[h,w,l],segments);
+    const vertices = this.getCylinderVertices([z,y,x],[h,w,l],[h,w,l],segments, tube);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -49,7 +49,7 @@ Armature.prototype.createXCylinder = function(coords, size, color, segments){
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, segments){
+Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -57,7 +57,7 @@ Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, 
     const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices([z,y,x],[hb,wb,lb],[ht,wt,lt],segments);
+    const vertices = this.getCylinderVertices([z,y,x],[hb,wb,lb],[ht,wt,lt],segments, tube);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -74,14 +74,14 @@ Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, 
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createYCylinder = function(coords, size, color, segments){
+Armature.prototype.createYCylinder = function(coords, size, color, segments, tube){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices([x,z,y],[l,h,w],[l,h,w],segments);
+    const vertices = this.getCylinderVertices([x,z,y],[l,h,w],[l,h,w],segments, tube);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -98,14 +98,14 @@ Armature.prototype.createYCylinder = function(coords, size, color, segments){
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createZCylinder = function(coords, size, color, segments){
+Armature.prototype.createZCylinder = function(coords, size, color, segments, tube){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices([x,y,z],[l,w,h],[l,w,h],segments);
+    const vertices = this.getCylinderVertices([x,y,z],[l,w,h],[l,w,h],segments, tube);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -115,7 +115,7 @@ Armature.prototype.createZCylinder = function(coords, size, color, segments){
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, segments){
+Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -123,7 +123,7 @@ Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, 
     const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
     const r = color[0], g = color[1], b = color[2];
 
-    const vertices = this.getCylinderVertices([x,y,z],[lb,wb,hb],[lt,wt,ht],segments);
+    const vertices = this.getCylinderVertices([x,y,z],[lb,wb,hb],[lt,wt,ht],segments, tube);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -246,7 +246,7 @@ Armature.prototype.getCubeVertices = function(coords, size) {
     return vertices;
 }
 
-Armature.prototype.getCylinderVertices = function(coords, sizeBase, sizeTop, segments){
+Armature.prototype.getCylinderVertices = function(coords, sizeBase, sizeTop, segments, tube){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -275,13 +275,14 @@ Armature.prototype.getCylinderVertices = function(coords, sizeBase, sizeTop, seg
     xcoordsT.push(xcoordsT[0]);
     ycoordsT.push(ycoordsT[0]);
 
-    // Iterate through the top
-    for(let i = 0; i < xcoordsT.length - 1; i++){
-        vertices.push([xcoordsT[i], ycoordsT[i], z + h]);
-        vertices.push([xcoordsT[i + 1], ycoordsT[i + 1], z + h]);
-        vertices.push([x, y, z + h]);
+    if(!tube){
+        // Iterate through the top
+        for(let i = 0; i < xcoordsT.length - 1; i++){
+            vertices.push([xcoordsT[i], ycoordsT[i], z + h]);
+            vertices.push([xcoordsT[i + 1], ycoordsT[i + 1], z + h]);
+            vertices.push([x, y, z + h]);
+        }
     }
-
     // Iterate through the sides
     for(let i = 0; i < xcoordsT.length - 1; i++){
         //top left triangle
@@ -295,11 +296,13 @@ Armature.prototype.getCylinderVertices = function(coords, sizeBase, sizeTop, seg
         vertices.push([xcoordsB[i + 1], ycoordsB[i + 1], z - h]);
     }
 
-    // Iterate through the bottom
-    for(let i = 0; i < xcoordsT.length - 1; i++){
-        vertices.push([xcoordsB[i + 1], ycoordsB[i + 1], z - h]);
-        vertices.push([xcoordsB[i], ycoordsB[i], z - h]);
-        vertices.push([x, y, z - h]);
+    if(!tube){
+        // Iterate through the bottom
+        for(let i = 0; i < xcoordsT.length - 1; i++){
+            vertices.push([xcoordsB[i + 1], ycoordsB[i + 1], z - h]);
+            vertices.push([xcoordsB[i], ycoordsB[i], z - h]);
+            vertices.push([x, y, z - h]);
+        }
     }
 
     return vertices;
