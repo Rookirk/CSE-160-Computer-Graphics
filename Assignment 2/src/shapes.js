@@ -7,7 +7,14 @@ Armature.prototype.pushVert = function(x,y,z,r,g,b){
     this.vertexArr.push( b/255 );
 }
 
-Armature.prototype.createCube = function(coords, size, color){
+transformVert = function(vertex, transformMatrix){
+    let oldVertex = new Vector3([vertex[0], vertex[1], vertex[2]]);
+    let newMatrix = new Matrix4();
+    newMatrix.set(transformMatrix);
+    return newMatrix.multiplyVector3(oldVertex);
+}
+
+Armature.prototype.createCube = function(coords, size, color, transformFunc){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -25,7 +32,7 @@ Armature.prototype.createCube = function(coords, size, color){
     this.partData[endIndex].vertsPerShape.push(36);
 }
 
-Armature.prototype.createXCylinder = function(coords, size, color, segments, tube){
+Armature.prototype.createXCylinder = function(coords, size, color, segments, tube, transformFunc){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -37,10 +44,10 @@ Armature.prototype.createXCylinder = function(coords, size, color, segments, tub
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
 
-        let oldVertex = new Vector3([vertex[0], vertex[1], vertex[2]]);
-        let rotMatrix = new Matrix4();
-        rotMatrix.setRotate(90,0,1,0);
-        let newVertex = rotMatrix.multiplyVector3(oldVertex);
+        let transformMatrix = new Matrix4();
+        transformMatrix.setRotate(90,0,1,0);
+
+        let newVertex = transformVert(vertex, transformMatrix);
 
         let elem = newVertex.elements;
         this.pushVert(elem[0], elem[1], elem[2],r,g,b);
@@ -49,7 +56,7 @@ Armature.prototype.createXCylinder = function(coords, size, color, segments, tub
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube){
+Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube, transformFunc){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -62,10 +69,10 @@ Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
 
-        let oldVertex = new Vector3([vertex[0], vertex[1], vertex[2]]);
-        let rotMatrix = new Matrix4();
-        rotMatrix.setRotate(90,0,1,0);
-        let newVertex = rotMatrix.multiplyVector3(oldVertex);
+        let transformMatrix = new Matrix4();
+        transformMatrix.setRotate(90,0,1,0);
+
+        let newVertex = transformVert(vertex, transformMatrix);
 
         let elem = newVertex.elements;
         this.pushVert(elem[0], elem[1], elem[2],r,g,b);
@@ -74,7 +81,7 @@ Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, 
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createYCylinder = function(coords, size, color, segments, tube){
+Armature.prototype.createYCylinder = function(coords, size, color, segments, tube, transformFunc){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -86,10 +93,10 @@ Armature.prototype.createYCylinder = function(coords, size, color, segments, tub
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
 
-        let oldVertex = new Vector3([vertex[0], vertex[1], vertex[2]]);
-        let rotMatrix = new Matrix4();
-        rotMatrix.setRotate(90,1,0,0);
-        let newVertex = rotMatrix.multiplyVector3(oldVertex);
+        let transformMatrix = new Matrix4();
+        transformMatrix.setRotate(90,1,0,0);
+
+        let newVertex = transformVert(vertex, transformMatrix);
 
         let elem = newVertex.elements;
         this.pushVert(elem[0], elem[1], elem[2],r,g,b);
@@ -98,7 +105,7 @@ Armature.prototype.createYCylinder = function(coords, size, color, segments, tub
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createZCylinder = function(coords, size, color, segments, tube){
+Armature.prototype.createZCylinder = function(coords, size, color, segments, tube, transformFunc){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -109,13 +116,25 @@ Armature.prototype.createZCylinder = function(coords, size, color, segments, tub
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
-        this.pushVert(vertex[0], vertex[1], vertex[2],r,g,b);
+
+        let transformMatrix = new Matrix4();
+
+        if(typeof transformFunc === "function"){
+            let newMatrix = transformFunc();
+            console.log(newMatrix);
+            transformMatrix.multiply(newMatrix);
+        }
+
+        let newVertex = transformVert(vertex, transformMatrix);
+
+        let elem = newVertex.elements;
+        this.pushVert(elem[0], elem[1], elem[2],r,g,b);
     }
 
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube){
+Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube, transformFunc){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
@@ -127,13 +146,25 @@ Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, 
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
-        this.pushVert(vertex[0], vertex[1], vertex[2],r,g,b);
+
+        let transformMatrix = new Matrix4();
+
+        if(typeof transformFunc === "function"){
+            let newMatrix = transformFunc();
+            console.log(newMatrix);
+            transformMatrix.multiply(newMatrix);
+        }
+
+        let newVertex = transformVert(vertex, transformMatrix);
+
+        let elem = newVertex.elements;
+        this.pushVert(elem[0], elem[1], elem[2],r,g,b);
     }
 
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createSphere = function(coords, size, color, segments){
+Armature.prototype.createSphere = function(coords, size, color, segments, transformFunc){
     if(segments < 3){
         console.log("Cannot have less than 3 segments in sphere");
         return;
@@ -156,7 +187,7 @@ Armature.prototype.createSphere = function(coords, size, color, segments){
     this.partData[endIndex].vertsPerShape.push(vertices.length);
 }
 
-Armature.prototype.createFin = function(coords, finCoords, size, color, segments){
+Armature.prototype.createFin = function(coords, finCoords, size, color, segments, transformFunc){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
