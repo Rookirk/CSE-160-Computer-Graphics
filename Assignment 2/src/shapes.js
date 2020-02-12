@@ -1,3 +1,7 @@
+Armature.prototype.pushShape = function(){
+    
+}
+
 Armature.prototype.pushVert = function(x,y,z,r,g,b){
     this.vertexArr.push( x );
     this.vertexArr.push( y );
@@ -25,7 +29,19 @@ Armature.prototype.createCube = function(coords, size, color, transformFunc){
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
-        this.pushVert(vertex[0],vertex[1],vertex[2],r,g,b);
+
+        let transformMatrix = new Matrix4();
+
+        if(typeof transformFunc === "function"){
+            let newMatrix = transformFunc();
+            console.log(newMatrix);
+            transformMatrix.multiply(newMatrix);
+        }
+
+        let newVertex = transformVert(vertex, transformMatrix);
+
+        let elem = newVertex.elements;
+        this.pushVert(elem[0], elem[1], elem[2],r,g,b);
     }
 
     // cubes have 36 verts
@@ -89,6 +105,31 @@ Armature.prototype.createYCylinder = function(coords, size, color, segments, tub
     const r = color[0], g = color[1], b = color[2];
 
     const vertices = this.getCylinderVertices([x,z,y],[l,h,w],[l,h,w],segments, tube);
+
+    for(let i = 0; i < vertices.length; i++){
+        const vertex = vertices[i];
+
+        let transformMatrix = new Matrix4();
+        transformMatrix.setRotate(90,1,0,0);
+
+        let newVertex = transformVert(vertex, transformMatrix);
+
+        let elem = newVertex.elements;
+        this.pushVert(elem[0], elem[1], elem[2],r,g,b);
+    }
+
+    this.partData[endIndex].vertsPerShape.push(vertices.length);
+}
+
+Armature.prototype.createYTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube, transformFunc){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0], y = coords[1], z = coords[2];
+    const lb = sizeB[0], wb = sizeB[1], hb = sizeB[2];
+    const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
+    const r = color[0], g = color[1], b = color[2];
+
+    const vertices = this.getCylinderVertices([x,z,y],[lb,hb,wb],[lt,ht,wt],segments, tube);
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
@@ -180,7 +221,19 @@ Armature.prototype.createSphere = function(coords, size, color, segments, transf
 
     for(let i = 0; i < vertices.length; i++){
         const vertex = vertices[i];
-        this.pushVert(vertex[0], vertex[1], vertex[2],r,g,b);
+
+        let transformMatrix = new Matrix4();
+
+        if(typeof transformFunc === "function"){
+            let newMatrix = transformFunc();
+            console.log(newMatrix);
+            transformMatrix.multiply(newMatrix);
+        }
+
+        let newVertex = transformVert(vertex, transformMatrix);
+
+        let elem = newVertex.elements;
+        this.pushVert(elem[0], elem[1], elem[2],r,g,b);
     }    
 
     // Add how many vertices were added
