@@ -42,8 +42,6 @@ Armature.prototype.createShape = function(vertices, color, transformFunc){
 }
 
 Armature.prototype.createCube = function(coords, size, color, transformFunc){
-    const endIndex = this.partData.length - 1;
-
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
 
@@ -53,8 +51,6 @@ Armature.prototype.createCube = function(coords, size, color, transformFunc){
 }
 
 Armature.prototype.createXCylinder = function(coords, size, color, segments, tube, transformFunc){
-    const endIndex = this.partData.length - 1;
-
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
 
@@ -77,8 +73,6 @@ Armature.prototype.createXCylinder = function(coords, size, color, segments, tub
 }
 
 Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube, transformFunc){
-    const endIndex = this.partData.length - 1;
-
     const x = coords[0], y = coords[1], z = coords[2];
     const lb = sizeB[0], wb = sizeB[1], hb = sizeB[2];
     const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
@@ -102,8 +96,6 @@ Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, 
 }
 
 Armature.prototype.createYCylinder = function(coords, size, color, segments, tube, transformFunc){
-    const endIndex = this.partData.length - 1;
-
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
 
@@ -126,8 +118,6 @@ Armature.prototype.createYCylinder = function(coords, size, color, segments, tub
 }
 
 Armature.prototype.createYTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube, transformFunc){
-    const endIndex = this.partData.length - 1;
-
     const x = coords[0], y = coords[1], z = coords[2];
     const lb = sizeB[0], wb = sizeB[1], hb = sizeB[2];
     const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
@@ -151,11 +141,8 @@ Armature.prototype.createYTruncCylinder = function(coords, sizeB, sizeT, color, 
 }
 
 Armature.prototype.createZCylinder = function(coords, size, color, segments, tube, transformFunc){
-    const endIndex = this.partData.length - 1;
-
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
-    const r = color[0], g = color[1], b = color[2];
 
     const vertices = this.getCylinderVertices([x,y,z],[l,w,h],[l,w,h],segments, tube);
 
@@ -163,8 +150,6 @@ Armature.prototype.createZCylinder = function(coords, size, color, segments, tub
 }
 
 Armature.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, color, segments, tube, transformFunc){
-    const endIndex = this.partData.length - 1;
-
     const x = coords[0], y = coords[1], z = coords[2];
     const lb = sizeB[0], wb = sizeB[1], hb = sizeB[2];
     const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
@@ -181,28 +166,27 @@ Armature.prototype.createSphere = function(coords, size, color, segments, transf
         return;
     }
 
-    const endIndex = this.partData.length - 1;
-
-    const x = coords[0], y = coords[1], z = coords[2];
-    const l = size[0], w = size[1], h = size[2];
-    const r = color[0], g = color[1], b = color[2];
-
     const vertices = this.getSphereVertices(coords,size,segments);
 
     this.createShape(vertices, color, transformFunc);
 }
 
 Armature.prototype.createCone = function(coords, tipCoords, size, color, segments, transformFunc){
+    const vertices = this.getConeVertices(coords, tipCoords, size, segments);
+    
+    this.createShape(vertices, color, transformFunc);
+}
+
+Armature.prototype.getConeVertices = function(coords, tipCoords, size, segments) {
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
-    const xfin = tipCoords[0], zfin = tipCoords[1];
+    const xtip = tipCoords[0], ztip = tipCoords[1];
     const l = size[0], w = size[1], h = size[2];
-    const r = color[0], g = color[1], b = color[2];
 
     let xcoords = [];
     let zcoords = [];
-    let vertexCount = 0;
+    let vertices = [];
 
     // Finds the coords of the circle
     let circleRotationTheta = 2*Math.PI/segments;
@@ -217,15 +201,12 @@ Armature.prototype.createCone = function(coords, tipCoords, size, color, segment
 
     // Iterate through the top
     for(let i = 0; i < xcoords.length - 1; i++){
-        this.pushVert( xcoords[i], y - w , zcoords[i], r,g,b);
-        this.pushVert( xcoords[i + 1], y - w, zcoords[i + 1], r,g,b);
-        this.pushVert( x + l*xfin, y + w, z + h*zfin, r,g,b);
-
-        vertexCount += 3;
+        vertices.push( [xcoords[i], y - w , zcoords[i]] );
+        vertices.push( [xcoords[i + 1], y - w, zcoords[i + 1]] );
+        vertices.push( [x + l*xtip, y + w, z + h*ztip] );
     }
 
-    // Add how many vertices were added
-    this.partData[endIndex].vertsPerShape.push(vertexCount);
+    return vertices;
 }
 
 Armature.prototype.getCubeVertices = function(coords, size) {
