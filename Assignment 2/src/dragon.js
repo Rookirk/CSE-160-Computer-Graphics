@@ -25,7 +25,10 @@ function createDragon(){
 
     let totalSpineSegs = 7;
     rig.drawDragonTail(totalSpineSegs);
-    //rig.drawDragonTailPlume(totalSpineSegs);
+    rig.drawDragonTailPlume(totalSpineSegs);
+
+    rig.drawDragonLegs("left");
+    rig.drawDragonLegs("right");
     
     let totalChestSegsPerS = 4;
     rig.drawDragonBody(totalChestSegsPerS);
@@ -49,188 +52,128 @@ function createDragon(){
 
             armature.createSphere( [.05, .05, -.16], [.02, .02, .02], scaleColor,6); // Eyebrows
             armature.createSphere( [-.05, .05, -.16], [.02, .02, .02], scaleColor,6); // Eyes
+
+            armature.createDragonAntlers("left");
+            armature.createDragonAntlers("right");
         },
         function(initMatrix) {
             initMatrix.rotate(-25,1,0,0);
         },
         function(animMatrix) {
-            animMatrix.transformChest(40,Math.PI);
+            animMatrix.transformChest(40,1.25*Math.PI);
         }
     );
-    rig.drawDragonAntlers("left");
-    rig.drawDragonAntlers("right");
+    //rig.drawDragonAntlers("left");
+    //rig.drawDragonAntlers("right");
 }
 
-Armature.prototype.drawDragonAntlers = function(side){
+Armature.prototype.createDragonAntlers = function(side){
     let scaleOrientation, prefix;
-    if(side === "left"){
-        scaleOrientation = 1;
-        prefix = "l";
-    }
-    else if(side === "right"){
-        scaleOrientation = -1;
-        prefix = "r";
-    }
+    if(side === "left") scaleOrientation = 1;
+    else if(side === "right") scaleOrientation = -1;
     else{
         console.log("side can only be 'left' or 'right' in drawDragonAntlers");
         return;
     }
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler1",
-            parent: "Head",
-            origin: [.1*scaleOrientation,.1,.1]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, 0], [.03, .03, .05], antlerColor, 6, true);
-        },
-        // [initMatrix][scale][rotate]
-        function(initMatrix) {
-            initMatrix.scale(1*scaleOrientation,1,1);
-            initMatrix.rotate(-25,1,0,0);
-            initMatrix.rotate(15,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler2",
-            parent: prefix + "Antler1",
-            origin: [0,0,.05]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .04], [.025, .025, .04], antlerColor, 6, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(-15,1,0,0);
-            initMatrix.rotate(15,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler3",
-            parent: prefix + "Antler2",
-            origin: [0,0,.08]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .03], [.02, .02, .03], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(15,1,0,0);
-            initMatrix.rotate(-10,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler4",
-            parent: prefix + "Antler3",
-            origin: [0,0,.06]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .02], [.015, .015, .02], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(15,1,0,0);
-            initMatrix.rotate(-5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler5",
-            parent: prefix + "Antler4",
-            origin: [0,0,.04]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .02], [.01, .01, .02], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(-15,1,0,0);
-            initMatrix.rotate(-5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler6",
-            parent: prefix + "Antler5",
-            origin: [0,0,.04]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .015], [.008, .008, .015], antlerColor, 3, false);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(-15,1,0,0);
-            initMatrix.rotate(-5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler1_1",
-            parent: prefix + "Antler1",
-            origin: [0,0,.05]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .035], [.02, .02, .035], antlerColor, 6, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(45,1,0,0);
-            initMatrix.rotate(15,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler1_2",
-            parent: prefix + "Antler1_1",
-            origin: [0,0,.06]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .015], [.015, .015, .02], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(5,1,0,0);
-            initMatrix.rotate(5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler1_3",
-            parent: prefix + "Antler1_2",
-            origin: [0,0,.03]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .015], [.01, .01, .02], antlerColor, 3, false);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(5,1,0,0);
-            initMatrix.rotate(5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler3_1",
-            parent: prefix + "Antler3",
-            origin: [0,0,.03]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .025], [.02, .02, .03], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(35,1,0,0);
-            initMatrix.rotate(-45,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler3_2",
-            parent: prefix + "Antler3_1",
-            origin: [0,0,.05]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .015], [.015, .015, .015], antlerColor, 4, false);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(-35,1,0,0);
-            initMatrix.rotate(-45,0,1,0);
-        }
-    );
+
+    let transformMatrix = new Matrix4();
+
+    // Antler1
+    transformMatrix.translate(.1*scaleOrientation,.1,.1);
+    transformMatrix.scale(1*scaleOrientation,1,1);
+    transformMatrix.rotate(-25,1,0,0);
+    transformMatrix.rotate(15,0,1,0);
+    this.createZCylinder( [0, 0, 0], [.03, .03, .05], antlerColor, 6, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    const antler1Matrix = new Matrix4();
+    antler1Matrix.set(transformMatrix);
+
+    // Antler2
+    transformMatrix.translate(0,0,.05);
+    transformMatrix.rotate(-15,1,0,0);
+    transformMatrix.rotate(15,0,1,0);
+    this.createZCylinder( [0, 0, .04], [.025, .025, .04], antlerColor, 6, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler3
+    transformMatrix.translate(0,0,.08);
+    transformMatrix.rotate(15,1,0,0);
+    transformMatrix.rotate(-10,0,1,0);
+    this.createZCylinder( [0, 0, .03], [.02, .02, .03], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    const antler3Matrix = new Matrix4();
+    antler3Matrix.set(transformMatrix);
+
+    // Antler4
+    transformMatrix.translate(0,0,.06);
+    transformMatrix.rotate(15,1,0,0);
+    transformMatrix.rotate(-5,0,1,0);
+    this.createZCylinder( [0, 0, .02], [.015, .015, .02], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler5
+    transformMatrix.translate(0,0,.04);
+    transformMatrix.rotate(-15,1,0,0);
+    transformMatrix.rotate(-5,0,1,0);
+    this.createZCylinder( [0, 0, .02], [.01, .01, .02], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler6
+    transformMatrix.translate(0,0,.04);
+    transformMatrix.rotate(-15,1,0,0);
+    transformMatrix.rotate(-5,0,1,0);
+    this.createZCylinder( [0, 0, .015], [.008, .008, .015], antlerColor, 3, false, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler1_1
+    transformMatrix.set(antler1Matrix);
+    transformMatrix.translate(0,0,.05);
+    transformMatrix.rotate(45,1,0,0);
+    transformMatrix.rotate(15,0,1,0);
+    this.createZCylinder( [0, 0, .035], [.02, .02, .035], antlerColor, 6, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler1_2
+    transformMatrix.translate(0,0,.06);
+    transformMatrix.rotate(5,1,0,0);
+    transformMatrix.rotate(5,0,1,0);
+    this.createZCylinder( [0, 0, .015], [.015, .015, .02], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler1_3
+    transformMatrix.translate(0,0,.03);
+    transformMatrix.rotate(5,1,0,0);
+    transformMatrix.rotate(5,0,1,0);
+    this.createZCylinder( [0, 0, .015], [.01, .01, .02], antlerColor, 3, false, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler3_1
+    transformMatrix.set(antler3Matrix);
+    transformMatrix.translate(0,0,.03);
+    transformMatrix.rotate(35,1,0,0);
+    transformMatrix.rotate(-45,0,1,0);
+    this.createZCylinder( [0, 0, .025], [.02, .02, .03], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler3_2
+    transformMatrix.translate(0,0,.05);
+    transformMatrix.rotate(-35,1,0,0);
+    transformMatrix.rotate(-45,0,1,0);
+    this.createZCylinder( [0, 0, .015], [.015, .015, .015], antlerColor, 4, false, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
 }
 
 Armature.prototype.drawDragonArms = function(side){
@@ -401,7 +344,7 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
             initMatrix.rotate(25,1,0,0);
         },
         function(animMatrix) {
-            animMatrix.transformChest(2,0);
+            animMatrix.transformChest(2,.25*Math.PI);
         }
     );
 
@@ -422,7 +365,7 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
                 initMatrix.rotate(35,1,0,0);
             },
             function(animMatrix) {
-                animMatrix.transformChest(5,0);
+                animMatrix.transformChest(5,.25*Math.PI);
             }
         );
     }
@@ -444,26 +387,197 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
                 initMatrix.rotate(-40,1,0,0);
             },
             function(animMatrix) {
-                animMatrix.transformChest(-10,Math.PI);
+                animMatrix.transformChest(-10,1.25*Math.PI);
             }
         )
     }
 }
 
+Armature.prototype.drawDragonLegs = function(side){
+    let scaleOrientation, prefix;
+    if(side === "left"){
+        scaleOrientation = 1;
+        prefix = "l";
+    }
+    else if(side === "right"){
+        scaleOrientation = -1;
+        prefix = "r";
+    }
+    else{
+        console.log("side can only be 'left' or 'right' in drawDragonAntlers");
+        return;
+    }
+    rig.addBodyPart(
+        {
+            name: prefix + "Leg1",
+            parent: "Tail5",
+            origin: [.06*scaleOrientation,0,-.1]
+        },
+        function(armature) {
+            armature.createSphere( [0, 0, 0], [.1, .1, .1], armColor, 6);
+            armature.createXTruncCylinder( [.12, 0, 0], [.12, .1, .1], [.1, .04, .04], armColor, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.scale(1*scaleOrientation,1,1);
+            initMatrix.rotate(35,1,0,0); // how up the arms are
+            initMatrix.rotate(-45,0,0,1); //how inward the arms are
+        },
+        function(animMatrix) {
+            animMatrix.transformLegJoint();
+        }
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Leg2",
+            parent: prefix + "Leg1",
+            origin: [.24,0,0]
+        },
+        function(armature) {
+            armature.createSphere( [0, 0, 0], [.04, .04, .04], armColor, 6);
+            armature.createXTruncCylinder( [.06, 0, 0], [.06, .04, .04], [.1, .03, .03], armColor, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-90,0,1,0); // how up the arms are
+        },
+        function(animMatrix) {
+            animMatrix.transformKnee();
+        }
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Leg3",
+            parent: prefix + "Leg2",
+            origin: [.12,0,0]
+        },
+        function(armature) {
+            armature.createSphere( [0, 0, 0], [.04, .04, .04], armColor, 6);
+            armature.createXTruncCylinder( [.1, 0, 0], [.1, .04, .04], [.1, .03, .03], armColor, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+            initMatrix.rotate(45,0,1,0); // how up the arms are
+        },
+        function(animMatrix) {
+            animMatrix.transformInnerKnee();
+        }
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "Foot",
+            parent: prefix + "Leg3",
+            origin: [.2,0,0]
+        },
+        function(armature) {
+            armature.createXTruncCylinder( [.08, 0, 0], [.08, .02, .03], [.08, .02, .06], armColor2, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-120,1,0,0); // wrist action like queen wave
+            initMatrix.rotate(-45,0,0,1); // wrist action like pressing button
+        },
+        function(animMatrix) {
+            animMatrix.transformAnkle();
+        }
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeIndex1",
+            parent: prefix + "Foot",
+            origin: [.14,0,.04]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeIndex2",
+            parent: prefix + "ToeIndex1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6, false);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeMiddle1",
+            parent: prefix + "Foot",
+            origin: [.16,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeMiddle2",
+            parent: prefix + "ToeMiddle1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6, false);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeRing1",
+            parent: prefix + "Foot",
+            origin: [.14,0,-.04]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .015, .015], armColor3, 6, true);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+    rig.addBodyPart(
+        {
+            name: prefix + "ToeRing2",
+            parent: prefix + "ToeRing1",
+            origin: [.04,0,0]
+        },
+        function(armature) {
+            armature.createXCylinder( [.015, 0, 0], [.025, .010, .010], armColor3, 6, false);
+        },
+        function(initMatrix) {
+            initMatrix.rotate(-45,0,0,1);
+        },
+        function(animMatrix) {}
+    );
+}
+
 Armature.prototype.drawDragonSpineSeg = function(offset, underbellyLength){
     this.createZCylinder( [0, 0, .1 + offset], [.1, .1, .1], scaleColor, 8, true); // Golden scales
     this.createZCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], bellyColor, 8, true); // Yellow underbelly
-    this.createFin([0, .16, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
+    this.createCone([0, .16, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
     this.createSphere([0, .01, 0 + offset], [.11, .11, .13], scaleColor, 5); // Golden scales
     this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
 }
 
-Armature.prototype.drawDragonTruncSpineSeg = function(offset, underbellyLength){
-    this.createZTruncCylinder( [0, 0, .1 + offset], [.1, .1, .1], [.1*.85, .1*.85, .1*.85], scaleColor, 8, true); // Golden scales
-    //this.createZTruncCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], [.08*.85, .08*.85, underbellyLength*.85], bellyColor, 8, true); // Yellow underbelly
-    //this.createFin([0, .16, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
-    //this.createSphere([0, .01, 0 + offset], [.11, .11, .13], scaleColor, 5); // Golden scales
-    //this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
+Armature.prototype.drawDragonTruncSpineSeg = function(offset, underbellyLength, finHeight, smallerSize){
+    this.createZTruncCylinder( [0, 0, .1 + offset], [.1, .1, .1], [.1*smallerSize, .1*smallerSize, .1*smallerSize], scaleColor, 8, true); // Golden scales
+    this.createZTruncCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], [.08*smallerSize, .08*smallerSize, underbellyLength*smallerSize], bellyColor, 8, true); // Yellow underbelly
+    this.createCone([0, finHeight, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
+    this.createSphere([0, .01, 0 + offset], [.11, .11, .13], scaleColor, 5); // Golden scales
+    this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
 }
 
 Armature.prototype.drawDragonTail = function(totalSpineSegs){
@@ -474,7 +588,7 @@ Armature.prototype.drawDragonTail = function(totalSpineSegs){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.drawDragonSpineSeg(0,.1);
+            armature.drawDragonTruncSpineSeg(0,.1, .14,.85);
         },
         function(initMatrix) {},
         function(animMatrix) {
@@ -493,7 +607,7 @@ Armature.prototype.drawDragonTail = function(totalSpineSegs){
                 origin: [0,0,.2]
             },
             function(armature) {
-                armature.drawDragonSpineSeg(0,.1);
+                armature.drawDragonTruncSpineSeg(0,.1, .14,.85);
             },
             function(initMatrix) {
                 initMatrix.scale(.85,.85,1);
@@ -511,36 +625,14 @@ Armature.prototype.drawDragonTailPlume = function(totalSpineSegs){
         {
             name: "TailPlume1",
             parent: "Tail" + lastTailSeg,
-            origin: [0,0,0]
+            origin: [0,0,.2]
         },
         function(armature) {
-            armature.drawDragonSpineSeg(0,.1);
+            armature.drawDragonTruncSpineSeg(0,.1, .04,0);
         },
         function(initMatrix) {},
         function(animMatrix) {
             animMatrix.transformSpine(15,0);
         }
     );
-    
-    for(let i = 0; i < totalSpineSegs; i++){
-        const currIndex = i + 2;
-        const parentIndex = currIndex - 1;
-        const spineOffset = (totalSpineSegs-i)/totalSpineSegs*Math.PI;
-        rig.addBodyPart(
-            {
-                name: "Tail" + currIndex,
-                parent: "Tail" + parentIndex,
-                origin: [0,0,.2]
-            },
-            function(armature) {
-                armature.drawDragonSpineSeg(0,.1);
-            },
-            function(initMatrix) {
-                initMatrix.scale(.85,.85,1);
-            },
-            function(animMatrix) {
-                animMatrix.transformSpine(15,spineOffset);
-            }
-        );
-    }
 }

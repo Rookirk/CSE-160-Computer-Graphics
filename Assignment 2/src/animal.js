@@ -6,7 +6,7 @@ function createAnimal(){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.createZCylinder(   [0,   0,   0],   [.1,   .1,   .1],[255,255,255], 10, false); // white
+            armature.createSphere(   [0,   0,   0],   [.1,   .1,   .1],[255,255,255], 10, false); // white
         },
         function(initMatrix) {
             //initMatrix.rotate(45,1,0,0);
@@ -23,8 +23,10 @@ function createAnimal(){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.createFin( [.2, .2, .2], [1, 0], [.1, .1, .1],[255,255,  0], 10); // yellow
-            armature.createCube( [-.2, .2, -.2],   [.1,   .1, .1],  [0,255,255]); // cyan
+            armature.createCone( [.2, .2, .2], [1, 0], [.1, .1, .1],[255,255,  0], 10); // yellow
+            armature.createCube( [-.2, .2, -.2],   [.1,   .1, .1],  [0,255,255], function(matrix){
+                matrix.rotate(45,0,1,0);
+            }); // cyan
         },
         function(initMatrix) {
             //initMatrix.rotate(45,1,0,0);
@@ -41,7 +43,7 @@ function createAnimal(){
             origin: [-.2,-.2,.2]
         },
         function(armature) {
-            armature.createYCylinder(  [.4, 0, -.4],   [.1,   .1,   .1],[255,  0,255], 10, false); // magenta
+            armature.createYCylinder(  [.4, 0, -.4],   [.1,   .1,   .1],[255,  0,255], 10, true); // magenta
             armature.createXCylinder( [0, 0,  0],   [.1,   .1,   .1],  [0,255,  0], 10, false); // green
         },
         function(initMatrix){
