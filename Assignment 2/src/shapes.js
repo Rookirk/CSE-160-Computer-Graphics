@@ -97,7 +97,7 @@ Armature.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, color, 
         let elem = newVertex.elements;
         transformedVerts.push([elem[0], elem[1], elem[2]]);
     }
-    
+
     this.createShape(transformedVerts, color, transformFunc);
 }
 
@@ -192,11 +192,11 @@ Armature.prototype.createSphere = function(coords, size, color, segments, transf
     this.createShape(vertices, color, transformFunc);
 }
 
-Armature.prototype.createFin = function(coords, finCoords, size, color, segments, transformFunc){
+Armature.prototype.createCone = function(coords, tipCoords, size, color, segments, transformFunc){
     const endIndex = this.partData.length - 1;
 
     const x = coords[0], y = coords[1], z = coords[2];
-    const xfin = finCoords[0], zfin = finCoords[1];
+    const xfin = tipCoords[0], zfin = tipCoords[1];
     const l = size[0], w = size[1], h = size[2];
     const r = color[0], g = color[1], b = color[2];
 

@@ -23,7 +23,7 @@ function createAnimal(){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.createFin( [.2, .2, .2], [1, 0], [.1, .1, .1],[255,255,  0], 10); // yellow
+            armature.createCone( [.2, .2, .2], [1, 0], [.1, .1, .1],[255,255,  0], 10); // yellow
             armature.createCube( [-.2, .2, -.2],   [.1,   .1, .1],  [0,255,255], function(matrix){
                 matrix.rotate(45,0,1,0);
             }); // cyan

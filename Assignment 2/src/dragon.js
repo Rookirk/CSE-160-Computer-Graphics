@@ -60,7 +60,7 @@ function createDragon(){
             initMatrix.rotate(-25,1,0,0);
         },
         function(animMatrix) {
-            animMatrix.transformChest(40,Math.PI);
+            animMatrix.transformChest(40,1.25*Math.PI);
         }
     );
     //rig.drawDragonAntlers("left");
@@ -344,7 +344,7 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
             initMatrix.rotate(25,1,0,0);
         },
         function(animMatrix) {
-            animMatrix.transformChest(2,0);
+            animMatrix.transformChest(2,.25*Math.PI);
         }
     );
 
@@ -365,7 +365,7 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
                 initMatrix.rotate(35,1,0,0);
             },
             function(animMatrix) {
-                animMatrix.transformChest(5,0);
+                animMatrix.transformChest(5,.25*Math.PI);
             }
         );
     }
@@ -387,7 +387,7 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
                 initMatrix.rotate(-40,1,0,0);
             },
             function(animMatrix) {
-                animMatrix.transformChest(-10,Math.PI);
+                animMatrix.transformChest(-10,1.25*Math.PI);
             }
         )
     }
@@ -567,7 +567,7 @@ Armature.prototype.drawDragonLegs = function(side){
 Armature.prototype.drawDragonSpineSeg = function(offset, underbellyLength){
     this.createZCylinder( [0, 0, .1 + offset], [.1, .1, .1], scaleColor, 8, true); // Golden scales
     this.createZCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], bellyColor, 8, true); // Yellow underbelly
-    this.createFin([0, .16, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
+    this.createCone([0, .16, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
     this.createSphere([0, .01, 0 + offset], [.11, .11, .13], scaleColor, 5); // Golden scales
     this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
 }
@@ -575,7 +575,7 @@ Armature.prototype.drawDragonSpineSeg = function(offset, underbellyLength){
 Armature.prototype.drawDragonTruncSpineSeg = function(offset, underbellyLength, finHeight, smallerSize){
     this.createZTruncCylinder( [0, 0, .1 + offset], [.1, .1, .1], [.1*smallerSize, .1*smallerSize, .1*smallerSize], scaleColor, 8, true); // Golden scales
     this.createZTruncCylinder( [0, -.03, .1 + offset], [.08, .08, underbellyLength], [.08*smallerSize, .08*smallerSize, underbellyLength*smallerSize], bellyColor, 8, true); // Yellow underbelly
-    this.createFin([0, finHeight, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
+    this.createCone([0, finHeight, .1 + offset], [0, .7], [.03, .06, .1], finColor, 6); // green fin
     this.createSphere([0, .01, 0 + offset], [.11, .11, .13], scaleColor, 5); // Golden scales
     this.createSphere([0, -.03, 0 + offset], [.08, .08, .08], bellyColor, 5); // yellow underbelly
 }
