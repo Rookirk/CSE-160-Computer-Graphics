@@ -344,7 +344,7 @@ Armature.prototype.drawDragonBody = function(totalChestSegsPerS){
             initMatrix.rotate(25,1,0,0);
         },
         function(animMatrix) {
-            animMatrix.transformChest(2,.25*Math.PI);
+            animMatrix.transformChest(3,.25*Math.PI);
         }
     );
 
@@ -581,6 +581,7 @@ Armature.prototype.drawDragonTruncSpineSeg = function(offset, underbellyLength, 
 }
 
 Armature.prototype.drawDragonTail = function(totalSpineSegs){
+    const scaleFactor = .9;
     rig.addBodyPart(
         {
             name: "Tail1",
@@ -588,7 +589,7 @@ Armature.prototype.drawDragonTail = function(totalSpineSegs){
             origin: [0,0,0]
         },
         function(armature) {
-            armature.drawDragonTruncSpineSeg(0,.1, .14,.85);
+            armature.drawDragonTruncSpineSeg(0,.1, .14,scaleFactor);
         },
         function(initMatrix) {},
         function(animMatrix) {
@@ -607,10 +608,10 @@ Armature.prototype.drawDragonTail = function(totalSpineSegs){
                 origin: [0,0,.2]
             },
             function(armature) {
-                armature.drawDragonTruncSpineSeg(0,.1, .14,.85);
+                armature.drawDragonTruncSpineSeg(0,.1, .14,scaleFactor);
             },
             function(initMatrix) {
-                initMatrix.scale(.85,.85,1);
+                initMatrix.scale(scaleFactor,scaleFactor,1);
             },
             function(animMatrix) {
                 animMatrix.transformSpine(15,spineOffset);
@@ -639,7 +640,7 @@ Armature.prototype.drawDragonTailPlume = function(totalSpineSegs){
             let transformMatrix = new Matrix4();
             for(let i = 0; i < totalFins; i++){
                 transformMatrix.rotate(360/totalFins, 0,0,1);
-                armature.createCone([0, .08, .04], [0, .6], [.07, .08, .03], finColor, 6, function(matrix){
+                armature.createCone([0, .13, .03], [0, 1], [.07, .13, .08], finColor, 6, function(matrix){
                     matrix.multiply(transformMatrix);
                 });
             }
@@ -648,7 +649,7 @@ Armature.prototype.drawDragonTailPlume = function(totalSpineSegs){
             transformMatrix.rotate(180/totalFins,0,0,1);
             for(let i = 0; i < totalFins; i++){
                 transformMatrix.rotate(360/totalFins, 0,0,1);
-                armature.createCone([0, .1, .06], [0, 1.3], [.07, .1, .06], finColor, 6, function(matrix){
+                armature.createCone([0, .15, .05], [0, 1.7], [.07, .15, .1], finColor, 6, function(matrix){
                     matrix.multiply(transformMatrix);
                 });
             }
@@ -656,15 +657,15 @@ Armature.prototype.drawDragonTailPlume = function(totalSpineSegs){
             transformMatrix.setIdentity();
             for(let i = 0; i < totalFins; i++){
                 transformMatrix.rotate(360/totalFins, 0,0,1);
-                armature.createCone([0, .06, .08], [0, 1.2], [.07, .06, .1], finColor, 6, function(matrix){
+                armature.createCone([0, .1, .08], [0, 1.8], [.07, .1, .14], finColor, 6, function(matrix){
                     matrix.multiply(transformMatrix);
                 });
             }
 
             transformMatrix.setIdentity();
-            transformMatrix.translate(0,0,.15);
+            transformMatrix.translate(0,0,.25);
             transformMatrix.rotate(90,1,0,0);
-            armature.createCone([0, 0, 0], [0, 0], [.1, .15, .1], finColor, 6, function(matrix){
+            armature.createCone([0, 0, 0], [0, 0], [.1, .25, .1], finColor, 6, function(matrix){
                 matrix.multiply(transformMatrix);
             });
         },
