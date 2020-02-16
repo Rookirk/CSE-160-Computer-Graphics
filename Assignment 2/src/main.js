@@ -80,6 +80,7 @@ function main() {
 
     rig = new Armature();
     createDragon();
+    //createAnimal();
 
     if(!enableAnim) rig.transformRigMatrices();
 
