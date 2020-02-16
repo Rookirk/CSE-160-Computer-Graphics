@@ -36,7 +36,7 @@ Matrix4.prototype.transformLegJoint = function() {
 }
 
 Matrix4.prototype.transformKnee = function() {
-    return this.templateOscillate(.002, Math.PI, [1, 1, 0], -15, 65);
+    return this.templateOscillate(.002, Math.PI, [1, 1, 0], -50, 25);
 }
 
 Matrix4.prototype.transformInnerKnee = function() {

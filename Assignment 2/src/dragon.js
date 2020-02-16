@@ -21,7 +21,7 @@ function createDragon(){
         function(animMatrix) {
             animMatrix.transformBody();
         }
-        )
+    );
 
     let totalSpineSegs = 7;
     rig.drawDragonTail(totalSpineSegs);
@@ -628,7 +628,45 @@ Armature.prototype.drawDragonTailPlume = function(totalSpineSegs){
             origin: [0,0,.2]
         },
         function(armature) {
-            armature.drawDragonTruncSpineSeg(0,.1, .04,0);
+            const underbellyLength = .1, smallerSize = 0;
+            //armature.createZTruncCylinder( [0, 0, .1], [.1, .1, .1], [.1*smallerSize, .1*smallerSize, .1*smallerSize], scaleColor, 8, true); // Golden scales
+            //armature.createZTruncCylinder( [0, -.03, .1], [.08, .08, underbellyLength], [.08*smallerSize, .08*smallerSize, underbellyLength*smallerSize], bellyColor, 8, true); // Yellow underbelly
+            armature.createSphere([0, .01, 0], [.11, .11, .13], scaleColor, 5); // Golden scales
+            armature.createSphere([0, -.03, 0], [.08, .08, .08], bellyColor, 5); // yellow underbelly
+
+            const totalFins = 8;
+
+            let transformMatrix = new Matrix4();
+            for(let i = 0; i < totalFins; i++){
+                transformMatrix.rotate(360/totalFins, 0,0,1);
+                armature.createCone([0, .08, .04], [0, .6], [.07, .08, .03], finColor, 6, function(matrix){
+                    matrix.multiply(transformMatrix);
+                });
+            }
+
+            transformMatrix.setIdentity();
+            transformMatrix.rotate(180/totalFins,0,0,1);
+            for(let i = 0; i < totalFins; i++){
+                transformMatrix.rotate(360/totalFins, 0,0,1);
+                armature.createCone([0, .1, .06], [0, 1.3], [.07, .1, .06], finColor, 6, function(matrix){
+                    matrix.multiply(transformMatrix);
+                });
+            }
+
+            transformMatrix.setIdentity();
+            for(let i = 0; i < totalFins; i++){
+                transformMatrix.rotate(360/totalFins, 0,0,1);
+                armature.createCone([0, .06, .08], [0, 1.2], [.07, .06, .1], finColor, 6, function(matrix){
+                    matrix.multiply(transformMatrix);
+                });
+            }
+
+            transformMatrix.setIdentity();
+            transformMatrix.translate(0,0,.15);
+            transformMatrix.rotate(90,1,0,0);
+            armature.createCone([0, 0, 0], [0, 0], [.1, .15, .1], finColor, 6, function(matrix){
+                matrix.multiply(transformMatrix);
+            });
         },
         function(initMatrix) {},
         function(animMatrix) {
