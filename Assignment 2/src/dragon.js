@@ -52,6 +52,9 @@ function createDragon(){
 
             armature.createSphere( [.05, .05, -.16], [.02, .02, .02], scaleColor,6); // Eyebrows
             armature.createSphere( [-.05, .05, -.16], [.02, .02, .02], scaleColor,6); // Eyes
+
+            armature.createDragonAntlers("left");
+            armature.createDragonAntlers("right");
         },
         function(initMatrix) {
             initMatrix.rotate(-25,1,0,0);
@@ -60,180 +63,117 @@ function createDragon(){
             animMatrix.transformChest(40,Math.PI);
         }
     );
-    rig.drawDragonAntlers("left");
-    rig.drawDragonAntlers("right");
+    //rig.drawDragonAntlers("left");
+    //rig.drawDragonAntlers("right");
 }
 
-Armature.prototype.drawDragonAntlers = function(side){
+Armature.prototype.createDragonAntlers = function(side){
     let scaleOrientation, prefix;
-    if(side === "left"){
-        scaleOrientation = 1;
-        prefix = "l";
-    }
-    else if(side === "right"){
-        scaleOrientation = -1;
-        prefix = "r";
-    }
+    if(side === "left") scaleOrientation = 1;
+    else if(side === "right") scaleOrientation = -1;
     else{
         console.log("side can only be 'left' or 'right' in drawDragonAntlers");
         return;
     }
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler1",
-            parent: "Head",
-            origin: [.1*scaleOrientation,.1,.1]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, 0], [.03, .03, .05], antlerColor, 6, true);
-        },
-        // [initMatrix][scale][rotate]
-        function(initMatrix) {
-            initMatrix.scale(1*scaleOrientation,1,1);
-            initMatrix.rotate(-25,1,0,0);
-            initMatrix.rotate(15,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler2",
-            parent: prefix + "Antler1",
-            origin: [0,0,.05]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .04], [.025, .025, .04], antlerColor, 6, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(-15,1,0,0);
-            initMatrix.rotate(15,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler3",
-            parent: prefix + "Antler2",
-            origin: [0,0,.08]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .03], [.02, .02, .03], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(15,1,0,0);
-            initMatrix.rotate(-10,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler4",
-            parent: prefix + "Antler3",
-            origin: [0,0,.06]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .02], [.015, .015, .02], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(15,1,0,0);
-            initMatrix.rotate(-5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler5",
-            parent: prefix + "Antler4",
-            origin: [0,0,.04]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .02], [.01, .01, .02], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(-15,1,0,0);
-            initMatrix.rotate(-5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler6",
-            parent: prefix + "Antler5",
-            origin: [0,0,.04]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .015], [.008, .008, .015], antlerColor, 3, false);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(-15,1,0,0);
-            initMatrix.rotate(-5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler1_1",
-            parent: prefix + "Antler1",
-            origin: [0,0,.05]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .035], [.02, .02, .035], antlerColor, 6, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(45,1,0,0);
-            initMatrix.rotate(15,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler1_2",
-            parent: prefix + "Antler1_1",
-            origin: [0,0,.06]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .015], [.015, .015, .02], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(5,1,0,0);
-            initMatrix.rotate(5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler1_3",
-            parent: prefix + "Antler1_2",
-            origin: [0,0,.03]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .015], [.01, .01, .02], antlerColor, 3, false);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(5,1,0,0);
-            initMatrix.rotate(5,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler3_1",
-            parent: prefix + "Antler3",
-            origin: [0,0,.03]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .025], [.02, .02, .03], antlerColor, 4, true);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(35,1,0,0);
-            initMatrix.rotate(-45,0,1,0);
-        }
-    );
-    rig.addBodyPart(
-        {
-            name: prefix + "Antler3_2",
-            parent: prefix + "Antler3_1",
-            origin: [0,0,.05]
-        },
-        function(armature) {
-            armature.createZCylinder( [0, 0, .015], [.015, .015, .015], antlerColor, 4, false);
-        },
-        function(initMatrix) {
-            initMatrix.rotate(-35,1,0,0);
-            initMatrix.rotate(-45,0,1,0);
-        }
-    );
+
+    let transformMatrix = new Matrix4();
+
+    // Antler1
+    transformMatrix.translate(.1*scaleOrientation,.1,.1);
+    transformMatrix.scale(1*scaleOrientation,1,1);
+    transformMatrix.rotate(-25,1,0,0);
+    transformMatrix.rotate(15,0,1,0);
+    this.createZCylinder( [0, 0, 0], [.03, .03, .05], antlerColor, 6, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    const antler1Matrix = new Matrix4();
+    antler1Matrix.set(transformMatrix);
+
+    // Antler2
+    transformMatrix.translate(0,0,.05);
+    transformMatrix.rotate(-15,1,0,0);
+    transformMatrix.rotate(15,0,1,0);
+    this.createZCylinder( [0, 0, .04], [.025, .025, .04], antlerColor, 6, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler3
+    transformMatrix.translate(0,0,.08);
+    transformMatrix.rotate(15,1,0,0);
+    transformMatrix.rotate(-10,0,1,0);
+    this.createZCylinder( [0, 0, .03], [.02, .02, .03], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    const antler3Matrix = new Matrix4();
+    antler3Matrix.set(transformMatrix);
+
+    // Antler4
+    transformMatrix.translate(0,0,.06);
+    transformMatrix.rotate(15,1,0,0);
+    transformMatrix.rotate(-5,0,1,0);
+    this.createZCylinder( [0, 0, .02], [.015, .015, .02], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler5
+    transformMatrix.translate(0,0,.04);
+    transformMatrix.rotate(-15,1,0,0);
+    transformMatrix.rotate(-5,0,1,0);
+    this.createZCylinder( [0, 0, .02], [.01, .01, .02], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler6
+    transformMatrix.translate(0,0,.04);
+    transformMatrix.rotate(-15,1,0,0);
+    transformMatrix.rotate(-5,0,1,0);
+    this.createZCylinder( [0, 0, .015], [.008, .008, .015], antlerColor, 3, false, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler1_1
+    transformMatrix.set(antler1Matrix);
+    transformMatrix.translate(0,0,.05);
+    transformMatrix.rotate(45,1,0,0);
+    transformMatrix.rotate(15,0,1,0);
+    this.createZCylinder( [0, 0, .035], [.02, .02, .035], antlerColor, 6, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler1_2
+    transformMatrix.translate(0,0,.06);
+    transformMatrix.rotate(5,1,0,0);
+    transformMatrix.rotate(5,0,1,0);
+    this.createZCylinder( [0, 0, .015], [.015, .015, .02], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler1_3
+    transformMatrix.translate(0,0,.03);
+    transformMatrix.rotate(5,1,0,0);
+    transformMatrix.rotate(5,0,1,0);
+    this.createZCylinder( [0, 0, .015], [.01, .01, .02], antlerColor, 3, false, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler3_1
+    transformMatrix.set(antler3Matrix);
+    transformMatrix.translate(0,0,.03);
+    transformMatrix.rotate(35,1,0,0);
+    transformMatrix.rotate(-45,0,1,0);
+    this.createZCylinder( [0, 0, .025], [.02, .02, .03], antlerColor, 4, true, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
+
+    // Antler3_2
+    transformMatrix.translate(0,0,.05);
+    transformMatrix.rotate(-35,1,0,0);
+    transformMatrix.rotate(-45,0,1,0);
+    this.createZCylinder( [0, 0, .015], [.015, .015, .015], antlerColor, 4, false, function(matrix){
+        matrix.multiply(transformMatrix);
+    });
 }
 
 Armature.prototype.drawDragonArms = function(side){
