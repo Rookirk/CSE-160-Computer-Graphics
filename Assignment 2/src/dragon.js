@@ -55,6 +55,13 @@ function createDragon(){
 
             armature.createDragonAntlers("left");
             armature.createDragonAntlers("right");
+
+            armature.createCone([0, .2, .07], [0, .7], [.08, .06, .1], finColor, 6, function(matrix){
+                matrix.rotate(35,1,0,0);
+            });
+
+            armature.createDragonMane("left");
+            armature.createDragonMane("right");
         },
         function(initMatrix) {
             initMatrix.rotate(-25,1,0,0);
@@ -562,6 +569,58 @@ Armature.prototype.drawDragonLegs = function(side){
         },
         function(animMatrix) {}
     );
+}
+
+Armature.prototype.createDragonMane = function(side){
+    let scaleOrientation, prefix;
+    if(side === "left") scaleOrientation = 1;
+    else if(side === "right") scaleOrientation = -1;
+    else{
+        console.log("side can only be 'left' or 'right' in drawDragonAntlers");
+        return;
+    }
+
+    this.createCone([0,0,0], [0, .08], [.06, .065, .1], finColor, 6, function(matrix){
+        matrix.translate(scaleOrientation*.055, .15, .1);
+        matrix.rotate(10,1,0,0);
+        matrix.rotate(-scaleOrientation*13,0,0,1);
+    });
+
+    this.createCone([0,0,0], [0, 1], [.06, .085, .1], finColor, 6, function(matrix){
+        matrix.translate(scaleOrientation*.07, .07, .18);
+        matrix.rotate(35,1,0,0);
+        matrix.rotate(-scaleOrientation*25,0,0,1);
+    });
+
+    this.createCone([0,0,0], [0, 1.3], [.05, .09, .08], finColor, 6, function(matrix){
+        matrix.translate(scaleOrientation*.12, .03, .18);
+        matrix.rotate(35,1,0,0);
+        matrix.rotate(-scaleOrientation*55,0,0,1);
+    });
+
+    this.createCone([0,0,0], [0, 1.7], [.055, .085, .08], finColor, 6, function(matrix){
+        matrix.translate(scaleOrientation*.13, -.05, .15);
+        matrix.rotate(20,1,0,0);
+        matrix.rotate(-scaleOrientation*90,0,0,1);
+    });
+
+    this.createCone([0,0,0], [0, 1.5], [.045, .07, .08], finColor, 6, function(matrix){
+        matrix.translate(scaleOrientation*.12, -.09, .13);
+        matrix.rotate(20,1,0,0);
+        matrix.rotate(-scaleOrientation*110,0,0,1);
+    });
+
+    this.createCone([0,0,0], [0, 1.4], [.045, .065, .08], finColor, 6, function(matrix){
+        matrix.translate(scaleOrientation*.1, -.12, .11);
+        matrix.rotate(20,1,0,0);
+        matrix.rotate(-scaleOrientation*130,0,0,1);
+    });
+
+    this.createCone([0,0,0], [0, 1.2], [.045, .045, .08], finColor, 6, function(matrix){
+        matrix.translate(scaleOrientation*.065, -.14, .06);
+        matrix.rotate(20,1,0,0);
+        matrix.rotate(-scaleOrientation*145,0,0,1);
+    });
 }
 
 Armature.prototype.drawDragonSpineSeg = function(offset, underbellyLength){
