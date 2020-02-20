@@ -5,6 +5,7 @@ class World {
         this.vertexArr = [];
 
         this.createCube([0,0,0],[.1,.1,.1],[255,0,0]);
+        this.createCube([.1,.1,-.2],[.1,.1,.1],[255,255,0]);
     }
 
     pushVert = function(x,y,z,r,g,b){

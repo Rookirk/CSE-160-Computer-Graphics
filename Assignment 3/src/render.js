@@ -15,6 +15,15 @@ function drawGeometry() {
     gl.drawArrays(gl.TRIANGLES, 0, world.vertexArr.length/6);
 }
 
+function transformModelMatrix() {
+    modelMatrix.setIdentity();
+    modelMatrix.rotate(-15,1,0,0);
+    modelMatrix.scale(.6,.6,.6);
+    //modelMatrix.translate(0,-.6,.4);
+    modelMatrix.rotate(25,0,1,0);
+    //modelMatrix.translate(0,0,-.4);
+}
+
 function updateTime() {
     let now = performance.now();
     globalTime = now - startTime;

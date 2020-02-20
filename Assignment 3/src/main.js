@@ -62,6 +62,7 @@ function main() {
 
     modelMatrix = new Matrix4();
     modelMatrix.setIdentity();
+    transformModelMatrix();
 
     world = new World(5,5);
 
