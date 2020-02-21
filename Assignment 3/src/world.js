@@ -5,13 +5,15 @@ class World {
         this.vertexArr = [];
 
         this.createCube([0,0,0],[.1,.1,.1],[255,0,0]);
-        this.createCube([.1,.1,-.2],[.1,.1,.1],[255,255,0]);
+        //this.createCube([.1,.1,-.2],[.1,.1,.1],[255,255,0]);
     }
 
-    pushVert = function(x,y,z,r,g,b){
+    pushVert = function(x,y,z,tx,ty,r,g,b){
         this.vertexArr.push( x );
         this.vertexArr.push( y );
         this.vertexArr.push( z );
+        this.vertexArr.push( tx );
+        this.vertexArr.push( ty );
         this.vertexArr.push( r/255 );
         this.vertexArr.push( g/255 );
         this.vertexArr.push( b/255 );
@@ -29,7 +31,7 @@ class World {
         //  | |v7---|-|v4
         //  |/      |/
         //  v2------v3
-        var cubeVertices = [
+        const cubeVertices = [
             // Vertex coordinates and color
             [ 1.0,  1.0,  1.0 ],  // v0
             [-1.0,  1.0,  1.0 ],  // v1
@@ -41,8 +43,20 @@ class World {
             [-1.0, -1.0, -1.0 ],  // v7
         ];
 
+        //  v0------v2
+        //  |       |
+        //  |       |
+        //  |       |
+        //  v1------v3
+        const texCoords = [
+            [0.0, 1.0],  // v0
+            [0.0, 0.0],  // v1
+            [1.0, 1.0],  // v2
+            [1.0, 0.0],  // v3
+        ];
+
         // Indices of the vertices
-        var cubeIndices = new Uint8Array([
+        const cubeIndices = new Uint8Array([
             0, 1, 2,   0, 2, 3,    // front
             0, 3, 4,   0, 4, 5,    // right
             0, 5, 6,   0, 6, 1,    // up
@@ -50,13 +64,25 @@ class World {
             7, 4, 3,   7, 3, 2,    // down
             4, 7, 6,   4, 6, 5     // back
         ]);
+
+        const texIndices = new Uint8Array([
+            2, 0, 1,   2, 1, 3,
+            2, 0, 1,   2, 1, 3,
+            2, 0, 1,   2, 1, 3,
+            2, 0, 1,   2, 1, 3,
+            2, 0, 1,   2, 1, 3,
+            2, 0, 1,   2, 1, 3
+        ]);
         // Iterate through all vertices
         for(let i = 0; i < cubeIndices.length; i++){
             let indexVal = cubeIndices[i];
             // push the x, y, z, r, g, b with appropriate transforms
             vertices.push([x + cubeVertices[indexVal][0] * l,
                            y + cubeVertices[indexVal][1] * w,
-                           z + cubeVertices[indexVal][2] * h]);
+                           z + cubeVertices[indexVal][2] * h,
+                           texIndices[indexVal][0],
+                           texIndices[indexVal][1]
+            ]);
         }
 
         return vertices;
@@ -68,17 +94,22 @@ class World {
 
         for(let i = 0; i < vertices.length; i++){
             const vertex = vertices[i];
+            const xyzVertex = [vertex[0],vertex[1],vertex[2]];
 
             let newVertex;
             if(typeof transformFunc === "function"){
                 let transformMatrix = new Matrix4();
                 transformFunc(transformMatrix);
-                newVertex = transformVert(vertex, transformMatrix);
+                newVertex = transformVert(xyzVertex, transformMatrix);
                 let elem = newVertex.elements;
-                this.pushVert(elem[0], elem[1], elem[2],r,g,b);
+                this.pushVert(elem[0], elem[1], elem[2],
+                              vertex[3],vertex[4],
+                              r,g,b);
             }
             else{
-                this.pushVert(vertex[0], vertex[1], vertex[2],r,g,b);
+                this.pushVert(vertex[0], vertex[1], vertex[2],
+                              vertex[3],vertex[4],
+                              r,g,b);
             }
         }
 

@@ -12,7 +12,7 @@ function drawGeometry() {
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(world.vertexArr), gl.STATIC_DRAW);
 
-    gl.drawArrays(gl.TRIANGLES, 0, world.vertexArr.length/6);
+    gl.drawArrays(gl.TRIANGLES, 0, world.vertexArr.length/8);
 }
 
 function transformModelMatrix() {

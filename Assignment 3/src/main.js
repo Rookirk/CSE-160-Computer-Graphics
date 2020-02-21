@@ -8,26 +8,39 @@
 // Vertex shader program
 var VSHADER_SOURCE = `
     attribute vec4 a_Position;
+    attribute vec2 a_TexCoord;
     attribute vec4 a_Color;
+
     uniform mat4 u_ModelMatrix;
+
     varying vec4 v_Color;
+    varying vec2 v_TexCoord;
+
     void main() {
       gl_Position = u_ModelMatrix * a_Position;
+      v_TexCoord = a_TexCoord;
       v_Color = a_Color;
     }`;
 
 // Fragment shader program
 var FSHADER_SOURCE = `
     precision mediump float;
+
+    uniform sampler2D u_Sampler;
+
     varying vec4 v_Color;
+    varying vec2 v_TexCoord;
+
     void main() {
-      gl_FragColor = v_Color;
+      gl_FragColor = texture2D(u_Sampler, v_TexCoord);
     }`;
 
 var gl;
 var a_Position;
 var a_Color;
+var a_TexCoord;
 var u_ModelMatrix;
+var u_Sampler;
 
 var world;
 
@@ -40,18 +53,20 @@ function main() {
 
     // Get the rendering context for WebGL
     gl = getWebGLContext(canvas, false);
-    if (!gl) {
+    if(!gl) {
         console.log('Failed to get the rendering context for WebGL');
         return;
     }
 
     // Initialize shaders
-    if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
+    if(!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
         console.log('Failed to intialize shaders.');
         return;
     }
 
     assignStorageLocations();
+
+    initTextures();
 
     initVertexBuffers();
 
@@ -81,25 +96,71 @@ function update() {
 }
 
 function assignStorageLocations() {
-    // // Get the storage location of attributes
+    // Get the storage location of attributes
     a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-    if (a_Position < 0) {
+    if(a_Position < 0) {
         console.log('Failed to get the storage location of a_Position');
         return;
     }
+    a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+    if(a_TexCoord < 0){
+        console.log('Failed to get the storage location of a_TexCoord');
+        return;
+    }
     a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-    if (a_Color < 0) {
+    if(a_Color < 0) {
         console.log('Failed to get the storage location of a_Color');
         return;
     }
+
+    // Get the storage location of uniforms
     u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
-    if (!u_ModelMatrix) {
+    if(!u_ModelMatrix) {
         console.log('Failed to get the storage location of u_ModelMatrix');
+        return;
+    }
+
+    u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
+    if(!u_Sampler){
+        console.log('Failed to get the storage location of u_Sampler');
         return;
     }
 }
 
-// Code used from MultiAttributeSize_Interleaved Ch. 5
+function initTextures() {
+    var texture = gl.createTexture();
+    if(!texture){
+        console.log('Failed to create the texture object');
+        return;
+    }
+
+    var image = new Image();
+    if(!image){
+        console.log('Failed to create the image object');
+        return;
+    }
+    image.onload = function(){
+        loadTexture(texture, image);
+    };
+    image.src = 'img/sky.jpg';
+}
+
+function loadTexture(texture, image){
+    gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+    // Enable texture unit0
+    gl.activeTexture(gl.TEXTURE0);
+    // Bind the texture object to the target
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+
+    // Set the texture parameters
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    // Set the texture image
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
+
+    // Set the texture unit 0 to the sampler
+    gl.uniform1i(u_Sampler, 0);
+}
+
 function initVertexBuffers() {
     var vertexBuffer = gl.createBuffer();
     if(!vertexBuffer){
@@ -109,11 +170,15 @@ function initVertexBuffers() {
 
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 
-    var FSIZE = Float32Array.BYTES_PER_ELEMENT;
+    const FSIZE = Float32Array.BYTES_PER_ELEMENT;
+    const totalUnits = FSIZE * 8;
 
-    gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, FSIZE * 6, 0);
+    gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, totalUnits, 0);
     gl.enableVertexAttribArray(a_Position);
 
-    gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, FSIZE * 6, FSIZE * 3);
+    gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
+    gl.enableVertexAttribArray(a_TexCoord);
+
+    gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 5);
     gl.enableVertexAttribArray(a_Color);
 }
