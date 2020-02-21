@@ -44,6 +44,8 @@ var u_Sampler;
 
 var world;
 
+var texture;
+
 var enableInit = true;
 var enableAnim = true;
 
@@ -128,7 +130,7 @@ function assignStorageLocations() {
 }
 
 function initTextures() {
-    var texture = gl.createTexture();
+    texture = gl.createTexture();
     if(!texture){
         console.log('Failed to create the texture object');
         return;
@@ -147,6 +149,7 @@ function initTextures() {
 
 function loadTexture(texture, image){
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
+
     // Enable texture unit0
     gl.activeTexture(gl.TEXTURE0);
     // Bind the texture object to the target

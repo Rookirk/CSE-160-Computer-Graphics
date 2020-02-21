@@ -12,6 +12,11 @@ function drawGeometry() {
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(world.vertexArr), gl.STATIC_DRAW);
 
+    // Enable texture unit0
+    gl.activeTexture(gl.TEXTURE0);
+    // Bind the texture object to the target
+    gl.bindTexture(gl.TEXTURE_2D, texture);
+
     gl.drawArrays(gl.TRIANGLES, 0, world.vertexArr.length/8);
 }
 
@@ -20,7 +25,7 @@ function transformModelMatrix() {
     modelMatrix.rotate(-15,1,0,0);
     modelMatrix.scale(.6,.6,.6);
     //modelMatrix.translate(0,-.6,.4);
-    modelMatrix.rotate(25,0,1,0);
+    //modelMatrix.rotate(25,0,1,0);
     //modelMatrix.translate(0,0,-.4);
 }
 

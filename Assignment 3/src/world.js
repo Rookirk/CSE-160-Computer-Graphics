@@ -80,9 +80,10 @@ class World {
             vertices.push([x + cubeVertices[indexVal][0] * l,
                            y + cubeVertices[indexVal][1] * w,
                            z + cubeVertices[indexVal][2] * h,
-                           texIndices[indexVal][0],
-                           texIndices[indexVal][1]
+                           texCoords[texIndices[i]][0],
+                           texCoords[texIndices[i]][1]
             ]);
+            console.log(vertices[vertices.length - 1]);
         }
 
         return vertices;
