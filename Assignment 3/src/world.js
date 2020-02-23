@@ -5,20 +5,23 @@ class World {
         this.vertexArr = [];
 
         this.worldArray = [
-        [1,1,1,1],
+        [1,1,2,1],
         [1,0,0,1],
         [1,'c',0,1],
-        [1,1,1,1],
+        [1,2,1,3],
         ];
 
         for(let i = 0; i < this.worldArray.length; i++){
             for(let j = 0; j < this.worldArray[i].length; j++){
                 const elem = this.worldArray[i][j];
-                if(elem === 1){
-                    this.createCube([j*.2,-.2,i*.2],[.1,.1,.1],[255,0,0]);
-                }
                 if(elem === 'c'){
                     camera = new Camera([j*.2,0,i*.2],[j*.2,0,i*.2-1]);
+                }
+                else{
+                    const groundHeight = -.2;
+                    for(let k = 0; k < elem; k++){
+                        this.createCube([j*.2,groundHeight + .2*k,i*.2],[.1,.1,.1],[255,0,0]);
+                    }
                 }
             }
         }
