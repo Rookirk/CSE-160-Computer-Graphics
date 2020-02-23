@@ -3,6 +3,9 @@ class Camera {
         this.eye = eye;
         this.at = at;
         this.up = up;
+
+        this.rotateVel = 2;
+        this.walkVel = .02;
     }
 
     getYaw() {
@@ -131,27 +134,27 @@ function scaleAngle(angle, scaleParams){
 document.addEventListener( 'keydown', function(event) {
     if(event.keyCode === getEventKey('W')) {
         const angle = camera.getYaw();
-        camera.moveInDirection(angle, .1);
+        camera.moveInDirection(angle, camera.walkVel);
     }
     else if(event.keyCode === getEventKey('S')) {
         const angle = camera.getYaw();
         const newAngle = scaleAngle(angle, [-1,1,-1]);
-        camera.moveInDirection(newAngle, .1);
+        camera.moveInDirection(newAngle, camera.walkVel);
     }
     else if(event.keyCode === getEventKey('A')) {
         const angle = camera.getYaw();
         const newAngle = rotateAngle(angle,-90);
-        camera.moveInDirection(newAngle, .1);
+        camera.moveInDirection(newAngle, camera.walkVel);
     }
     else if(event.keyCode === getEventKey('D')) {
         const angle = camera.getYaw();
         const newAngle = rotateAngle(angle,90);
-        camera.moveInDirection(newAngle, .1);
+        camera.moveInDirection(newAngle, camera.walkVel);
     }
     else if(event.keyCode === getEventKey('Q')) {
-        camera.rotateYaw(-1);
+        camera.rotateYaw(-camera.rotateVel);
     }
     else if(event.keyCode === getEventKey('E')) {
-        camera.rotateYaw(1);
+        camera.rotateYaw(camera.rotateVel);
     }
 });

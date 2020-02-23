@@ -77,7 +77,6 @@ function main() {
     }
 
     world = new World(5,5);
-    camera = new Camera();
 
     assignStorageLocations();
 
