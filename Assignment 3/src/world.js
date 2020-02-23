@@ -2,6 +2,7 @@ class World {
     constructor(width, height) {
         this.width = width;
         this.height = height;
+
         this.vertexArr = [];
 
         this.worldArray = [
@@ -11,31 +12,21 @@ class World {
         [1,2,1,3],
         ];
 
+        const bs = .2; // block size
         for(let i = 0; i < this.worldArray.length; i++){
             for(let j = 0; j < this.worldArray[i].length; j++){
                 const elem = this.worldArray[i][j];
                 if(elem === 'c'){
-                    camera = new Camera([j*.2,0,i*.2],[j*.2,0,i*.2-1]);
+                    camera = new Camera([j*bs,0,i*bs],[j*bs,0,i*bs-1]);
                 }
                 else{
-                    const groundHeight = -.2;
+                    const groundHeight = -bs;
                     for(let k = 0; k < elem; k++){
-                        this.createCube([j*.2,groundHeight + .2*k,i*.2],[.1,.1,.1],[255,0,0]);
+                        this.createCube([j*bs,groundHeight + bs*k,i*bs],[bs/2,bs/2,bs/2],[255,0,0]);
                     }
                 }
             }
         }
-
-        /*this.createCube([0,0,0],[.1,.1,.1],[255,0,0]);
-        this.createCube([.2,0,-.2],[.1,.1,.1],[255,255,0]);
-        this.createCube([.4,0,-.2],[.1,.1,.1],[255,255,0]);
-
-        this.createCube([0,.2,0],[.1,.1,.1],[255,0,0]);
-        this.createCube([0,.4,0],[.1,.1,.1],[255,0,0]);
-        this.createCube([0,.6,0],[.1,.1,.1],[255,0,0]);
-
-        this.createCube([.2,.2,0],[.1,.1,.1],[255,0,0]);
-        this.createCube([.4,.3,.2],[.1,.1,.1],[255,0,0]);*/
     }
 
     pushVert(x,y,z,tx,ty,r,g,b){
