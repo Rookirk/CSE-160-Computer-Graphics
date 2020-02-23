@@ -156,9 +156,7 @@ function initMVPMatrices() {
     camera.setNewCameraPosition();
 
     projMatrix = new Matrix4();
-    projMatrix.setPerspective(45,1,.02,5);
-
-    //transformModelMatrix();
+    projMatrix.setPerspective(60,1,.02,5);
 }
 
 function initTextures() {

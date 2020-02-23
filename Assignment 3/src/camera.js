@@ -17,7 +17,7 @@ class Camera {
         this.eye[1] += y;
         this.eye[2] += z;
 
-        this.at[0] + x;
+        this.at[0] += x;
         this.at[1] += y;
         this.at[2] += z;
 
@@ -37,18 +37,7 @@ class Camera {
 
     rotateYaw(angle){
         const yaw = this.getYaw();
-        const x = yaw[0];
-        const y = yaw[1];
-        const z = yaw[2];
-        const dist = Math.sqrt(Math.pow(x,2) + Math.pow(z,2));
-
-        const degAngle = getAngle(x,z);
-
-        const newDegAngle = degAngle + angle;
-
-        const newAngle = [Math.cos((Math.PI/180)*newDegAngle) * dist,
-                          0,
-                          Math.sin((Math.PI/180)*newDegAngle) * dist];
+        const newAngle = rotateAngle(yaw, angle);
 
         this.at[0] = this.eye[0] + newAngle[0];
         this.at[2] = this.eye[2] + newAngle[2];
@@ -60,9 +49,6 @@ class Camera {
         viewMatrix.setLookAt(this.eye[0], this.eye[1], this.eye[2],
                           this.at[0], this.at[1], this.at[2],
                           this.up[0], this.up[1], this.up[2]);
-
-        console.log("eye " + this.eye);
-        console.log("at " + this.at);
     }
 }
 
@@ -107,7 +93,31 @@ function getEventKey(key) {
     }
 }
 
-function rotateAngle(angle, rotateParams){
+function rotateAngle(angle, howMuchToRotate){
+    const x = angle[0];
+    const y = angle[1];
+    const z = angle[2];
+    const dist = Math.sqrt(Math.pow(x,2) + Math.pow(z,2));
+
+    const degAngle = getAngle(x,z);
+
+    const newDegAngle = degAngle + howMuchToRotate;
+
+    const newAngle = [Math.cos((Math.PI/180)*newDegAngle) * dist,
+                      0,
+                      Math.sin((Math.PI/180)*newDegAngle) * dist];
+    return newAngle;
+    /*console.log(angle);
+    let oldAngle = new Vector3([angle[0], angle[1], angle[2]]);
+    let rotateMatrix = new Matrix4();
+    rotateMatrix.setIdentity();
+    rotateMatrix.rotate(rotateParams[0],rotateParams[1],rotateParams[2],rotateParams[3]);
+    console.log(rotateMatrix);
+    rotateMatrix.multiplyVector3(oldAngle);
+    console.log(rotateMatrix);
+    let elem = rotateMatrix.elements;
+    console.log([elem[0], elem[1], elem[2]]);
+    return [elem[0], elem[1], elem[2]];*/
 
 }
 
@@ -125,7 +135,17 @@ document.addEventListener( 'keydown', function(event) {
     }
     else if(event.keyCode === getEventKey('S')) {
         const angle = camera.getYaw();
-        const newAngle = scaleAngle(angle, [-1,1,-1])
+        const newAngle = scaleAngle(angle, [-1,1,-1]);
+        camera.moveInDirection(newAngle, .1);
+    }
+    else if(event.keyCode === getEventKey('A')) {
+        const angle = camera.getYaw();
+        const newAngle = rotateAngle(angle,-90);
+        camera.moveInDirection(newAngle, .1);
+    }
+    else if(event.keyCode === getEventKey('D')) {
+        const angle = camera.getYaw();
+        const newAngle = rotateAngle(angle,90);
         camera.moveInDirection(newAngle, .1);
     }
     else if(event.keyCode === getEventKey('Q')) {
