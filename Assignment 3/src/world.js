@@ -6,6 +6,14 @@ class World {
 
         this.createCube([0,0,0],[.1,.1,.1],[255,0,0]);
         //this.createCube([.1,.1,-.2],[.1,.1,.1],[255,255,0]);
+        //this.createCube([.5,0,-.8],[.1,.1,.1],[255,255,0]);
+
+        this.createCube([0,.2,0],[.1,.1,.1],[255,0,0]);
+        this.createCube([0,.4,0],[.1,.1,.1],[255,0,0]);
+        this.createCube([0,.6,0],[.1,.1,.1],[255,0,0]);
+
+        this.createCube([.2,.2,0],[.1,.1,.1],[255,0,0]);
+        this.createCube([.4,.3,.2],[.1,.1,.1],[255,0,0]);
     }
 
     pushVert = function(x,y,z,tx,ty,r,g,b){

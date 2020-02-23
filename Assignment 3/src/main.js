@@ -50,6 +50,10 @@ var u_Sampler;
 var world;
 var camera;
 
+var projMatrix;
+var viewMatrix;
+var modelMatrix;
+
 var texture;
 
 var enableInit = true;
@@ -149,12 +153,10 @@ function initMVPMatrices() {
     modelMatrix.setIdentity();
 
     viewMatrix = new Matrix4();
-    viewMatrix.lookAt(camera.eye[0], camera.eye[1], camera.eye[2],
-                      camera.at[0], camera.at[1], camera.at[2],
-                      camera.up[0], camera.up[1], camera.up[2]);
+    camera.setNewCameraPosition();
 
     projMatrix = new Matrix4();
-    projMatrix.setIdentity();
+    projMatrix.setPerspective(45,1,.02,5);
 
     //transformModelMatrix();
 }
