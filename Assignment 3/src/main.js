@@ -11,13 +11,15 @@ var VSHADER_SOURCE = `
     attribute vec2 a_TexCoord;
     attribute vec4 a_Color;
 
+    uniform mat4 u_ProjMatrix;
+    uniform mat4 u_ViewMatrix;
     uniform mat4 u_ModelMatrix;
 
     varying vec4 v_Color;
     varying vec2 v_TexCoord;
 
     void main() {
-      gl_Position = u_ModelMatrix * a_Position;
+      gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
       v_TexCoord = a_TexCoord;
       v_Color = a_Color;
     }`;
@@ -39,10 +41,14 @@ var gl;
 var a_Position;
 var a_Color;
 var a_TexCoord;
+
+var u_ProjMatrix;
+var u_ViewMatrix;
 var u_ModelMatrix;
 var u_Sampler;
 
 var world;
+var camera;
 
 var texture;
 
@@ -66,7 +72,12 @@ function main() {
         return;
     }
 
+    world = new World(5,5);
+    camera = new Camera();
+
     assignStorageLocations();
+
+    initMVPMatrices();
 
     initTextures();
 
@@ -76,12 +87,6 @@ function main() {
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.enable(gl.DEPTH_TEST);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-
-    modelMatrix = new Matrix4();
-    modelMatrix.setIdentity();
-    transformModelMatrix();
-
-    world = new World(5,5);
 
     update();
 }
@@ -116,6 +121,16 @@ function assignStorageLocations() {
     }
 
     // Get the storage location of uniforms
+    u_ProjMatrix = gl.getUniformLocation(gl.program, 'u_ProjMatrix');
+    if(!u_ProjMatrix) {
+        console.log('Failed to get the storage location of u_ProjMatrix');
+        return;
+    }
+    u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
+    if(!u_ViewMatrix) {
+        console.log('Failed to get the storage location of u_ViewMatrix');
+        return;
+    }
     u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
     if(!u_ModelMatrix) {
         console.log('Failed to get the storage location of u_ModelMatrix');
@@ -127,6 +142,21 @@ function assignStorageLocations() {
         console.log('Failed to get the storage location of u_Sampler');
         return;
     }
+}
+
+function initMVPMatrices() {
+    modelMatrix = new Matrix4();
+    modelMatrix.setIdentity();
+
+    viewMatrix = new Matrix4();
+    viewMatrix.lookAt(camera.eye[0], camera.eye[1], camera.eye[2],
+                      camera.at[0], camera.at[1], camera.at[2],
+                      camera.up[0], camera.up[1], camera.up[2]);
+
+    projMatrix = new Matrix4();
+    projMatrix.setIdentity();
+
+    //transformModelMatrix();
 }
 
 function initTextures() {

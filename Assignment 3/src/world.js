@@ -83,7 +83,6 @@ class World {
                            texCoords[texIndices[i]][0],
                            texCoords[texIndices[i]][1]
             ]);
-            console.log(vertices[vertices.length - 1]);
         }
 
         return vertices;
