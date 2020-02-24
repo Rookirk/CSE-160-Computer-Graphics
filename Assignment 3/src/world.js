@@ -6,27 +6,39 @@ class World {
         this.vertexArr = [];
 
         this.worldArray = [
-        [1,1,2,1],
-        [1,0,0,1],
-        [1,'c',0,1],
-        [1,2,1,3],
+        [1,0,2,1],
+        [1,0,0,0],
+        [0,'c',0,1],
+        [0,2,0,3],
         ];
 
-        const bs = .2; // block size
+        const blockSize = .2;
         for(let i = 0; i < this.worldArray.length; i++){
             for(let j = 0; j < this.worldArray[i].length; j++){
                 const elem = this.worldArray[i][j];
                 if(elem === 'c'){
-                    camera = new Camera([j*bs,0,i*bs],[j*bs,0,i*bs-1]);
+                    camera = new Camera([j*blockSize, blockSize, i*blockSize],
+                                        [j*blockSize, 0, i*blockSize-1]);
                 }
                 else{
-                    const groundHeight = -bs;
                     for(let k = 0; k < elem; k++){
-                        this.createCube([j*bs,groundHeight + bs*k,i*bs],[bs/2,bs/2,bs/2],[255,0,0]);
+                        this.createCube([j*blockSize, blockSize*k + blockSize/2, i*blockSize],
+                                        [blockSize/2, blockSize/2, blockSize/2],
+                                         [255,0,0]);
                     }
                 }
             }
         }
+
+        //this.createCube([0,.1,0],[.002,.002,.002],[255,0,0]);
+
+        this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
+                          0,
+                          blockSize*this.worldArray.length/2 - blockSize/2],
+                         [blockSize*this.worldArray.length/2,
+                          1,
+                          blockSize*this.worldArray.length/2],
+                          [255,0,0]);
     }
 
     pushVert(x,y,z,tx,ty,r,g,b){
@@ -109,6 +121,59 @@ class World {
         return vertices;
     }
 
+        getPlaneVertices(coords, size) {
+        const x = coords[0], y = coords[1], z = coords[2];
+        const l = size[0], w = size[1], h = size[2];
+
+        let vertices = [];
+        //  v0------v2
+        //  |       |
+        //  |       |
+        //  |       |
+        //  v1------v3
+        const squareVertices = [
+            // Vertex coordinates and color
+            [-1.0,  0, -1.0 ],  // v0
+            [-1.0,  0,  1.0 ],  // v1
+            [ 1.0,  0,  1.0 ],  // v2
+            [ 1.0,  0, -1.0 ],  // v3
+        ];
+
+        //  v0------v2
+        //  |       |
+        //  |       |
+        //  |       |
+        //  v1------v3
+        const texCoords = [
+            [0.0, 1.0],  // v0
+            [0.0, 0.0],  // v1
+            [1.0, 1.0],  // v2
+            [1.0, 0.0],  // v3
+        ];
+
+        // Indices of the vertices
+        const squareIndices = new Uint8Array([
+            0, 1, 2,   0, 2, 3,    // front
+        ]);
+
+        const texIndices = new Uint8Array([
+            2, 0, 1,   2, 1, 3,
+        ]);
+        // Iterate through all vertices
+        for(let i = 0; i < squareIndices.length; i++){
+            let indexVal = squareIndices[i];
+            // push the x, y, z, texCoords with appropriate transforms
+            vertices.push([x + squareVertices[indexVal][0] * l,
+                           y + squareVertices[indexVal][1] * w,
+                           z + squareVertices[indexVal][2] * h,
+                           texCoords[texIndices[i]][0],
+                           texCoords[texIndices[i]][1]
+            ]);
+        }
+
+        return vertices;
+    }
+
     createShape(vertices, color, transformFunc){
         //const endIndex = this.partData.length - 1;
         const r = color[0], g = color[1], b = color[2];
@@ -142,6 +207,15 @@ class World {
         const l = size[0], w = size[1], h = size[2];
 
         const vertices = this.getCubeVertices(coords, size);
+
+        this.createShape(vertices, color, transformFunc);
+    }
+
+    createPlane(coords, size, color, transformFunc){
+        const x = coords[0], y = coords[1], z = coords[2];
+        const l = size[0], w = size[1], h = size[2];
+
+        const vertices = this.getPlaneVertices(coords, size);
 
         this.createShape(vertices, color, transformFunc);
     }
