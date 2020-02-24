@@ -1,38 +1,44 @@
 class World {
-    constructor(width, height) {
+    constructor(width, height, rooms) {
         this.width = width;
         this.height = height;
+        this.rooms = rooms;
 
         this.vertexArr = [];
         this.partData = [];
 
-        this.worldArray = [
+        /*this.worldArray = [
         [0,0,0,0],
         [0,0,1,0],
         [0,'c',0,0],
         [0,0,0,0],
 
-        /*
         [1,0,2,1],
         [1,0,0,0],
         [0,'c',0,1],
         [0,2,0,3],
-        */
-        ];
+        ];*/
+
+        let params = {
+            width: this.width,
+            height: this.height,
+            rooms: this.rooms
+        }
+        this.worldArray = new graph_dungeon(params);
 
         const blockSize = .1;
         for(let i = 0; i < this.worldArray.length; i++){
             for(let j = 0; j < this.worldArray[i].length; j++){
                 const elem = this.worldArray[i][j];
                 if(elem === 'c'){
-                    camera = new Camera([j*blockSize, .2, i*blockSize],
-                                        [j*blockSize, 0, i*blockSize-1]);
+                    camera.setNewCameraPosition([j*blockSize, .2, i*blockSize],
+                                                [j*blockSize, 0, i*blockSize-1]);
                 }
                 else{
                     for(let k = 0; k < elem; k++){
                         this.createCube([j*blockSize, blockSize*k + blockSize/2, i*blockSize],
                                         [blockSize/2, blockSize/2, blockSize/2],
-                                        'debug',
+                                        'wall1',
                                         [1,1],
                                         [255,255,255]);
                     }

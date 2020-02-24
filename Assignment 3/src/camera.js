@@ -24,7 +24,7 @@ class Camera {
         this.at[1] += y;
         this.at[2] += z;
 
-        this.setNewCameraPosition();
+        this.setNewLookAt();
     }
 
     moveInDirection(angle, magnitude){
@@ -45,14 +45,22 @@ class Camera {
         this.at[0] = this.eye[0] + newAngle[0];
         this.at[2] = this.eye[2] + newAngle[2];
 
-        this.setNewCameraPosition();
+        this.setNewLookAt();
     }
 
-    setNewCameraPosition(){
+    setNewLookAt(){
         viewMatrix.setLookAt(this.eye[0], this.eye[1], this.eye[2],
                           this.at[0], this.at[1], this.at[2],
                           this.up[0], this.up[1], this.up[2]);
         gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
+    }
+
+    setNewCameraPosition(eye = [0,0,-1], at = [0,0,0], up = [0,1,0]){
+        this.eye = eye;
+        this.at = at;
+        this.up = up;
+
+        this.setNewLookAt();
     }
 }
 
@@ -147,3 +155,13 @@ document.addEventListener( 'keydown', function(event) {
         camera.rotateYaw(camera.rotateVel);
     }
 });
+
+/*canvas.onmousemove = function(ev) {
+    if (!(document.pointerLockElement === canvas ||
+        document.mozPointerLockElement === canvas)) {
+        return;
+    }
+
+    const x = ev.clientX;
+    const y = ev.clientY;
+}*/

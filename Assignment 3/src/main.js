@@ -63,6 +63,11 @@ function main() {
     // Retrieve HTML elements
     var canvas = document.getElementById('webgl');
 
+    canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
+    canvas.onclick = function() {
+        canvas.requestPointerLock();
+    };
+
     // Get the rendering context for WebGL
     gl = getWebGLContext(canvas, false);
     if(!gl) {
@@ -82,9 +87,11 @@ function main() {
 
     initVertexBuffers();
 
-    world = new World(5,5);
-
     initMVPMatrices(canvas);
+
+    camera = new Camera([.1, .2, .1],
+                        [.1, 0, .1-1]);
+    world = new World(20,20, 5);
 
     // Specify the color for clearing <canvas>
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -152,7 +159,6 @@ function initMVPMatrices(canvas) {
     modelMatrix.setIdentity();
 
     viewMatrix = new Matrix4();
-    camera.setNewCameraPosition();
 
     projMatrix = new Matrix4();
     projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
@@ -169,6 +175,7 @@ function initAllTextures() {
     }
     initTexture(path, 'WhitePixel.png', 'pixel');
     initTexture(path, 'Ground.png', 'ground');
+    initTexture(path, 'Wall1.png', 'wall1');
     initTexture(path, 'Debug.png', 'debug');
     console.log(textures);
 }
