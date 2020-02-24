@@ -18,7 +18,7 @@ function drawGeometry() {
         // Enable texture unit0
         gl.activeTexture(gl['TEXTURE' + part.texUnit]);
         // Bind the texture object to the target
-        gl.bindTexture(gl.TEXTURE_2D, textures[part.texUnit].texture);
+        gl.bindTexture(gl.TEXTURE_2D, textures.texObj[part.texUnit]);
 
         gl.uniform1i(u_Sampler, part.texUnit);
 

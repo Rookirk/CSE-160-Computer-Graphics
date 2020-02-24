@@ -32,16 +32,17 @@ class World {
                     for(let k = 0; k < elem; k++){
                         this.createCube([j*blockSize, blockSize*k + blockSize/2, i*blockSize],
                                         [blockSize/2, blockSize/2, blockSize/2],
-                                        1,
+                                        'debug',
+                                        [1,1],
                                         [255,0,0]);
                     }
                 }
             }
         }
 
-        this.createInvertedCube([0,0,0],[5,5,5], 1, [255,0,0]);
+        this.createInvertedCube([0,0,0],[5,5,5], 'debug', [1,1], [255,0,0]);
 
-        this.createInvertedCube([0,.25,0],[.1,.1,.1], 1, [255,0,0]);
+        this.createInvertedCube([0,.25,0],[.1,.1,.1], 'debug', [1,1], [255,0,0]);
 
         this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
                           0,
@@ -49,7 +50,8 @@ class World {
                          [blockSize*this.worldArray.length/2,
                           1,
                           blockSize*this.worldArray.length/2],
-                          0,
+                          'ground',
+                          [this.worldArray.length,this.worldArray.length],
                           [255,0,0]);
     }
 
@@ -64,9 +66,10 @@ class World {
         this.vertexArr.push( b/255 );
     }
 
-    getCubeVertices(coords, size) {
+    getCubeVertices(coords, size, uvSize) {
         const x = coords[0], y = coords[1], z = coords[2];
         const l = size[0], w = size[1], h = size[2];
+        const tl = uvSize[0], tw = uvSize[1];
 
         let vertices = [];
         //    v6----- v5
@@ -125,17 +128,18 @@ class World {
             vertices.push([x + cubeVertices[indexVal][0] * l,
                            y + cubeVertices[indexVal][1] * w,
                            z + cubeVertices[indexVal][2] * h,
-                           texCoords[texIndices[i]][0],
-                           texCoords[texIndices[i]][1]
+                           texCoords[texIndices[i]][0] * tl,
+                           texCoords[texIndices[i]][1] * tw
             ]);
         }
 
         return vertices;
     }
 
-    getInvertedCubeVertices(coords, size) {
+    getInvertedCubeVertices(coords, size, uvSize) {
         const x = coords[0], y = coords[1], z = coords[2];
         const l = size[0], w = size[1], h = size[2];
+        const tl = uvSize[0], tw = uvSize[1];
 
         let vertices = [];
         //    v6----- v5
@@ -194,17 +198,18 @@ class World {
             vertices.push([x + cubeVertices[indexVal][0] * l,
                            y + cubeVertices[indexVal][1] * w,
                            z + cubeVertices[indexVal][2] * h,
-                           texCoords[texIndices[i]][0],
-                           texCoords[texIndices[i]][1]
+                           texCoords[texIndices[i]][0] * tl,
+                           texCoords[texIndices[i]][1] * tw
             ]);
         }
 
         return vertices;
     }
 
-    getPlaneVertices(coords, size) {
+    getPlaneVertices(coords, size, uvSize) {
         const x = coords[0], y = coords[1], z = coords[2];
         const l = size[0], w = size[1], h = size[2];
+        const tl = uvSize[0], tw = uvSize[1];
 
         let vertices = [];
         //  v0------v2
@@ -247,15 +252,15 @@ class World {
             vertices.push([x + squareVertices[indexVal][0] * l,
                            y + squareVertices[indexVal][1] * w,
                            z + squareVertices[indexVal][2] * h,
-                           texCoords[texIndices[i]][0],
-                           texCoords[texIndices[i]][1]
+                           texCoords[texIndices[i]][0] * tl,
+                           texCoords[texIndices[i]][1] * tw
             ]);
         }
 
         return vertices;
     }
 
-    createShape(vertices, texUnit, color, transformFunc){
+    createShape(vertices, texName, color, transformFunc){
         this.partData.push({
             amountOfVerts: 0,
             texUnit: -1
@@ -285,33 +290,24 @@ class World {
         }
 
         this.partData[endIndex].amountOfVerts = vertices.length;
-        this.partData[endIndex].texUnit = texUnit;
+        this.partData[endIndex].texUnit = textures.indexNames[texName];
     }
 
-    createCube(coords, size, texUnit, color, transformFunc){
-        const x = coords[0], y = coords[1], z = coords[2];
-        const l = size[0], w = size[1], h = size[2];
+    createCube(coords, size, texName, uvSize, color, transformFunc){
+        const vertices = this.getCubeVertices(coords, size, uvSize);
 
-        const vertices = this.getCubeVertices(coords, size);
-
-        this.createShape(vertices, texUnit, color, transformFunc);
+        this.createShape(vertices, texName, color, transformFunc);
     }
 
-    createInvertedCube(coords, size, texUnit, color, transformFunc){
-        const x = coords[0], y = coords[1], z = coords[2];
-        const l = size[0], w = size[1], h = size[2];
+    createInvertedCube(coords, size, texName, uvSize, color, transformFunc){
+        const vertices = this.getInvertedCubeVertices(coords, size, uvSize);
 
-        const vertices = this.getInvertedCubeVertices(coords, size);
-
-        this.createShape(vertices, texUnit, color, transformFunc);
+        this.createShape(vertices, texName, color, transformFunc);
     }
 
-    createPlane(coords, size, texUnit, color, transformFunc){
-        const x = coords[0], y = coords[1], z = coords[2];
-        const l = size[0], w = size[1], h = size[2];
+    createPlane(coords, size, texName, uvSize, color, transformFunc){
+        const vertices = this.getPlaneVertices(coords, size, uvSize);
 
-        const vertices = this.getPlaneVertices(coords, size);
-
-        this.createShape(vertices, texUnit, color, transformFunc);
+        this.createShape(vertices, texName, color, transformFunc);
     }
 }

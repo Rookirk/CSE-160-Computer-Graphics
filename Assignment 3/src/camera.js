@@ -111,18 +111,6 @@ function rotateAngle(angle, howMuchToRotate){
                       0,
                       Math.sin((Math.PI/180)*newDegAngle) * dist];
     return newAngle;
-    /*console.log(angle);
-    let oldAngle = new Vector3([angle[0], angle[1], angle[2]]);
-    let rotateMatrix = new Matrix4();
-    rotateMatrix.setIdentity();
-    rotateMatrix.rotate(rotateParams[0],rotateParams[1],rotateParams[2],rotateParams[3]);
-    console.log(rotateMatrix);
-    rotateMatrix.multiplyVector3(oldAngle);
-    console.log(rotateMatrix);
-    let elem = rotateMatrix.elements;
-    console.log([elem[0], elem[1], elem[2]]);
-    return [elem[0], elem[1], elem[2]];*/
-
 }
 
 function scaleAngle(angle, scaleParams){

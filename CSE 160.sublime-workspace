@@ -40,7 +40,7 @@
 			"file": "Assignment 3/src/main.js",
 			"settings":
 			{
-				"buffer_size": 5478,
+				"buffer_size": 6121,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -49,16 +49,7 @@
 			"file": "Assignment 3/src/camera.js",
 			"settings":
 			{
-				"buffer_size": 4365,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 3/src/render.js",
-			"settings":
-			{
-				"buffer_size": 1039,
+				"buffer_size": 3953,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -67,10 +58,19 @@
 			"file": "Assignment 3/src/world.js",
 			"settings":
 			{
-				"buffer_size": 4729,
+				"buffer_size": 10239,
 				"encoding": "UTF-8",
 				"line_ending": "Windows",
 				"name": "class World {"
+			}
+		},
+		{
+			"file": "Assignment 3/src/render.js",
+			"settings":
+			{
+				"buffer_size": 1190,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
@@ -134,16 +134,16 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/dragon.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/render.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/armature.js",
 		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/src/generators/room_generator.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/shapes.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/dragon.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/cuon-matrix.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/animal.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/render.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/shapes.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/dragon.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/lib/cuon-matrix.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/armature.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/animFuncs.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/main.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/drive.html",
@@ -265,13 +265,14 @@
 	],
 	"find":
 	{
-		"height": 27.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
 		"height": 101.0,
 		"where_history":
 		[
+			"",
 			"world.js",
 			"camera.js",
 			"",
@@ -291,6 +292,11 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"typeof",
+			"normalize",
+			"crossProduct",
+			"normalize",
+			"1",
 			"this.blockSize",
 			"-=",
 			"\t",
@@ -384,7 +390,7 @@
 	"groups":
 	[
 		{
-			"selected": 7,
+			"selected": 5,
 			"sheets":
 			[
 				{
@@ -431,8 +437,8 @@
 						"selection":
 						[
 							[
-								14434,
-								14443
+								20521,
+								20530
 							]
 						],
 						"settings":
@@ -445,10 +451,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 8324.0,
+						"translation.y": 12482.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -464,8 +470,8 @@
 						"selection":
 						[
 							[
-								287,
-								287
+								516,
+								516
 							]
 						],
 						"settings":
@@ -481,7 +487,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
@@ -490,15 +496,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5478,
+						"buffer_size": 6121,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1698,
-								1698
+								3981,
+								3981
 							]
 						],
 						"settings":
@@ -511,10 +517,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 972.0,
+						"translation.y": 1509.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -523,15 +529,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4365,
+						"buffer_size": 3953,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3559,
-								3554
+								2720,
+								2720
 							]
 						],
 						"settings":
@@ -541,60 +547,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Assignment 3/src/render.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1039,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								375,
-								375
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 1824.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 5,
 					"file": "Assignment 3/src/world.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4729,
+						"buffer_size": 10239,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1240,
-								1240
+								9966,
+								9966
 							]
 						],
 						"settings":
@@ -606,10 +579,43 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 270.0,
+						"translation.y": 2849.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "Assignment 3/src/render.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1190,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								793,
+								793
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
@@ -640,7 +646,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{

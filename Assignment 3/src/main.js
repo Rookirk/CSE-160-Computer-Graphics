@@ -54,7 +54,7 @@ var projMatrix;
 var viewMatrix;
 var modelMatrix;
 
-var textures = [];
+var textures;
 
 var enableInit = true;
 var enableAnim = true;
@@ -76,15 +76,15 @@ function main() {
         return;
     }
 
-    world = new World(5,5);
-
     assignStorageLocations();
-
-    initMVPMatrices(canvas);
 
     initAllTextures();
 
     initVertexBuffers();
+
+    world = new World(5,5);
+
+    initMVPMatrices(canvas);
 
     // Specify the color for clearing <canvas>
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -161,11 +161,18 @@ function initMVPMatrices(canvas) {
 
 function initAllTextures() {
     const path = "img/";
-    initTexture(path, 'Ground.png', 0);
-    initTexture(path, 'Debug.png', 1);
+    textures = {
+        currUnit: 0,
+        indexNames: new Object(),
+        texObj: [],
+        imgObj: []
+    }
+    initTexture(path, 'Ground.png', 'ground');
+    initTexture(path, 'Debug.png', 'debug');
+    console.log(textures);
 }
 
-function initTexture(path, file, unit, textureParams) {
+function initTexture(path, file, indexName, textureParams) {
     let texture = gl.createTexture();
     if(!texture){
         console.log('Failed to create the texture object');
@@ -177,12 +184,18 @@ function initTexture(path, file, unit, textureParams) {
         console.log('Failed to create the image object');
         return;
     }
+
+    const unit = textures.currUnit;
+    textures.indexNames[indexName] = unit;
+    textures.currUnit++;
+
     image.onload = function(){
         loadTexture(texture, image, unit, textureParams);
     };
     image.src = path + file;
 
-    textures[unit] = {texture: texture, image: image};
+    textures.texObj[unit] = texture;
+    textures.imgObj[unit] = image;
 }
 
 function loadTexture(texture, image, unit, textureParams){
@@ -195,8 +208,9 @@ function loadTexture(texture, image, unit, textureParams){
 
     // Set the texture parameters
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
-    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
+    if(typeof textureParams === "function"){
+        textureParams();
+    }
     // Set the texture image
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
 
