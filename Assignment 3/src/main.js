@@ -54,7 +54,7 @@ var projMatrix;
 var viewMatrix;
 var modelMatrix;
 
-var texture;
+var textures = [];
 
 var enableInit = true;
 var enableAnim = true;
@@ -80,9 +80,9 @@ function main() {
 
     assignStorageLocations();
 
-    initMVPMatrices();
+    initMVPMatrices(canvas);
 
-    initTextures();
+    initAllTextures();
 
     initVertexBuffers();
 
@@ -147,7 +147,7 @@ function assignStorageLocations() {
     }
 }
 
-function initMVPMatrices() {
+function initMVPMatrices(canvas) {
     modelMatrix = new Matrix4();
     modelMatrix.setIdentity();
 
@@ -155,42 +155,53 @@ function initMVPMatrices() {
     camera.setNewCameraPosition();
 
     projMatrix = new Matrix4();
-    projMatrix.setPerspective(60,1,.02,5);
+    projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
+    gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
 }
 
-function initTextures() {
-    texture = gl.createTexture();
+function initAllTextures() {
+    const path = "img/";
+    initTexture(path, 'Ground.png', 0);
+    initTexture(path, 'Debug.png', 1);
+}
+
+function initTexture(path, file, unit, textureParams) {
+    let texture = gl.createTexture();
     if(!texture){
         console.log('Failed to create the texture object');
         return;
     }
 
-    var image = new Image();
+    let image = new Image();
     if(!image){
         console.log('Failed to create the image object');
         return;
     }
     image.onload = function(){
-        loadTexture(texture, image);
+        loadTexture(texture, image, unit, textureParams);
     };
-    image.src = 'img/sky.jpg';
+    image.src = path + file;
+
+    textures[unit] = {texture: texture, image: image};
 }
 
-function loadTexture(texture, image){
+function loadTexture(texture, image, unit, textureParams){
     gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1); // Flip the image's y axis
 
     // Enable texture unit0
-    gl.activeTexture(gl.TEXTURE0);
+    gl.activeTexture(gl['TEXTURE' + unit]);
     // Bind the texture object to the target
     gl.bindTexture(gl.TEXTURE_2D, texture);
 
     // Set the texture parameters
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.MIRRORED_REPEAT);
     // Set the texture image
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
 
-    // Set the texture unit 0 to the sampler
-    gl.uniform1i(u_Sampler, 0);
+    // Set the texture unit to the sampler
+    gl.uniform1i(u_Sampler, unit);
 }
 
 function initVertexBuffers() {

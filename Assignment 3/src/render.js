@@ -9,17 +9,22 @@ function drawGeometry() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
-    gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
-    gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(world.vertexArr), gl.STATIC_DRAW);
 
-    // Enable texture unit0
-    gl.activeTexture(gl.TEXTURE0);
-    // Bind the texture object to the target
-    gl.bindTexture(gl.TEXTURE_2D, texture);
+    let beginningIndex = 0;
+    for(let i = 0; i < world.partData.length; i++){
+        let part = world.partData[i];
+        // Enable texture unit0
+        gl.activeTexture(gl['TEXTURE' + part.texUnit]);
+        // Bind the texture object to the target
+        gl.bindTexture(gl.TEXTURE_2D, textures[part.texUnit].texture);
 
-    gl.drawArrays(gl.TRIANGLES, 0, world.vertexArr.length/8);
+        gl.uniform1i(u_Sampler, part.texUnit);
+
+        gl.drawArrays(gl.TRIANGLES, beginningIndex, part.amountOfVerts);
+        beginningIndex += part.amountOfVerts;
+    }
 }
 
 function transformModelMatrix() {

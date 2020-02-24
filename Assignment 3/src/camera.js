@@ -52,6 +52,7 @@ class Camera {
         viewMatrix.setLookAt(this.eye[0], this.eye[1], this.eye[2],
                           this.at[0], this.at[1], this.at[2],
                           this.up[0], this.up[1], this.up[2]);
+        gl.uniformMatrix4fv(u_ViewMatrix, false, viewMatrix.elements);
     }
 }
 
