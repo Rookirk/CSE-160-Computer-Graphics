@@ -34,15 +34,15 @@ class World {
                                         [blockSize/2, blockSize/2, blockSize/2],
                                         'debug',
                                         [1,1],
-                                        [255,0,0]);
+                                        [255,255,255]);
                     }
                 }
             }
         }
 
-        this.createInvertedCube([0,0,0],[5,5,5], 'debug', [1,1], [255,0,0]);
+        this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
 
-        this.createInvertedCube([0,.25,0],[.1,.1,.1], 'debug', [1,1], [255,0,0]);
+        this.createInvertedCube([0,.25,0],[.1,.1,.1], 'debug', [1,1], [255,255,255]);
 
         this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
                           0,
@@ -52,7 +52,7 @@ class World {
                           blockSize*this.worldArray.length/2],
                           'ground',
                           [this.worldArray.length,this.worldArray.length],
-                          [255,0,0]);
+                          [255,255,255]);
     }
 
     pushVert(x,y,z,tx,ty,r,g,b){

@@ -34,7 +34,7 @@ var FSHADER_SOURCE = `
     varying vec2 v_TexCoord;
 
     void main() {
-      gl_FragColor = texture2D(u_Sampler, v_TexCoord);
+      gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color;
     }`;
 
 var gl;
@@ -167,6 +167,7 @@ function initAllTextures() {
         texObj: [],
         imgObj: []
     }
+    initTexture(path, 'WhitePixel.png', 'pixel');
     initTexture(path, 'Ground.png', 'ground');
     initTexture(path, 'Debug.png', 'debug');
     console.log(textures);
