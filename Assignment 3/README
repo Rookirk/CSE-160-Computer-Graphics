@@ -4,3 +4,7 @@ CSE 160
 Assignment 3
 
 Awesome things I did:
+-I implemented my Dungeon Gen algorithm from CMPM 147 (coded by me and Brenden Satake)
+-Multiple textures
+-I made those textures!
+-I can change the color of textures in the shader!
