@@ -6,6 +6,8 @@ class Camera {
 
         this.rotateVel = 2;
         this.walkVel = .02;
+
+        this.setNewLookAt();
     }
 
     getYaw() {

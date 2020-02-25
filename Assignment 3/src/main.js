@@ -89,9 +89,8 @@ function main() {
 
     initMVPMatrices(canvas);
 
-    camera = new Camera([.1, .2, .1],
-                        [.1, 0, .1-1]);
-    world = new World(20,20, 5);
+    camera = new Camera();
+    world = new World(40,40, 20);
 
     // Specify the color for clearing <canvas>
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -177,7 +176,6 @@ function initAllTextures() {
     initTexture(path, 'Ground.png', 'ground');
     initTexture(path, 'Wall1.png', 'wall1');
     initTexture(path, 'Debug.png', 'debug');
-    console.log(textures);
 }
 
 function initTexture(path, file, indexName, textureParams) {

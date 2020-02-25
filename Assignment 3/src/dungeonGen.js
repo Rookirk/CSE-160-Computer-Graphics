@@ -19,8 +19,6 @@ function graph_dungeon (params) {
     let partitions = [];
     partition_rooms(partitions,0,0,width - 1,height - 1,numberOfRooms);
 
-    console.log(partitions);
-
     // If the partitions comes out to less than the desired number
     let numRooms = partitions.length;
 
@@ -173,6 +171,8 @@ function graph_dungeon (params) {
     console.log(start);
     console.log(end);
     console.log(key);
+
+    dungeon.set(start.x,start.y,'c');
 
     return dungeon.values;
 }

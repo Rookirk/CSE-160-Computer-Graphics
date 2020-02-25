@@ -22,7 +22,7 @@ class World {
         let params = {
             width: this.width,
             height: this.height,
-            rooms: this.rooms
+            numberOfRooms: this.rooms
         }
         this.worldArray = new graph_dungeon(params);
 
@@ -48,7 +48,7 @@ class World {
 
         this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
 
-        this.createInvertedCube([0,.25,0],[.1,.1,.1], 'debug', [1,1], [255,255,255]);
+        //this.createInvertedCube([0,.25,0],[.1,.1,.1], 'debug', [1,1], [255,255,255]);
 
         this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
                           0,
@@ -115,7 +115,7 @@ class World {
             0, 3, 4,   0, 4, 5,    // right
             0, 5, 6,   0, 6, 1,    // up
             1, 6, 7,   1, 7, 2,    // left
-            7, 4, 3,   7, 3, 2,    // down
+            //7, 4, 3,   7, 3, 2,    // down
             4, 7, 6,   4, 6, 5     // back
         ]);
 
@@ -124,7 +124,7 @@ class World {
             0, 1, 3,   0, 3, 2,
             3, 2, 0,   3, 0, 1,
             2, 0, 1,   2, 1, 3,
-            2, 0, 1,   2, 1, 3,
+            //2, 0, 1,   2, 1, 3,
             1, 3, 2,   1, 2, 0
         ]);
         // Iterate through all vertices

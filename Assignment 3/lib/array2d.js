@@ -10,8 +10,6 @@ class Array2d {
     constructor (width, height) {
         this.width = width;
         this.height = height;
-        console.log(width);
-        console.log(height);
         this.values = [];
         for(let i = 0; i < height; i++){
             this.values.push([]);
@@ -30,7 +28,6 @@ class Array2d {
     }
     fill (generator) {
         forEach2(this.width, this.height, (i, j) => {
-            console.log(this.values);
             this.values[i][j] = generator(i, j);
         });
     }
