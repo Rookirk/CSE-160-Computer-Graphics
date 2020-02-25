@@ -174,6 +174,14 @@ function graph_dungeon (params) {
 
     dungeon.set(start.x,start.y,'c');
 
+    for(let i = 0; i < width; i++){
+        for(let j = 0; j < height; j++){
+            if(dungeon.get(i,j) === 1){
+                dungeon.set(i,j,randIntRange(1,3));
+            }
+        }
+    }
+
     return dungeon.values;
 }
 

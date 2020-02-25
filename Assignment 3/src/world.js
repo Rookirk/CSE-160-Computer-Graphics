@@ -31,8 +31,8 @@ class World {
             for(let j = 0; j < this.worldArray[i].length; j++){
                 const elem = this.worldArray[i][j];
                 if(elem === 'c'){
-                    camera.setNewCameraPosition([j*blockSize, .2, i*blockSize],
-                                                [j*blockSize, 0, i*blockSize-1]);
+                    camera.setNewCameraPosition([j*blockSize, 2.25*blockSize, i*blockSize],
+                                                [j*blockSize, blockSize, i*blockSize-1]);
                 }
                 else{
                     for(let k = 0; k < elem; k++){
@@ -43,6 +43,36 @@ class World {
                                         [255,255,255]);
                     }
                 }
+            }
+        }
+        for(let i = 0; i < this.worldArray.length + 1; i++){
+            for(let k = 0; k < 4; k++){
+                this.createCube([-1*blockSize, blockSize*k + blockSize/2, i*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255]);
+            }
+            for(let k = 0; k < 4; k++){
+                this.createCube([i*blockSize, blockSize*k + blockSize/2, -1*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255]);
+            }
+            for(let k = 0; k < 4; k++){
+                this.createCube([(this.worldArray.length+1)*blockSize, blockSize*k + blockSize/2, i*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255]);
+            }
+            for(let k = 0; k < 4; k++){
+                this.createCube([i*blockSize, blockSize*k + blockSize/2, (this.worldArray.length+1)*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255]);
             }
         }
 
