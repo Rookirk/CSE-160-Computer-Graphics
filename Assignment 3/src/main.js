@@ -63,11 +63,6 @@ function main() {
     // Retrieve HTML elements
     var canvas = document.getElementById('webgl');
 
-    canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
-    canvas.onclick = function() {
-        canvas.requestPointerLock();
-    };
-
     // Get the rendering context for WebGL
     gl = getWebGLContext(canvas, false);
     if(!gl) {
@@ -89,7 +84,7 @@ function main() {
 
     initMVPMatrices(canvas);
 
-    camera = new Camera();
+    camera = new Camera(canvas);
     world = new World(40,40, 20);
 
     // Specify the color for clearing <canvas>

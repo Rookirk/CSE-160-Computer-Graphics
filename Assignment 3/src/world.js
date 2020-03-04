@@ -61,14 +61,14 @@ class World {
                                             [255,255,255]);
             }
             for(let k = 0; k < 4; k++){
-                this.createCube([(this.worldArray.length+1)*blockSize, blockSize*k + blockSize/2, i*blockSize],
+                this.createCube([(this.worldArray.length)*blockSize, blockSize*k + blockSize/2, i*blockSize],
                                             [blockSize/2, blockSize/2, blockSize/2],
                                             'ground',
                                             [1,1],
                                             [255,255,255]);
             }
             for(let k = 0; k < 4; k++){
-                this.createCube([i*blockSize, blockSize*k + blockSize/2, (this.worldArray.length+1)*blockSize],
+                this.createCube([i*blockSize, blockSize*k + blockSize/2, (this.worldArray.length)*blockSize],
                                             [blockSize/2, blockSize/2, blockSize/2],
                                             'ground',
                                             [1,1],

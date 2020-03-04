@@ -15,15 +15,8 @@
 			"file": "Assignment 3/README",
 			"settings":
 			{
-				"buffer_size": 59,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 3/lib/cuon-matrix.js",
-			"settings":
-			{
-				"buffer_size": 21233,
+				"buffer_size": 239,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
@@ -31,7 +24,7 @@
 			"file": "Assignment 3/drive.html",
 			"settings":
 			{
-				"buffer_size": 563,
+				"buffer_size": 694,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -40,7 +33,7 @@
 			"file": "Assignment 3/src/main.js",
 			"settings":
 			{
-				"buffer_size": 6121,
+				"buffer_size": 6306,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -49,7 +42,7 @@
 			"file": "Assignment 3/src/camera.js",
 			"settings":
 			{
-				"buffer_size": 3953,
+				"buffer_size": 4839,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -58,7 +51,7 @@
 			"file": "Assignment 3/src/world.js",
 			"settings":
 			{
-				"buffer_size": 10239,
+				"buffer_size": 12221,
 				"encoding": "UTF-8",
 				"line_ending": "Windows",
 				"name": "class World {"
@@ -68,27 +61,17 @@
 			"file": "Assignment 3/src/render.js",
 			"settings":
 			{
-				"buffer_size": 1190,
+				"buffer_size": 1189,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 3/src/dungeonGen.js",
+			"file": "Assignment 3/lib/cuon-matrix.js",
 			"settings":
 			{
-				"buffer_size": 17533,
-				"encoding": "UTF-8",
+				"buffer_size": 21233,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "// MultiTexture.js (c) 2012 matsuda and kanda\n// Vertex shader program\nvar VSHADER_SOURCE =\n  'attribute vec4 a_Position;\\n' +\n  'attribute vec2 a_TexCoord;\\n' +\n  'varying vec2 v_TexCoord;\\n' +\n  'void main() {\\n' +\n  '  gl_Position = a_Position;\\n' +\n  '  v_TexCoord = a_TexCoord;\\n' +\n  '}\\n';\n\n// Fragment shader program\nvar FSHADER_SOURCE =\n  '#ifdef GL_ES\\n' +\n  'precision mediump float;\\n' +\n  '#endif\\n' +\n  'uniform sampler2D u_Sampler0;\\n' +\n  'uniform sampler2D u_Sampler1;\\n' +\n  'varying vec2 v_TexCoord;\\n' +\n  'void main() {\\n' +\n  '  vec4 color0 = texture2D(u_Sampler0, v_TexCoord);\\n' +\n  '  vec4 color1 = texture2D(u_Sampler1, v_TexCoord);\\n' +\n  '  gl_FragColor = color0 * color1;\\n' +\n  '}\\n';\n\nfunction main() {\n  // Retrieve <canvas> element\n  var canvas = document.getElementById('webgl');\n\n  // Get the rendering context for WebGL\n  var gl = getWebGLContext(canvas);\n  if (!gl) {\n    console.log('Failed to get the rendering context for WebGL');\n    return;\n  }\n\n  // Initialize shaders\n  if (!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {\n    console.log('Failed to intialize shaders.');\n    return;\n  }\n\n  // Set the vertex information\n  var n = initVertexBuffers(gl);\n  if (n < 0) {\n    console.log('Failed to set the vertex information');\n    return;\n  }\n\n  // Specify the color for clearing <canvas>\n  gl.clearColor(0.0, 0.0, 0.0, 1.0);\n\n  // Set texture\n  if (!initTextures(gl, n)) {\n    console.log('Failed to intialize the texture.');\n    return;\n  }\n}\n\nfunction initVertexBuffers(gl) {\n  var verticesTexCoords = new Float32Array([\n    // Vertex coordinate, Texture coordinate\n    -0.5,  0.5,   0.0, 1.0,\n    -0.5, -0.5,   0.0, 0.0,\n     0.5,  0.5,   1.0, 1.0,\n     0.5, -0.5,   1.0, 0.0,\n  ]);\n  var n = 4; // The number of vertices\n\n  // Create a buffer object\n  var vertexTexCoordBuffer = gl.createBuffer();\n  if (!vertexTexCoordBuffer) {\n    console.log('Failed to create the buffer object');\n    return -1;\n  }\n\n  // Write the positions of vertices to a vertex shader\n  gl.bindBuffer(gl.ARRAY_BUFFER, vertexTexCoordBuffer);\n  gl.bufferData(gl.ARRAY_BUFFER, verticesTexCoords, gl.STATIC_DRAW);\n\n  var FSIZE = verticesTexCoords.BYTES_PER_ELEMENT;\n  //Get the storage location of a_Position, assign and enable buffer\n  var a_Position = gl.getAttribLocation(gl.program, 'a_Position');\n  if (a_Position < 0) {\n    console.log('Failed to get the storage location of a_Position');\n    return -1;\n  }\n  gl.vertexAttribPointer(a_Position, 2, gl.FLOAT, false, FSIZE * 4, 0);\n  gl.enableVertexAttribArray(a_Position);  // Enable the assignment of the buffer object\n\n  // Get the storage location of a_TexCoord\n  var a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');\n  if (a_TexCoord < 0) {\n    console.log('Failed to get the storage location of a_TexCoord');\n    return -1;\n  }\n  gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, FSIZE * 4, FSIZE * 2);\n  gl.enableVertexAttribArray(a_TexCoord);  // Enable the buffer assignment\n\n  return n;\n}\n\nfunction initTextures(gl, n) {\n  // Create a texture object\n  var texture0 = gl.createTexture(); \n  var texture1 = gl.createTexture();\n  if (!texture0 || !texture1) {\n    console.log('Failed to create the texture object');\n    return false;\n  }\n\n  // Get the storage location of u_Sampler0 and u_Sampler1\n  var u_Sampler0 = gl.getUniformLocation(gl.program, 'u_Sampler0');\n  var u_Sampler1 = gl.getUniformLocation(gl.program, 'u_Sampler1');\n  if (!u_Sampler0 || !u_Sampler1) {\n    console.log('Failed to get the storage location of u_Sampler');\n    return false;\n  }\n\n  // Create the image object\n  var image0 = new Image();\n  var image1 = new Image();\n  if (!image0 || !image1) {\n    console.log('Failed to create the image object');\n    return false;\n  }\n  // Register the event handler to be called when image loading is completed\n  image0.onload = function(){ loadTexture(gl, n, texture0, u_Sampler0, image0, 0); };\n  image1.onload = function(){ loadTexture(gl, n, texture1, u_Sampler1, image1, 1); };\n  // Tell the browser to load an Image\n  image0.src = '../resources/sky.jpg';\n  image1.src = '../resources/circle.gif';\n\n  return true;\n}\n// Specify whether the texture unit is ready to use\nvar g_texUnit0 = false, g_texUnit1 = false; \nfunction loadTexture(gl, n, texture, u_Sampler, image, texUnit) {\n  gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, 1);// Flip the image's y-axis\n  // Make the texture unit active\n  if (texUnit == 0) {\n    gl.activeTexture(gl.TEXTURE0);\n    g_texUnit0 = true;\n  } else {\n    gl.activeTexture(gl.TEXTURE1);\n    g_texUnit1 = true;\n  }\n  // Bind the texture object to the target\n  gl.bindTexture(gl.TEXTURE_2D, texture);   \n\n  // Set texture parameters\n  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);\n  // Set the image to texture\n  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);\n  \n  gl.uniform1i(u_Sampler, texUnit);   // Pass the texure unit to u_Sampler\n  \n  // Clear <canvas>\n  gl.clear(gl.COLOR_BUFFER_BIT);\n\n  if (g_texUnit0 && g_texUnit1) {\n    gl.drawArrays(gl.TRIANGLE_STRIP, 0, n);   // Draw the rectangle\n  }\n}\n",
-			"settings":
-			{
-				"buffer_size": 5094,
-				"line_ending": "Windows",
-				"name": "// MultiTexture.js (c) 2012 matsuda and kanda"
 			}
 		}
 	],
@@ -130,16 +113,25 @@
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib"
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src"
 	],
 	"file_history":
 	[
+		"/C/Users/Herman/Documents/Unity Projects/Assist Lab Test/Assets/Scripts/soundEfx.cs",
+		"/C/Users/Herman/AppData/Local/Temp/Temp1_Herman_Wu_Assignment_3.zip/Assignment 3/src/main.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/array2d.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/random.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/dungeonGen.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/cuon-matrix.js",
+		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/src/tests/room_generation_test.js",
+		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/src/generators/room_generator.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/src/main.js",
+		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/config/config.yaml",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/dragon.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/render.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/armature.js",
-		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/src/generators/room_generator.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/shapes.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/cuon-matrix.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/animal.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/shapes.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/dragon.js",
@@ -148,7 +140,6 @@
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/main.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/drive.html",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/README",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/src/main.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/test.js",
 		"/C/Users/Herman/Documents/School/CSE 111/10_17 Notes.txt",
 		"/C/Users/Herman/Documents/School/CSE 111/10_21_Notes.txt",
@@ -254,22 +245,15 @@
 		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/PlayerFSM.js",
 		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/Player.js",
 		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/PlayButton.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/MovePlatformLimiter.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/MovePlatform.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/DialogManager.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/Cloud.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/TransitionManager.js",
-		"/C/Users/Herman/Documents/Anime Projects/Blender Scripts/MixamoToBlenderBoneRename.py",
-		"/C/Users/Herman/Documents/Unity Projects/Untitled-Sharing-Game/Untitled Sharing Game/Assets/Scripts/globalScore.cs",
-		"/C/Users/Herman/Documents/Unity Projects/Untitled-Sharing-Game/Untitled Sharing Game/Assets/Scripts/levelManager.cs"
+		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/MovePlatformLimiter.js"
 	],
 	"find":
 	{
-		"height": 39.0
+		"height": 40.0
 	},
 	"find_in_files":
 	{
-		"height": 101.0,
+		"height": 647.0,
 		"where_history":
 		[
 			"",
@@ -292,6 +276,19 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"concat",
+			"lookat",
+			"pointerlock",
+			"randIntRange",
+			"create_smart_tunnel",
+			"create_gradual_tunnel_base",
+			"setLookat",
+			"randomArrayPick",
+			"setNewCameraPosition",
+			"mousedown",
+			"onmousedown",
+			"ev",
+			"textures",
 			"typeof",
 			"normalize",
 			"crossProduct",
@@ -362,6 +359,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"setNewLookAt",
 			"bs",
 			"    ",
 			"rotateAngle",
@@ -390,7 +388,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 2,
 			"sheets":
 			[
 				{
@@ -399,15 +397,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 59,
+						"buffer_size": 239,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								59,
-								59
+								239,
+								239
 							]
 						],
 						"settings":
@@ -421,57 +419,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Assignment 3/lib/cuon-matrix.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 21233,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								20521,
-								20530
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 12482.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "Assignment 3/drive.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 563,
+						"buffer_size": 694,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								516,
-								516
+								460,
+								460
 							]
 						],
 						"settings":
@@ -487,24 +452,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
+					"buffer": 2,
 					"file": "Assignment 3/src/main.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6121,
+						"buffer_size": 6306,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3981,
-								3981
+								1247,
+								1247
 							]
 						],
 						"settings":
@@ -517,7 +482,40 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1509.0,
+						"translation.y": 749.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Assignment 3/src/camera.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4839,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1683,
+								1683
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 741.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
@@ -525,81 +523,53 @@
 				},
 				{
 					"buffer": 4,
-					"file": "Assignment 3/src/camera.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3953,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2720,
-								2720
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1824.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
 					"file": "Assignment 3/src/world.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10239,
+						"buffer_size": 12221,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								9966,
-								9966
+								3321,
+								3321
 							]
 						],
 						"settings":
 						{
 							"auto_name": "class World {",
 							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2849.0,
+						"translation.y": 769.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 5,
 					"file": "Assignment 3/src/render.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1190,
+						"buffer_size": 1189,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								793,
-								793
+								602,
+								602
 							]
 						],
 						"settings":
@@ -615,69 +585,40 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "Assignment 3/src/dungeonGen.js",
+					"buffer": 6,
+					"file": "Assignment 3/lib/cuon-matrix.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 17533,
+						"buffer_size": 21233,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								567,
-								567
+								1619,
+								1625
 							]
 						],
 						"settings":
 						{
 							"incomplete_sync": null,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5094,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4882,
-								4882
-							]
-						],
-						"settings":
-						{
-							"auto_name": "// MultiTexture.js (c) 2012 matsuda and kanda",
-							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1404.0,
+						"translation.y": 977.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -685,7 +626,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 27.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -726,7 +667,7 @@
 	"project": "CSE 160.sublime-project",
 	"replace":
 	{
-		"height": 50.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":

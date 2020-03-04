@@ -1,5 +1,6 @@
 class Camera {
-    constructor( eye = [0,0,-1], at = [0,0,0], up = [0,1,0] ) {
+    constructor( canvas, eye = [0,0,-1], at = [0,0,0], up = [0,1,0] ) {
+        this.canvas = canvas;
         this.eye = eye;
         this.at = at;
         this.up = up;
@@ -8,6 +9,12 @@ class Camera {
         this.walkVel = .02;
 
         this.setNewLookAt();
+
+        // https://developer.mozilla.org/en-US/docs/Web/API/Element/requestPointerLock
+        canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
+        canvas.onclick = function() {
+            canvas.requestPointerLock();
+        };
     }
 
     getYaw() {
@@ -157,7 +164,8 @@ document.addEventListener( 'keydown', function(event) {
         camera.rotateYaw(camera.rotateVel);
     }
 });
-
+// https://stackoverflow.com/questions/9047600/how-to-determine-the-direction-on-onmousemove-event
+//https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/movementX
 /*canvas.onmousemove = function(ev) {
     if (!(document.pointerLockElement === canvas ||
         document.mozPointerLockElement === canvas)) {
