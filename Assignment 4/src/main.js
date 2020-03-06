@@ -9,19 +9,25 @@
 var VSHADER_SOURCE = `
     attribute vec4 a_Position;
     attribute vec2 a_TexCoord;
+    attribute vec4 a_NormalCoord;
     attribute vec4 a_Color;
 
     uniform mat4 u_ProjMatrix;
     uniform mat4 u_ViewMatrix;
     uniform mat4 u_ModelMatrix;
+    uniform bool u_DebugNormal;
 
-    varying vec4 v_Color;
     varying vec2 v_TexCoord;
+    varying vec4 v_NormalCoord;
+    varying vec4 v_Color;
 
     void main() {
-      gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
-      v_TexCoord = a_TexCoord;
-      v_Color = a_Color;
+        gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+        v_TexCoord = a_TexCoord;
+        if(u_DebugNormal)
+            v_Color = a_NormalCoord;
+        else
+            v_Color = a_Color;
     }`;
 
 // Fragment shader program
@@ -30,11 +36,12 @@ var FSHADER_SOURCE = `
 
     uniform sampler2D u_Sampler;
 
-    varying vec4 v_Color;
     varying vec2 v_TexCoord;
+    varying vec4 v_NormalCoord;
+    varying vec4 v_Color;
 
     void main() {
-      gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color;
+        gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color;
     }`;
 
 var gl;
@@ -58,6 +65,7 @@ var textures;
 
 var enableInit = true;
 var enableAnim = true;
+var enableNormals = 0;
 
 function main() {
     // Retrieve HTML elements
@@ -86,6 +94,8 @@ function main() {
 
     camera = new Camera(canvas);
     world = new World(40,40, 20);
+
+    normalsButton();
 
     // Specify the color for clearing <canvas>
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -118,6 +128,11 @@ function assignStorageLocations() {
         console.log('Failed to get the storage location of a_TexCoord');
         return;
     }
+    a_NormalCoord = gl.getAttribLocation(gl.program, 'a_NormalCoord');
+    if(a_NormalCoord < 0) {
+        console.log('Failed to get the storage location of a_NormalCoord');
+        return;
+    }
     a_Color = gl.getAttribLocation(gl.program, 'a_Color');
     if(a_Color < 0) {
         console.log('Failed to get the storage location of a_Color');
@@ -138,6 +153,12 @@ function assignStorageLocations() {
     u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
     if(!u_ModelMatrix) {
         console.log('Failed to get the storage location of u_ModelMatrix');
+        return;
+    }
+
+    u_DebugNormal = gl.getUniformLocation(gl.program, 'u_DebugNormal');
+    if(!u_DebugNormal) {
+        console.log('Failed to get the storage location of u_DebugNormal');
         return;
     }
 
@@ -229,7 +250,7 @@ function initVertexBuffers() {
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
 
     const FSIZE = Float32Array.BYTES_PER_ELEMENT;
-    const totalUnits = FSIZE * 8;
+    const totalUnits = FSIZE * 11;
 
     gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, totalUnits, 0);
     gl.enableVertexAttribArray(a_Position);
@@ -237,6 +258,25 @@ function initVertexBuffers() {
     gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
     gl.enableVertexAttribArray(a_TexCoord);
 
-    gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 5);
+    gl.vertexAttribPointer(a_NormalCoord, 3, gl.FLOAT, false, totalUnits, FSIZE * 5);
+    gl.enableVertexAttribArray(a_NormalCoord);
+
+    gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 8);
     gl.enableVertexAttribArray(a_Color);
+}
+
+function normalsButton() {
+    var normalsButton = document.getElementById('normalsButton');
+
+    normalsButton.addEventListener('click', function(){
+        if(enableNormals === 0){
+            enableNormals = 1;
+        }
+        else{
+            enableNormals = 0;
+        }
+        gl.uniform1i(u_DebugNormal, enableNormals);
+    });
+
+    gl.uniform1i(u_DebugNormal, enableNormals);
 }
