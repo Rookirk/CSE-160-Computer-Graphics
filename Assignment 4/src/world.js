@@ -121,8 +121,10 @@ class World {
             if(typeof transformFunc === "function"){
                 let transformMatrix = new Matrix4();
                 transformFunc(transformMatrix);
+
                 newVertex = transformVert(xyzVertex, transformMatrix);
                 let elem = newVertex.elements;
+                
                 this.pushVert([elem[0], elem[1], elem[2]],
                               vertex.texCoords,
                               vertex.normCoords,

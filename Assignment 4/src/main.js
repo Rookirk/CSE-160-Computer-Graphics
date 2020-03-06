@@ -6,42 +6,60 @@
 // Part refers to collection of parts to form a limb
 
 // Vertex shader program
-var VSHADER_SOURCE = `
+var VDEFAULT_SHADER = `
     attribute vec4 a_Position;
     attribute vec2 a_TexCoord;
-    attribute vec4 a_NormalCoord;
     attribute vec4 a_Color;
 
     uniform mat4 u_ProjMatrix;
     uniform mat4 u_ViewMatrix;
     uniform mat4 u_ModelMatrix;
-    uniform bool u_DebugNormal;
 
     varying vec2 v_TexCoord;
-    varying vec4 v_NormalCoord;
     varying vec4 v_Color;
 
     void main() {
         gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
         v_TexCoord = a_TexCoord;
-        if(u_DebugNormal)
-            v_Color = a_NormalCoord;
-        else
-            v_Color = a_Color;
+        v_Color = a_Color;
     }`;
 
 // Fragment shader program
-var FSHADER_SOURCE = `
+var FDEFAULT_SHADER = `
     precision mediump float;
 
     uniform sampler2D u_Sampler;
 
     varying vec2 v_TexCoord;
-    varying vec4 v_NormalCoord;
     varying vec4 v_Color;
 
     void main() {
         gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color;
+    }`;
+
+var VNORMAL_SHADER = `
+    attribute vec4 a_Position;
+    attribute vec4 a_NormalCoord;
+
+    uniform mat4 u_ProjMatrix;
+    uniform mat4 u_ViewMatrix;
+    uniform mat4 u_ModelMatrix;
+
+    varying vec4 v_NormalCoord;
+
+    void main() {
+        gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+        v_Color = a_NormalCoord;
+    }`;
+
+// Fragment shader program
+var FNORMAL_SHADER = `
+    precision mediump float;
+
+    varying vec4 v_NormalCoord;
+
+    void main() {
+        gl_FragColor = v_NormalCoord;
     }`;
 
 var gl;
@@ -79,10 +97,7 @@ function main() {
     }
 
     // Initialize shaders
-    if(!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
-        console.log('Failed to intialize shaders.');
-        return;
-    }
+    initAllShaders();
 
     assignStorageLocations();
 
@@ -116,55 +131,49 @@ function update() {
     requestAnimationFrame(update);
 }
 
+function initAllShaders() {
+    /*if(!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
+        console.log('Failed to intialize shaders.');
+        return;
+    }*/
+    var defaultProgram = createProgram(gl, VDEFAULT_SHADER, FDEFAULT_SHADER);
+    var normalProgram = createProgram(gl, VNORMAL_SHADER, FNORMAL_SHADER);
+}
+
 function assignStorageLocations() {
     // Get the storage location of attributes
-    a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-    if(a_Position < 0) {
-        console.log('Failed to get the storage location of a_Position');
-        return;
-    }
-    a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
-    if(a_TexCoord < 0){
-        console.log('Failed to get the storage location of a_TexCoord');
-        return;
-    }
-    a_NormalCoord = gl.getAttribLocation(gl.program, 'a_NormalCoord');
-    if(a_NormalCoord < 0) {
-        console.log('Failed to get the storage location of a_NormalCoord');
-        return;
-    }
-    a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-    if(a_Color < 0) {
-        console.log('Failed to get the storage location of a_Color');
-        return;
-    }
+    assignAttribLocation(defaultProgram, 'a_Position');
+    assignAttribLocation(defaultProgram, 'a_TexCoord');
+    assignAttribLocation(defaultProgram, 'a_Color');
 
     // Get the storage location of uniforms
-    u_ProjMatrix = gl.getUniformLocation(gl.program, 'u_ProjMatrix');
-    if(!u_ProjMatrix) {
-        console.log('Failed to get the storage location of u_ProjMatrix');
-        return;
-    }
-    u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
-    if(!u_ViewMatrix) {
-        console.log('Failed to get the storage location of u_ViewMatrix');
-        return;
-    }
-    u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
-    if(!u_ModelMatrix) {
-        console.log('Failed to get the storage location of u_ModelMatrix');
-        return;
-    }
+    assignUniformLocation(defaultProgram, 'u_ProjMatrix');
+    assignUniformLocation(defaultProgram, 'u_ViewMatrix');
+    assignUniformLocation(defaultProgram, 'u_ModelMatrix');
+    assignUniformLocation(defaultProgram, 'u_Sampler');
 
-    u_DebugNormal = gl.getUniformLocation(gl.program, 'u_DebugNormal');
-    if(!u_DebugNormal) {
-        console.log('Failed to get the storage location of u_DebugNormal');
+    // Get the storage location of attributes
+    assignAttribLocation(normalProgram, 'a_Position');
+    assignAttribLocation(normalProgram, 'a_NormalCoord');
+
+    // Get the storage location of uniforms
+    assignUniformLocation(normalProgram, 'u_ProjMatrix');
+    assignUniformLocation(normalProgram, 'u_ViewMatrix');
+    assignUniformLocation(normalProgram, 'u_ModelMatrix');
+}
+
+function assignAttribLocation(program, attrib){
+    program[attrib] = gl.getAttribLocation(program, attrib);
+    if(program[attrib] < 0){
+        console.log('Failed to get the storage location of ' + program + '.' + attrib);
         return;
     }
+}
 
-    u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
-    if(!u_Sampler){
-        console.log('Failed to get the storage location of u_Sampler');
+function assignUniformLocation(program, uniform){
+    program[uniform] = gl.getUniformLocation(program, uniform);
+    if(!program[uniform]){
+        console.log('Failed to get the storage location of ' + program + '.' + uniform);
         return;
     }
 }
