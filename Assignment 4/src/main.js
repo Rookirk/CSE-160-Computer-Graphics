@@ -6,68 +6,47 @@
 // Part refers to collection of parts to form a limb
 
 // Vertex shader program
-var VDEFAULT_SHADER = `
+var VSHADER_SOURCE = `
     attribute vec4 a_Position;
     attribute vec2 a_TexCoord;
+    attribute vec4 a_NormalCoord;
     attribute vec4 a_Color;
-
     uniform mat4 u_ProjMatrix;
     uniform mat4 u_ViewMatrix;
     uniform mat4 u_ModelMatrix;
-
+    uniform bool u_DebugNormal;
     varying vec2 v_TexCoord;
+    varying vec4 v_NormalCoord;
     varying vec4 v_Color;
-
     void main() {
         gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
         v_TexCoord = a_TexCoord;
-        v_Color = a_Color;
+        if(u_DebugNormal)
+            v_Color = a_NormalCoord;
+        else
+            v_Color = a_Color;
     }`;
 
 // Fragment shader program
-var FDEFAULT_SHADER = `
+var FSHADER_SOURCE = `
     precision mediump float;
-
     uniform sampler2D u_Sampler;
-
     varying vec2 v_TexCoord;
+    varying vec4 v_NormalCoord;
     varying vec4 v_Color;
-
     void main() {
         gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color;
     }`;
 
-var VNORMAL_SHADER = `
-    attribute vec4 a_Position;
-    attribute vec4 a_NormalCoord;
-
-    uniform mat4 u_ProjMatrix;
-    uniform mat4 u_ViewMatrix;
-    uniform mat4 u_ModelMatrix;
-
-    varying vec4 v_NormalCoord;
-
-    void main() {
-        gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
-        v_NormalCoord = a_NormalCoord;
-    }`;
-
-// Fragment shader program
-var FNORMAL_SHADER = `
-    precision mediump float;
-
-    varying vec4 v_NormalCoord;
-
-    void main() {
-        gl_FragColor = v_NormalCoord;
-    }`;
-
 var gl;
-var programs = {
-    default: -1,
-    normal: -1
-}
-var currProgram = "default";
+var a_Position;
+var a_Color;
+var a_TexCoord;
+
+var u_ProjMatrix;
+var u_ViewMatrix;
+var u_ModelMatrix;
+var u_Sampler;
 
 var world;
 var camera;
@@ -80,6 +59,7 @@ var textures;
 
 var enableInit = true;
 var enableAnim = true;
+var enableNormals = 0;
 
 function main() {
     // Retrieve HTML elements
@@ -93,7 +73,10 @@ function main() {
     }
 
     // Initialize shaders
-    initAllShaders();
+    if(!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
+        console.log('Failed to intialize shaders.');
+        return;
+    }
 
     assignStorageLocations();
 
@@ -127,59 +110,55 @@ function update() {
     requestAnimationFrame(update);
 }
 
-function initAllShaders() {
-    /*if(!initShaders(gl, VSHADER_SOURCE, FSHADER_SOURCE)) {
-        console.log('Failed to intialize shaders.');
-        return;
-    }*/
-    programs.default = createProgram(gl, VDEFAULT_SHADER, FDEFAULT_SHADER);
-    if(!programs.default){
-        console.log('Failed to intialize default shader.');
-        return;
-    }
-    programs.normal = createProgram(gl, VNORMAL_SHADER, FNORMAL_SHADER);
-    if(!programs.normal){
-        console.log('Failed to intialize normal shader.');
-        return;
-    }
-
-    gl.useProgram(programs[currProgram]);
-}
-
 function assignStorageLocations() {
     // Get the storage location of attributes
-    assignAttribLocation('default', 'a_Position');
-    assignAttribLocation('default', 'a_TexCoord');
-    assignAttribLocation('default', 'a_Color');
-
-    // Get the storage location of uniforms
-    assignUniformLocation('default', 'u_ProjMatrix');
-    assignUniformLocation('default', 'u_ViewMatrix');
-    assignUniformLocation('default', 'u_ModelMatrix');
-    assignUniformLocation('default', 'u_Sampler');
-
-    // Get the storage location of attributes
-    assignAttribLocation('normal', 'a_Position');
-    assignAttribLocation('normal', 'a_NormalCoord');
-
-    // Get the storage location of uniforms
-    assignUniformLocation('normal', 'u_ProjMatrix');
-    assignUniformLocation('normal', 'u_ViewMatrix');
-    assignUniformLocation('normal', 'u_ModelMatrix');
-}
-
-function assignAttribLocation(program, attrib){
-    programs[program][attrib] = gl.getAttribLocation(programs[program], attrib);
-    if(programs[program][attrib] < 0){
-        console.log('Failed to get the storage location of ' + program + '.' + attrib);
+    a_Position = gl.getAttribLocation(gl.program, 'a_Position');
+    if(a_Position < 0) {
+        console.log('Failed to get the storage location of a_Position');
         return;
     }
-}
+    a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
+    if(a_TexCoord < 0){
+        console.log('Failed to get the storage location of a_TexCoord');
+        return;
+    }
+    a_NormalCoord = gl.getAttribLocation(gl.program, 'a_NormalCoord');
+    if(a_NormalCoord < 0) {
+        console.log('Failed to get the storage location of a_NormalCoord');
+        return;
+    }
+    a_Color = gl.getAttribLocation(gl.program, 'a_Color');
+    if(a_Color < 0) {
+        console.log('Failed to get the storage location of a_Color');
+        return;
+    }
 
-function assignUniformLocation(program, uniform){
-    programs[program][uniform] = gl.getUniformLocation(programs[program], uniform);
-    if(!programs[program][uniform]){
-        console.log('Failed to get the storage location of ' + program + '.' + uniform);
+    // Get the storage location of uniforms
+    u_ProjMatrix = gl.getUniformLocation(gl.program, 'u_ProjMatrix');
+    if(!u_ProjMatrix) {
+        console.log('Failed to get the storage location of u_ProjMatrix');
+        return;
+    }
+    u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
+    if(!u_ViewMatrix) {
+        console.log('Failed to get the storage location of u_ViewMatrix');
+        return;
+    }
+    u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
+    if(!u_ModelMatrix) {
+        console.log('Failed to get the storage location of u_ModelMatrix');
+        return;
+    }
+
+    u_DebugNormal = gl.getUniformLocation(gl.program, 'u_DebugNormal');
+    if(!u_DebugNormal) {
+        console.log('Failed to get the storage location of u_DebugNormal');
+        return;
+    }
+
+    u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
+    if(!u_Sampler){
+        console.log('Failed to get the storage location of u_Sampler');
         return;
     }
 }
@@ -192,8 +171,7 @@ function initMVPMatrices(canvas) {
 
     projMatrix = new Matrix4();
     projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
-    gl.uniformMatrix4fv(programs.default.u_ProjMatrix, false, projMatrix.elements);
-    gl.uniformMatrix4fv(programs.normal.u_ProjMatrix, false, projMatrix.elements);
+    gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
 }
 
 function initAllTextures() {
@@ -253,7 +231,7 @@ function loadTexture(texture, image, unit, textureParams){
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
 
     // Set the texture unit to the sampler
-    gl.uniform1i(programs.default.u_Sampler, unit);
+    gl.uniform1i(u_Sampler, unit);
 }
 
 function initVertexBuffers() {
@@ -268,40 +246,31 @@ function initVertexBuffers() {
     const FSIZE = Float32Array.BYTES_PER_ELEMENT;
     const totalUnits = FSIZE * 11;
 
-    const defaultProg = programs.default;
+    gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, totalUnits, 0);
+    gl.enableVertexAttribArray(a_Position);
 
-    gl.vertexAttribPointer(defaultProg .a_Position, 3, gl.FLOAT, false, totalUnits, 0);
-    gl.enableVertexAttribArray(defaultProg .a_Position);
+    gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
+    gl.enableVertexAttribArray(a_TexCoord);
 
-    gl.vertexAttribPointer(defaultProg .a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
-    gl.enableVertexAttribArray(defaultProg .a_TexCoord);
+    gl.vertexAttribPointer(a_NormalCoord, 3, gl.FLOAT, false, totalUnits, FSIZE * 5);
+    gl.enableVertexAttribArray(a_NormalCoord);
 
-    gl.vertexAttribPointer(defaultProg .a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 8);
-    gl.enableVertexAttribArray(defaultProg .a_Color);
-
-    const normalProg  = programs.normal;
-
-    gl.vertexAttribPointer(normalProg .a_Position, 3, gl.FLOAT, false, totalUnits, 0);
-    gl.enableVertexAttribArray(normalProg .a_Position);
-
-    gl.vertexAttribPointer(normalProg .a_NormalCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 5);
-    gl.enableVertexAttribArray(normalProg .a_NormalCoord);
+    gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 8);
+    gl.enableVertexAttribArray(a_Color);
 }
 
 function normalsButton() {
     var normalsButton = document.getElementById('normalsButton');
 
     normalsButton.addEventListener('click', function(){
-        if(currProgram === "default"){
-            gl.useProgram(programs.normal);
-            currProgram = "normal";
-        }
-        else if(currProgram === "normal"){
-            gl.useProgram(programs.default);
-            currProgram = "default";
+        if(enableNormals === 0){
+            enableNormals = 1;
         }
         else{
-            console.log(currProgram + " is not a valid program");
+            enableNormals = 0;
         }
+        gl.uniform1i(u_DebugNormal, enableNormals);
     });
+
+    gl.uniform1i(u_DebugNormal, enableNormals);
 }
