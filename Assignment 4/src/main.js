@@ -39,14 +39,20 @@ var FSHADER_SOURCE = `
     }`;
 
 var gl;
-var a_Position;
-var a_Color;
-var a_TexCoord;
+var shaderVars = {
+    a_Position: -1,
+    a_TexCoord: -1,
+    a_NormalCoord: -1,
+    a_Color: -1,
 
-var u_ProjMatrix;
-var u_ViewMatrix;
-var u_ModelMatrix;
-var u_Sampler;
+    u_ProjMatrix: -1,
+    u_ViewMatrix: -1,
+    u_ModelMatrix: -1,
+
+    u_DebugNormal: -1,
+
+    u_Sampler: -1
+};
 
 var world;
 var camera;
@@ -112,53 +118,33 @@ function update() {
 
 function assignStorageLocations() {
     // Get the storage location of attributes
-    a_Position = gl.getAttribLocation(gl.program, 'a_Position');
-    if(a_Position < 0) {
-        console.log('Failed to get the storage location of a_Position');
-        return;
-    }
-    a_TexCoord = gl.getAttribLocation(gl.program, 'a_TexCoord');
-    if(a_TexCoord < 0){
-        console.log('Failed to get the storage location of a_TexCoord');
-        return;
-    }
-    a_NormalCoord = gl.getAttribLocation(gl.program, 'a_NormalCoord');
-    if(a_NormalCoord < 0) {
-        console.log('Failed to get the storage location of a_NormalCoord');
-        return;
-    }
-    a_Color = gl.getAttribLocation(gl.program, 'a_Color');
-    if(a_Color < 0) {
-        console.log('Failed to get the storage location of a_Color');
-        return;
-    }
+    assignAttribLocation('a_Position');
+    assignAttribLocation('a_TexCoord');
+    assignAttribLocation('a_NormalCoord');
+    assignAttribLocation('a_Color');
 
     // Get the storage location of uniforms
-    u_ProjMatrix = gl.getUniformLocation(gl.program, 'u_ProjMatrix');
-    if(!u_ProjMatrix) {
-        console.log('Failed to get the storage location of u_ProjMatrix');
-        return;
-    }
-    u_ViewMatrix = gl.getUniformLocation(gl.program, 'u_ViewMatrix');
-    if(!u_ViewMatrix) {
-        console.log('Failed to get the storage location of u_ViewMatrix');
-        return;
-    }
-    u_ModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix');
-    if(!u_ModelMatrix) {
-        console.log('Failed to get the storage location of u_ModelMatrix');
-        return;
-    }
+    assignUniformLocation('u_ProjMatrix');
+    assignUniformLocation('u_ViewMatrix');
+    assignUniformLocation('u_ModelMatrix');
 
-    u_DebugNormal = gl.getUniformLocation(gl.program, 'u_DebugNormal');
-    if(!u_DebugNormal) {
-        console.log('Failed to get the storage location of u_DebugNormal');
+    assignUniformLocation('u_DebugNormal');
+
+    assignUniformLocation('u_Sampler');
+}
+
+function assignAttribLocation(attrib){
+    shaderVars[attrib] = gl.getAttribLocation(gl.program, attrib);
+    if(shaderVars[attrib] < 0){
+        console.log('Failed to get the storage location of ' + attrib);
         return;
     }
+}
 
-    u_Sampler = gl.getUniformLocation(gl.program, 'u_Sampler');
-    if(!u_Sampler){
-        console.log('Failed to get the storage location of u_Sampler');
+function assignUniformLocation(uniform){
+    shaderVars[uniform] = gl.getUniformLocation(gl.program, uniform);
+    if(!shaderVars[uniform]){
+        console.log('Failed to get the storage location of ' + uniform);
         return;
     }
 }
@@ -171,7 +157,7 @@ function initMVPMatrices(canvas) {
 
     projMatrix = new Matrix4();
     projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
-    gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
+    gl.uniformMatrix4fv(shaderVars.u_ProjMatrix, false, projMatrix.elements);
 }
 
 function initAllTextures() {
@@ -231,7 +217,7 @@ function loadTexture(texture, image, unit, textureParams){
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
 
     // Set the texture unit to the sampler
-    gl.uniform1i(u_Sampler, unit);
+    gl.uniform1i(shaderVars.u_Sampler, unit);
 }
 
 function initVertexBuffers() {
@@ -246,17 +232,17 @@ function initVertexBuffers() {
     const FSIZE = Float32Array.BYTES_PER_ELEMENT;
     const totalUnits = FSIZE * 11;
 
-    gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, totalUnits, 0);
-    gl.enableVertexAttribArray(a_Position);
+    gl.vertexAttribPointer(shaderVars.a_Position, 3, gl.FLOAT, false, totalUnits, 0);
+    gl.enableVertexAttribArray(shaderVars.a_Position);
 
-    gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
-    gl.enableVertexAttribArray(a_TexCoord);
+    gl.vertexAttribPointer(shaderVars.a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
+    gl.enableVertexAttribArray(shaderVars.a_TexCoord);
 
-    gl.vertexAttribPointer(a_NormalCoord, 3, gl.FLOAT, false, totalUnits, FSIZE * 5);
-    gl.enableVertexAttribArray(a_NormalCoord);
+    gl.vertexAttribPointer(shaderVars.a_NormalCoord, 3, gl.FLOAT, false, totalUnits, FSIZE * 5);
+    gl.enableVertexAttribArray(shaderVars.a_NormalCoord);
 
-    gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 8);
-    gl.enableVertexAttribArray(a_Color);
+    gl.vertexAttribPointer(shaderVars.a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 8);
+    gl.enableVertexAttribArray(shaderVars.a_Color);
 }
 
 function normalsButton() {
@@ -269,8 +255,8 @@ function normalsButton() {
         else{
             enableNormals = 0;
         }
-        gl.uniform1i(u_DebugNormal, enableNormals);
+        gl.uniform1i(shaderVars.u_DebugNormal, enableNormals);
     });
 
-    gl.uniform1i(u_DebugNormal, enableNormals);
+    gl.uniform1i(shaderVars.u_DebugNormal, enableNormals);
 }
