@@ -141,22 +141,4 @@ class World {
         this.partData[endIndex].amountOfVerts = vertices.length;
         this.partData[endIndex].texUnit = textures.indexNames[texName];
     }
-
-    createCube(coords, size, texName, uvSize, color, transformFunc){
-        const vertices = this.getCubeVertices(coords, size, uvSize);
-
-        this.createShape(vertices, texName, color, transformFunc);
-    }
-
-    createInvertedCube(coords, size, texName, uvSize, color, transformFunc){
-        const vertices = this.getInvertedCubeVertices(coords, size, uvSize);
-
-        this.createShape(vertices, texName, color, transformFunc);
-    }
-
-    createPlane(coords, size, texName, uvSize, color, transformFunc){
-        const vertices = this.getPlaneVertices(coords, size, uvSize);
-
-        this.createShape(vertices, texName, color, transformFunc);
-    }
 }
