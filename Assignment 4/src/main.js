@@ -49,7 +49,7 @@ var VNORMAL_SHADER = `
 
     void main() {
         gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
-        v_Color = a_NormalCoord;
+        v_NormalCoord = a_NormalCoord;
     }`;
 
 // Fragment shader program
@@ -63,14 +63,11 @@ var FNORMAL_SHADER = `
     }`;
 
 var gl;
-var a_Position;
-var a_Color;
-var a_TexCoord;
-
-var u_ProjMatrix;
-var u_ViewMatrix;
-var u_ModelMatrix;
-var u_Sampler;
+var programs = {
+    default: -1,
+    normal: -1
+}
+var currProgram = "default";
 
 var world;
 var camera;
@@ -83,7 +80,6 @@ var textures;
 
 var enableInit = true;
 var enableAnim = true;
-var enableNormals = 0;
 
 function main() {
     // Retrieve HTML elements
@@ -136,43 +132,53 @@ function initAllShaders() {
         console.log('Failed to intialize shaders.');
         return;
     }*/
-    var defaultProgram = createProgram(gl, VDEFAULT_SHADER, FDEFAULT_SHADER);
-    var normalProgram = createProgram(gl, VNORMAL_SHADER, FNORMAL_SHADER);
+    programs.default = createProgram(gl, VDEFAULT_SHADER, FDEFAULT_SHADER);
+    if(!programs.default){
+        console.log('Failed to intialize default shader.');
+        return;
+    }
+    programs.normal = createProgram(gl, VNORMAL_SHADER, FNORMAL_SHADER);
+    if(!programs.normal){
+        console.log('Failed to intialize normal shader.');
+        return;
+    }
+
+    gl.useProgram(programs[currProgram]);
 }
 
 function assignStorageLocations() {
     // Get the storage location of attributes
-    assignAttribLocation(defaultProgram, 'a_Position');
-    assignAttribLocation(defaultProgram, 'a_TexCoord');
-    assignAttribLocation(defaultProgram, 'a_Color');
+    assignAttribLocation('default', 'a_Position');
+    assignAttribLocation('default', 'a_TexCoord');
+    assignAttribLocation('default', 'a_Color');
 
     // Get the storage location of uniforms
-    assignUniformLocation(defaultProgram, 'u_ProjMatrix');
-    assignUniformLocation(defaultProgram, 'u_ViewMatrix');
-    assignUniformLocation(defaultProgram, 'u_ModelMatrix');
-    assignUniformLocation(defaultProgram, 'u_Sampler');
+    assignUniformLocation('default', 'u_ProjMatrix');
+    assignUniformLocation('default', 'u_ViewMatrix');
+    assignUniformLocation('default', 'u_ModelMatrix');
+    assignUniformLocation('default', 'u_Sampler');
 
     // Get the storage location of attributes
-    assignAttribLocation(normalProgram, 'a_Position');
-    assignAttribLocation(normalProgram, 'a_NormalCoord');
+    assignAttribLocation('normal', 'a_Position');
+    assignAttribLocation('normal', 'a_NormalCoord');
 
     // Get the storage location of uniforms
-    assignUniformLocation(normalProgram, 'u_ProjMatrix');
-    assignUniformLocation(normalProgram, 'u_ViewMatrix');
-    assignUniformLocation(normalProgram, 'u_ModelMatrix');
+    assignUniformLocation('normal', 'u_ProjMatrix');
+    assignUniformLocation('normal', 'u_ViewMatrix');
+    assignUniformLocation('normal', 'u_ModelMatrix');
 }
 
 function assignAttribLocation(program, attrib){
-    program[attrib] = gl.getAttribLocation(program, attrib);
-    if(program[attrib] < 0){
+    programs[program][attrib] = gl.getAttribLocation(programs[program], attrib);
+    if(programs[program][attrib] < 0){
         console.log('Failed to get the storage location of ' + program + '.' + attrib);
         return;
     }
 }
 
 function assignUniformLocation(program, uniform){
-    program[uniform] = gl.getUniformLocation(program, uniform);
-    if(!program[uniform]){
+    programs[program][uniform] = gl.getUniformLocation(programs[program], uniform);
+    if(!programs[program][uniform]){
         console.log('Failed to get the storage location of ' + program + '.' + uniform);
         return;
     }
@@ -186,7 +192,8 @@ function initMVPMatrices(canvas) {
 
     projMatrix = new Matrix4();
     projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
-    gl.uniformMatrix4fv(u_ProjMatrix, false, projMatrix.elements);
+    gl.uniformMatrix4fv(programs.default.u_ProjMatrix, false, projMatrix.elements);
+    gl.uniformMatrix4fv(programs.normal.u_ProjMatrix, false, projMatrix.elements);
 }
 
 function initAllTextures() {
@@ -246,7 +253,7 @@ function loadTexture(texture, image, unit, textureParams){
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, image);
 
     // Set the texture unit to the sampler
-    gl.uniform1i(u_Sampler, unit);
+    gl.uniform1i(programs.default.u_Sampler, unit);
 }
 
 function initVertexBuffers() {
@@ -261,31 +268,40 @@ function initVertexBuffers() {
     const FSIZE = Float32Array.BYTES_PER_ELEMENT;
     const totalUnits = FSIZE * 11;
 
-    gl.vertexAttribPointer(a_Position, 3, gl.FLOAT, false, totalUnits, 0);
-    gl.enableVertexAttribArray(a_Position);
+    const defaultProg = programs.default;
 
-    gl.vertexAttribPointer(a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
-    gl.enableVertexAttribArray(a_TexCoord);
+    gl.vertexAttribPointer(defaultProg .a_Position, 3, gl.FLOAT, false, totalUnits, 0);
+    gl.enableVertexAttribArray(defaultProg .a_Position);
 
-    gl.vertexAttribPointer(a_NormalCoord, 3, gl.FLOAT, false, totalUnits, FSIZE * 5);
-    gl.enableVertexAttribArray(a_NormalCoord);
+    gl.vertexAttribPointer(defaultProg .a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
+    gl.enableVertexAttribArray(defaultProg .a_TexCoord);
 
-    gl.vertexAttribPointer(a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 8);
-    gl.enableVertexAttribArray(a_Color);
+    gl.vertexAttribPointer(defaultProg .a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 8);
+    gl.enableVertexAttribArray(defaultProg .a_Color);
+
+    const normalProg  = programs.normal;
+
+    gl.vertexAttribPointer(normalProg .a_Position, 3, gl.FLOAT, false, totalUnits, 0);
+    gl.enableVertexAttribArray(normalProg .a_Position);
+
+    gl.vertexAttribPointer(normalProg .a_NormalCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 5);
+    gl.enableVertexAttribArray(normalProg .a_NormalCoord);
 }
 
 function normalsButton() {
     var normalsButton = document.getElementById('normalsButton');
 
     normalsButton.addEventListener('click', function(){
-        if(enableNormals === 0){
-            enableNormals = 1;
+        if(currProgram === "default"){
+            gl.useProgram(programs.normal);
+            currProgram = "normal";
+        }
+        else if(currProgram === "normal"){
+            gl.useProgram(programs.default);
+            currProgram = "default";
         }
         else{
-            enableNormals = 0;
+            console.log(currProgram + " is not a valid program");
         }
-        gl.uniform1i(u_DebugNormal, enableNormals);
     });
-
-    gl.uniform1i(u_DebugNormal, enableNormals);
 }

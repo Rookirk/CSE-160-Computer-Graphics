@@ -8,7 +8,8 @@ var globalTime = 0;
 function drawGeometry() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    gl.uniformMatrix4fv(u_ModelMatrix, false, modelMatrix.elements);
+    gl.uniformMatrix4fv(programs.default.u_ModelMatrix, false, modelMatrix.elements);
+    gl.uniformMatrix4fv(programs.normal.u_ModelMatrix, false, modelMatrix.elements);
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(world.vertexArr), gl.STATIC_DRAW);
 
@@ -20,7 +21,7 @@ function drawGeometry() {
         // Bind the texture object to the target
         gl.bindTexture(gl.TEXTURE_2D, textures.texObj[part.texUnit]);
 
-        gl.uniform1i(u_Sampler, part.texUnit);
+        gl.uniform1i(programs.default.u_Sampler, part.texUnit);
 
         gl.drawArrays(gl.TRIANGLES, beginningIndex, part.amountOfVerts);
         beginningIndex += part.amountOfVerts;
