@@ -7,7 +7,7 @@ class World {
         this.vertexArr = [];
         this.partData = [];
 
-        /*this.worldArray = [
+        this.worldArray = [
         [0,0,0,0],
         [0,0,1,0],
         [0,'c',0,0],
@@ -17,14 +17,14 @@ class World {
         [1,0,0,0],
         [0,'c',0,1],
         [0,2,0,3],
-        ];*/
+        ];
 
-        let params = {
+        /*let params = {
             width: this.width,
             height: this.height,
             numberOfRooms: this.rooms
         }
-        this.worldArray = new graph_dungeon(params);
+        this.worldArray = new graph_dungeon(params);*/
 
         const blockSize = .1;
         for(let i = 0; i < this.worldArray.length; i++){
@@ -77,9 +77,9 @@ class World {
             }
         }
 
-        this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
+        //this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
 
-        //this.createInvertedCube([0,.25,0],[.1,.1,.1], 'debug', [1,1], [255,255,255]);
+        this.createCube([0,.25,0],[.1,.1,.1], 'debug', [1,1], [255,255,255]);
 
         this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
                           0,
