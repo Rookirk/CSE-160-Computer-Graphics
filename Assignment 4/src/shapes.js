@@ -6,24 +6,6 @@ class Vertex {
     }
 }
 
-World.prototype.createCube = function(coords, size, texName, uvSize, color, transformFunc){
-    const vertices = this.getCubeVertices(coords, size, uvSize);
-
-    this.createShape(vertices, texName, color, transformFunc);
-}
-
-World.prototype.createInvertedCube = function(coords, size, texName, uvSize, color, transformFunc){
-    const vertices = this.getInvertedCubeVertices(coords, size, uvSize);
-
-    this.createShape(vertices, texName, color, transformFunc);
-}
-
-World.prototype.createPlane = function(coords, size, texName, uvSize, color, transformFunc){
-    const vertices = this.getPlaneVertices(coords, size, uvSize);
-
-    this.createShape(vertices, texName, color, transformFunc);
-}
-
 World.prototype.getCubeVertices = function(coords, size, uvSize) {
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
