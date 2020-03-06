@@ -6,15 +6,31 @@ class Vertex {
     }
 }
 
-function getCrossProduct(vec1, vec2) {
-    const elem1 = vec1.elements;
-    const elem2 = vec2.elements;
+function getCrossProduct(vert0, vert1, vert2) {
+    const vec1 = [
+        vert1.x - vert0.x,
+        vert1.y - vert0.y,
+        vert1.z - vert0.z,
+    ];
+    const vec2 = [
+        vert2.x - vert0.x,
+        vert2.y - vert0.y,
+        vert2.z - vert0.z,
+    ];
 
-    return new Vector3(
-        elem1[1]*elem2[2] - elem1[2]*elem2[1],
-        elem1[2]*elem2[0] - elem1[0]*elem2[2],
-        elem1[0]*elem2[1] - elem1[1]*elem2[0]
-    );
+    let crossVec = new Vector3([
+        vec1[1]*vec2[2] - vec1[2]*vec2[1],
+        vec1[2]*vec2[0] - vec1[0]*vec2[2],
+        vec1[0]*vec2[1] - vec1[1]*vec2[0]
+    ]);
+
+    crossVec.normalize();
+
+    return [
+        crossVec.elements[0],
+        crossVec.elements[1],
+        crossVec.elements[2]
+    ]
 }
 
 World.prototype.getCubeVertices = function(coords, size, uvSize) {
@@ -83,15 +99,10 @@ World.prototype.getCubeVertices = function(coords, size, uvSize) {
         const vert1 = triangle[1];
         const vert2 = triangle[2];
 
-        const vec1 = new Vector3(
-            cubeVertices[ vert1 ].x - cubeVertices[ vert0 ].x,
-            cubeVertices[ vert1 ].y - cubeVertices[ vert0 ].y,
-            cubeVertices[ vert1 ].z - cubeVertices[ vert0 ].z,
-        );
-        const vec2 = new Vector3(
-            cubeVertices[ vert2 ].x - cubeVertices[ vert0 ].x,
-            cubeVertices[ vert2 ].y - cubeVertices[ vert0 ].y,
-            cubeVertices[ vert2 ].z - cubeVertices[ vert0 ].z,
+        const crossVec = getCrossProduct(
+            cubeVertices[ vert0 ],
+            cubeVertices[ vert1 ],
+            cubeVertices[ vert2 ]
         );
 
         // Iterate through all vertices in the triangle
@@ -105,7 +116,7 @@ World.prototype.getCubeVertices = function(coords, size, uvSize) {
                  z + cubeVertices[vertex].z * h],
                 [texCoords[texVertex].u * tl,
                  texCoords[texVertex].v * tw],
-                [1,1,0]
+                crossVec
             );
 
             vertices.push(newVertex);
