@@ -11,31 +11,39 @@ var VSHADER_SOURCE = `
     attribute vec2 a_TexCoord;
     attribute vec4 a_NormalCoord;
     attribute vec4 a_Color;
+
     uniform mat4 u_ProjMatrix;
     uniform mat4 u_ViewMatrix;
     uniform mat4 u_ModelMatrix;
-    uniform bool u_DebugNormal;
+    uniform float u_NormalSwitch;
+
     varying vec2 v_TexCoord;
     varying vec4 v_NormalCoord;
     varying vec4 v_Color;
+    varying float v_NormalSwitch;
+
     void main() {
         gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+
         v_TexCoord = a_TexCoord;
-        if(u_DebugNormal)
-            v_Color = a_NormalCoord;
-        else
-            v_Color = a_Color;
+        v_NormalCoord = a_NormalCoord;
+        v_Color = a_Color;
+        v_NormalSwitch = u_NormalSwitch;
     }`;
 
 // Fragment shader program
 var FSHADER_SOURCE = `
     precision mediump float;
+
     uniform sampler2D u_Sampler;
+
     varying vec2 v_TexCoord;
     varying vec4 v_NormalCoord;
     varying vec4 v_Color;
+    varying float v_NormalSwitch;
+
     void main() {
-        gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color;
+        gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color * (1.0 - v_NormalSwitch) + v_NormalCoord * v_NormalSwitch;
     }`;
 
 var gl;
@@ -49,7 +57,7 @@ var shaderVars = {
     u_ViewMatrix: -1,
     u_ModelMatrix: -1,
 
-    u_DebugNormal: -1,
+    u_NormalSwitch: -1,
 
     u_Sampler: -1
 };
@@ -65,7 +73,7 @@ var textures;
 
 var enableInit = true;
 var enableAnim = true;
-var enableNormals = 0;
+var enableNormals = 0.0;
 
 function main() {
     // Retrieve HTML elements
@@ -128,7 +136,7 @@ function assignStorageLocations() {
     assignUniformLocation('u_ViewMatrix');
     assignUniformLocation('u_ModelMatrix');
 
-    assignUniformLocation('u_DebugNormal');
+    assignUniformLocation('u_NormalSwitch');
 
     assignUniformLocation('u_Sampler');
 }
@@ -249,14 +257,14 @@ function normalsButton() {
     var normalsButton = document.getElementById('normalsButton');
 
     normalsButton.addEventListener('click', function(){
-        if(enableNormals === 0){
-            enableNormals = 1;
+        if(enableNormals === 0.0){
+            enableNormals = 1.0;
         }
         else{
-            enableNormals = 0;
+            enableNormals = 0.0;
         }
-        gl.uniform1i(shaderVars.u_DebugNormal, enableNormals);
+        gl.uniform1f(shaderVars.u_NormalSwitch, enableNormals);
     });
 
-    gl.uniform1i(shaderVars.u_DebugNormal, enableNormals);
+    gl.uniform1f(shaderVars.u_NormalSwitch, enableNormals);
 }
