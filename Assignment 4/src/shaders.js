@@ -10,20 +10,25 @@ var VSHADER_SOURCE = `
     uniform mat4 u_ModelMatrix;
 
     uniform float u_NormalSwitch;
+    uniform float u_LightSwitch;
 
     uniform vec4 u_SunPosition;
 
     varying vec2 v_TexCoord;
     varying vec4 v_NormalCoord;
     varying vec4 v_Color;
+
     varying float v_NormalSwitch;
+    varying float v_LightSwitch;
+
     varying vec4 v_SunPosition;
     varying float v_Lighting;
 
     void main() {
         gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
 
-        v_Lighting = dot( normalize(u_SunPosition), normalize(a_NormalCoord) );
+        float lightConst = max( dot( normalize(u_SunPosition), normalize(a_NormalCoord) ), 0.0 );
+        v_Lighting = max( ( 1.0 - u_LightSwitch ), lightConst );
 
         v_TexCoord = a_TexCoord;
         v_NormalCoord = a_NormalCoord;
@@ -41,7 +46,10 @@ var FSHADER_SOURCE = `
     varying vec2 v_TexCoord;
     varying vec4 v_NormalCoord;
     varying vec4 v_Color;
+
     varying float v_NormalSwitch;
+    varying float v_LightSwitch;
+
     varying vec4 v_SunPosition;
     varying float v_Lighting;
 
@@ -60,6 +68,8 @@ var shaderVars = {
     u_ModelMatrix: -1,
 
     u_NormalSwitch: -1,
+    u_LightSwitch: -1,
+
     u_SunPosition: -1,
 
     u_Sampler: -1

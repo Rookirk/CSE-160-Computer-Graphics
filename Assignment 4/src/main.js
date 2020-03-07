@@ -20,6 +20,7 @@ var textures;
 var enableInit = true;
 var enableAnim = true;
 var enableNormals = 0.0;
+var enableLight = 1.0;
 
 function main() {
     // Retrieve HTML elements
@@ -51,6 +52,7 @@ function main() {
     sun = new Sun( [0.0,0.0,0.0], 10, 5 );
 
     normalsButton();
+    lightButton();
 
     // Specify the color for clearing <canvas>
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -86,6 +88,8 @@ function assignStorageLocations() {
     assignUniformLocation('u_ModelMatrix');
 
     assignUniformLocation('u_NormalSwitch');
+    assignUniformLocation('u_LightSwitch');
+
     assignUniformLocation('u_SunPosition');
 
     assignUniformLocation('u_Sampler');
@@ -217,4 +221,20 @@ function normalsButton() {
     });
 
     gl.uniform1f(shaderVars.u_NormalSwitch, enableNormals);
+}
+
+function lightButton() {
+    var lightButton = document.getElementById('lightButton');
+
+    lightButton.addEventListener('click', function(){
+        if(enableLight === 0.0){
+            enableLight = 1.0;
+        }
+        else{
+            enableLight = 0.0;
+        }
+        gl.uniform1f(shaderVars.u_LightSwitch, enableLight);
+    });
+
+    gl.uniform1f(shaderVars.u_LightSwitch, enableLight);
 }
