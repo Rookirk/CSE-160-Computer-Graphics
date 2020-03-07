@@ -11,16 +11,19 @@ var VSHADER_SOURCE = `
 
     uniform float u_NormalSwitch;
 
-    uniform vec3 u_SunPosition;
+    uniform vec4 u_SunPosition;
 
     varying vec2 v_TexCoord;
     varying vec4 v_NormalCoord;
     varying vec4 v_Color;
     varying float v_NormalSwitch;
-    varying vec3 v_SunPosition;
+    varying vec4 v_SunPosition;
+    varying float v_Lighting;
 
     void main() {
         gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
+
+        v_Lighting = dot( normalize(u_SunPosition), normalize(a_NormalCoord) );
 
         v_TexCoord = a_TexCoord;
         v_NormalCoord = a_NormalCoord;
@@ -39,10 +42,11 @@ var FSHADER_SOURCE = `
     varying vec4 v_NormalCoord;
     varying vec4 v_Color;
     varying float v_NormalSwitch;
-    varying vec3 v_SunPosition;
+    varying vec4 v_SunPosition;
+    varying float v_Lighting;
 
     void main() {
-        gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color * (1.0 - v_NormalSwitch) + v_NormalCoord * v_NormalSwitch;
+        gl_FragColor = v_Lighting * texture2D(u_Sampler, v_TexCoord) * v_Color * (1.0 - v_NormalSwitch) + v_NormalCoord * v_NormalSwitch;
     }`;
 
 var shaderVars = {

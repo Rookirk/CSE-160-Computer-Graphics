@@ -30,6 +30,6 @@ class Sun {
 	}
 
 	updateShader(){
-		gl.uniform3f(shaderVars.u_SunPosition, this.x, this.y, this.z);
+		gl.uniform4f(shaderVars.u_SunPosition, this.x, this.y, this.z, 0);
 	}
 }
