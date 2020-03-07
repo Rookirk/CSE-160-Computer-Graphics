@@ -48,7 +48,7 @@ function main() {
 
     camera = new Camera(canvas);
     world = new World(40,40, 20);
-    sun = new Sun(1.0,1.0,1.0);
+    sun = new Sun( [0.0,0.0,0.0], 10, 5 );
 
     normalsButton();
 
@@ -66,7 +66,7 @@ function update() {
     // Clear <canvas>
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    sun.rotate();
+    sun.update();
 
     drawGeometry();
 
