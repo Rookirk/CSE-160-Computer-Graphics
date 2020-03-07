@@ -79,7 +79,7 @@ class World {
 
         //this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
 
-        this.createCube([0,.25,0],[.1,.1,.1], 'debug', [1,1], [255,255,255]);
+        this.createSphere([.25,.25,.25],[.1,.1,.1], 'debug', [1,1], [255,255,255], 8);
 
         this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
                           0,
@@ -156,6 +156,17 @@ class World {
 
     createPlane(coords, size, texName, uvSize, color, transformFunc){
         const vertices = this.getPlaneVertices(coords, size, uvSize);
+
+        this.createShape(vertices, texName, color, transformFunc);
+    }
+
+    createSphere(coords, size, texName, uvSize, color, segments, transformFunc){
+        if(segments < 3){
+            console.log("Cannot have less than 3 segments in sphere");
+            return;
+        }
+
+        const vertices = this.getSphereVertices(coords, size, uvSize, segments);
 
         this.createShape(vertices, texName, color, transformFunc);
     }

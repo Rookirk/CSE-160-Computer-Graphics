@@ -33,6 +33,16 @@ function getCrossProduct(vert0, vert1, vert2) {
     ]
 }
 
+function normalizeArray(vert) {
+    let vector = new Vector3(vert);
+    vector.normalize();
+    return [
+        vector.elements[0],
+        vector.elements[1],
+        vector.elements[2]
+    ]
+}
+
 World.prototype.getCubeVertices = function(coords, size, uvSize) {
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
@@ -253,6 +263,115 @@ World.prototype.getPlaneVertices = function(coords, size, uvSize) {
         );
 
         vertices.push(vertex);
+    }
+
+    return vertices;
+}
+
+World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
+    const x = coords[0], y = coords[1], z = coords[2];
+    const l = size[0], w = size[1], h = size[2];
+    const tl = uvSize[0], tw = uvSize[1];
+
+    let xcoords = [];
+    let zcoords = [];
+    let vertices = [];
+
+    // Finds the coords of the circle
+    let circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments; i++){
+        xcoords[i] = l*Math.cos(i*circleRotationTheta);
+        zcoords[i] = h*Math.sin(i*circleRotationTheta);
+    }
+
+    // Add one more at the end so that it is circular
+    xcoords.push(xcoords[0]);
+    zcoords.push(zcoords[0]);
+
+    let hemisphereTheta = Math.PI/segments;
+    // Iterate through the top
+    let yHeight = w*Math.cos(hemisphereTheta);
+    let horizRadius = Math.sin(hemisphereTheta);
+    for(let i = 0; i < xcoords.length - 1; i++){
+        vertices.push(new Vertex(
+            [ x + horizRadius*xcoords[i], y + yHeight , z + horizRadius*zcoords[i] ],
+            [0.0,0.0],
+            normalizeArray( [ horizRadius*xcoords[i], yHeight , horizRadius*zcoords[i] ] )
+        ));
+        vertices.push(new Vertex(
+            [ x + horizRadius*xcoords[i + 1], y + yHeight, z + horizRadius*zcoords[i + 1] ],
+            [1.0,0.0],
+            normalizeArray( [ horizRadius*xcoords[i + 1], yHeight, horizRadius*zcoords[i + 1] ] )
+        ));
+        vertices.push(new Vertex(
+            [ x, y + w, z ],
+            [1.0,1.0],
+            normalizeArray( 0, w, 0 )
+        ));
+    }
+
+    // Iterate through horizontal rings
+    for(let i = 1; i < segments - 1; i++){
+        yHeight = w*Math.cos(i*hemisphereTheta);
+        let yHeight2 = w*Math.cos((i+1)*hemisphereTheta);
+        horizRadius = Math.sin(i*hemisphereTheta);
+        let horizRadius2 = Math.sin((i+1)*hemisphereTheta);
+        for(let j = 0; j < xcoords.length - 1; j++){
+            //top left trjangle
+            vertices.push(new Vertex(
+                [ x + horizRadius*xcoords[j + 1], y + yHeight, z + horizRadius*zcoords[j + 1] ],
+                [0.0,0.0],
+                normalizeArray( [ horizRadius*xcoords[j + 1], yHeight, horizRadius*zcoords[j + 1] ] )
+            ));
+            vertices.push(new Vertex(
+                [ x + horizRadius*xcoords[j], y + yHeight, z + horizRadius*zcoords[j] ],
+                [1.0,0.0],
+                normalizeArray( [ horizRadius*xcoords[j], yHeight, horizRadius*zcoords[j] ] )
+            ));
+            vertices.push(new Vertex(
+                [ x + horizRadius2*xcoords[j], y + yHeight2, z + horizRadius2*zcoords[j] ],
+                [1.0,1.0],
+                normalizeArray( [ horizRadius2*xcoords[j], yHeight2, horizRadius2*zcoords[j] ] )
+            ));
+
+            // bottom rjght trjangle
+            vertices.push(new Vertex(
+                [ x + horizRadius*xcoords[j + 1], y + yHeight, z + horizRadius*zcoords[j + 1] ],
+                [1.0,1.0],
+                normalizeArray( [ horizRadius*xcoords[j + 1], yHeight, horizRadius*zcoords[j + 1] ] )
+            ));
+            vertices.push(new Vertex(
+                [ x + horizRadius2*xcoords[j], y + yHeight2, z + horizRadius2*zcoords[j] ],
+                [1.0,0.0],
+                normalizeArray( [ horizRadius2*xcoords[j], yHeight2, horizRadius2*zcoords[j] ] )
+            ));
+            vertices.push(new Vertex(
+                [ x + horizRadius2*xcoords[j + 1], y + yHeight2, z + horizRadius2*zcoords[j + 1] ],
+                [0.0,1.0],
+                normalizeArray( [ horizRadius2*xcoords[j + 1], yHeight2, horizRadius2*zcoords[j + 1] ] )
+            ));
+        }
+    }
+
+    // Iterate through the bottom
+    yHeight = w*Math.cos(hemisphereTheta);
+    horizRadius = Math.sin(hemisphereTheta);
+    for(let i = 0; i < xcoords.length - 1; i++){
+        vertices.push(new Vertex(
+            [ x + horizRadius*xcoords[i + 1], y - yHeight, z + horizRadius*zcoords[i + 1] ],
+            [1.0,0.0],
+            normalizeArray( [ horizRadius*xcoords[i + 1], -yHeight, horizRadius*zcoords[i + 1] ] )
+        ));
+        vertices.push(new Vertex(
+            [x + horizRadius*xcoords[i], y - yHeight, z + horizRadius*zcoords[i] ],
+            [0.0,1.0],
+            normalizeArray( [horizRadius*xcoords[i], -yHeight, horizRadius*zcoords[i] ] )
+        ));
+        vertices.push(new Vertex(
+            [x, y - w, z],
+            [1.0,1.0],
+            normalizeArray( [0, -w, 0] )
+        ));
     }
 
     return vertices;
