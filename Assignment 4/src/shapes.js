@@ -295,17 +295,17 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
     for(let i = 0; i < xcoords.length - 1; i++){
         vertices.push(new Vertex(
             [ x + horizRadius*xcoords[i], y + yHeight , z + horizRadius*zcoords[i] ],
-            [0.0,0.0],
+            [1.0,0.0],
             normalizeArray( [ horizRadius*xcoords[i], yHeight , horizRadius*zcoords[i] ] )
         ));
         vertices.push(new Vertex(
             [ x + horizRadius*xcoords[i + 1], y + yHeight, z + horizRadius*zcoords[i + 1] ],
-            [1.0,0.0],
+            [0.0,0.0],
             normalizeArray( [ horizRadius*xcoords[i + 1], yHeight, horizRadius*zcoords[i + 1] ] )
         ));
         vertices.push(new Vertex(
             [ x, y + w, z ],
-            [1.0,1.0],
+            [0.5,1.0],
             normalizeArray( 0, w, 0 )
         ));
     }
@@ -317,27 +317,27 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
         horizRadius = Math.sin(i*hemisphereTheta);
         let horizRadius2 = Math.sin((i+1)*hemisphereTheta);
         for(let j = 0; j < xcoords.length - 1; j++){
-            //top left trjangle
+            //top right trjangle
             vertices.push(new Vertex(
                 [ x + horizRadius*xcoords[j + 1], y + yHeight, z + horizRadius*zcoords[j + 1] ],
-                [0.0,0.0],
+                [0.0,1.0],
                 normalizeArray( [ horizRadius*xcoords[j + 1], yHeight, horizRadius*zcoords[j + 1] ] )
             ));
             vertices.push(new Vertex(
                 [ x + horizRadius*xcoords[j], y + yHeight, z + horizRadius*zcoords[j] ],
-                [1.0,0.0],
+                [1.0,1.0],
                 normalizeArray( [ horizRadius*xcoords[j], yHeight, horizRadius*zcoords[j] ] )
             ));
             vertices.push(new Vertex(
                 [ x + horizRadius2*xcoords[j], y + yHeight2, z + horizRadius2*zcoords[j] ],
-                [1.0,1.0],
+                [1.0,0.0],
                 normalizeArray( [ horizRadius2*xcoords[j], yHeight2, horizRadius2*zcoords[j] ] )
             ));
 
-            // bottom rjght trjangle
+            // bottom left trjangle
             vertices.push(new Vertex(
                 [ x + horizRadius*xcoords[j + 1], y + yHeight, z + horizRadius*zcoords[j + 1] ],
-                [1.0,1.0],
+                [0.0,1.0],
                 normalizeArray( [ horizRadius*xcoords[j + 1], yHeight, horizRadius*zcoords[j + 1] ] )
             ));
             vertices.push(new Vertex(
@@ -347,7 +347,7 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
             ));
             vertices.push(new Vertex(
                 [ x + horizRadius2*xcoords[j + 1], y + yHeight2, z + horizRadius2*zcoords[j + 1] ],
-                [0.0,1.0],
+                [0.0,0.0],
                 normalizeArray( [ horizRadius2*xcoords[j + 1], yHeight2, horizRadius2*zcoords[j + 1] ] )
             ));
         }
@@ -359,17 +359,17 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
     for(let i = 0; i < xcoords.length - 1; i++){
         vertices.push(new Vertex(
             [ x + horizRadius*xcoords[i + 1], y - yHeight, z + horizRadius*zcoords[i + 1] ],
-            [1.0,0.0],
+            [0.0,1.0],
             normalizeArray( [ horizRadius*xcoords[i + 1], -yHeight, horizRadius*zcoords[i + 1] ] )
         ));
         vertices.push(new Vertex(
             [x + horizRadius*xcoords[i], y - yHeight, z + horizRadius*zcoords[i] ],
-            [0.0,1.0],
+            [1.0,1.0],
             normalizeArray( [horizRadius*xcoords[i], -yHeight, horizRadius*zcoords[i] ] )
         ));
         vertices.push(new Vertex(
             [x, y - w, z],
-            [1.0,1.0],
+            [0.5,0.0],
             normalizeArray( [0, -w, 0] )
         ));
     }
