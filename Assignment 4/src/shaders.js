@@ -44,3 +44,19 @@ var FSHADER_SOURCE = `
     void main() {
         gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color * (1.0 - v_NormalSwitch) + v_NormalCoord * v_NormalSwitch;
     }`;
+
+var shaderVars = {
+    a_Position: -1,
+    a_TexCoord: -1,
+    a_NormalCoord: -1,
+    a_Color: -1,
+
+    u_ProjMatrix: -1,
+    u_ViewMatrix: -1,
+    u_ModelMatrix: -1,
+
+    u_NormalSwitch: -1,
+    u_SunPosition: -1,
+
+    u_Sampler: -1
+};

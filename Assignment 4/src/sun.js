@@ -6,10 +6,10 @@ class Sun {
 	}
 
 	rotate(){
-		updateShader();
+		this.updateShader();
 	}
 
 	updateShader(){
-		gl.uniform3fv(shaderVars.u_SunPosition, this.x, this.y, this.z);
+		gl.uniform3f(shaderVars.u_SunPosition, this.x, this.y, this.z);
 	}
 }

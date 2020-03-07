@@ -6,21 +6,6 @@
 // Part refers to collection of parts to form a limb
 
 var gl;
-var shaderVars = {
-    a_Position: -1,
-    a_TexCoord: -1,
-    a_NormalCoord: -1,
-    a_Color: -1,
-
-    u_ProjMatrix: -1,
-    u_ViewMatrix: -1,
-    u_ModelMatrix: -1,
-
-    u_NormalSwitch: -1,
-    u_SunPosition: -1,
-
-    u_Sampler: -1
-};
 
 var world;
 var camera;
@@ -63,7 +48,7 @@ function main() {
 
     camera = new Camera(canvas);
     world = new World(40,40, 20);
-    sun = new Sun(1,1,1);
+    sun = new Sun(1.0,1.0,1.0);
 
     normalsButton();
 
