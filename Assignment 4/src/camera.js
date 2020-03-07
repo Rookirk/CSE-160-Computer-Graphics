@@ -1,3 +1,4 @@
+// requires MVP matrices to be set up beforehand
 class Camera {
     constructor( canvas, eye = [0,0,-1], at = [0,0,0], up = [0,1,0] ) {
         this.canvas = canvas;

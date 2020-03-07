@@ -1,9 +1,15 @@
 class Sun {
-	constructor(position){
-		this.coords = {
-			x: position[0],
-			y: position[1],
-			z: position[2]
-		}
+	constructor(x,y,z){
+		this.x = x;
+		this.y = y;
+		this.z = z;
+	}
+
+	rotate(){
+		updateShader();
+	}
+
+	updateShader(){
+		gl.uniform3fv(shaderVars.u_SunPosition, this.x, this.y, this.z);
 	}
 }

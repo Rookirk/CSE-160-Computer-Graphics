@@ -1,3 +1,4 @@
+// Camera needs to be created before world
 class World {
     constructor(width, height, rooms) {
         this.width = width;

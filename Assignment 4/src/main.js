@@ -15,12 +15,16 @@ var VSHADER_SOURCE = `
     uniform mat4 u_ProjMatrix;
     uniform mat4 u_ViewMatrix;
     uniform mat4 u_ModelMatrix;
+
     uniform float u_NormalSwitch;
+
+    uniform vec3 u_SunPosition;
 
     varying vec2 v_TexCoord;
     varying vec4 v_NormalCoord;
     varying vec4 v_Color;
     varying float v_NormalSwitch;
+    varying vec3 v_SunPosition;
 
     void main() {
         gl_Position = u_ProjMatrix * u_ViewMatrix * u_ModelMatrix * a_Position;
@@ -29,6 +33,7 @@ var VSHADER_SOURCE = `
         v_NormalCoord = a_NormalCoord;
         v_Color = a_Color;
         v_NormalSwitch = u_NormalSwitch;
+        v_SunPosition = u_SunPosition;
     }`;
 
 // Fragment shader program
@@ -41,6 +46,7 @@ var FSHADER_SOURCE = `
     varying vec4 v_NormalCoord;
     varying vec4 v_Color;
     varying float v_NormalSwitch;
+    varying vec3 v_SunPosition;
 
     void main() {
         gl_FragColor = texture2D(u_Sampler, v_TexCoord) * v_Color * (1.0 - v_NormalSwitch) + v_NormalCoord * v_NormalSwitch;
@@ -58,12 +64,14 @@ var shaderVars = {
     u_ModelMatrix: -1,
 
     u_NormalSwitch: -1,
+    u_SunPosition: -1,
 
     u_Sampler: -1
 };
 
 var world;
 var camera;
+var sun;
 
 var projMatrix;
 var viewMatrix;
@@ -102,6 +110,7 @@ function main() {
 
     camera = new Camera(canvas);
     world = new World(40,40, 20);
+    sun = new Sun(1,1,1);
 
     normalsButton();
 
@@ -118,6 +127,8 @@ function update() {
 
     // Clear <canvas>
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+    sun.rotate();
 
     drawGeometry();
 
@@ -137,6 +148,7 @@ function assignStorageLocations() {
     assignUniformLocation('u_ModelMatrix');
 
     assignUniformLocation('u_NormalSwitch');
+    assignUniformLocation('u_SunPosition');
 
     assignUniformLocation('u_Sampler');
 }
