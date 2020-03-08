@@ -201,7 +201,9 @@ World.prototype.getInvertedCubeVertices = function(coords, size, uvSize) {
              z + cubeVertices[indexVal][2] * h],
             [texCoords[texIndices[i]][0] * tl,
              texCoords[texIndices[i]][1] * tw],
-            [1,1,0]
+            [cubeVertices[indexVal][0] * l,
+             cubeVertices[indexVal][1] * w,
+             cubeVertices[indexVal][2] * h]
         );
 
         vertices.push(vertex);

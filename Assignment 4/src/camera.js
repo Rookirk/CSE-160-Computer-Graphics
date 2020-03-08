@@ -37,7 +37,7 @@ class Camera {
         this.setNewLookAt();
     }
 
-    moveInDirection(angle, magnitude){
+    moveInDirection(angle, magnitude) {
         const x = angle[0],
               z = angle[2];
 
@@ -48,7 +48,7 @@ class Camera {
         this.moveCamera(xDist, 0, zDist);
     }
 
-    rotateYaw(angle){
+    rotateYaw(angle) {
         const yaw = this.getYaw();
         const newAngle = rotateAngle(yaw, angle);
 
@@ -58,7 +58,7 @@ class Camera {
         this.setNewLookAt();
     }
 
-    setNewLookAt(){
+    setNewLookAt() {
         viewMatrix.setLookAt(this.eye[0], this.eye[1], this.eye[2],
                           this.at[0], this.at[1], this.at[2],
                           this.up[0], this.up[1], this.up[2]);
@@ -66,12 +66,24 @@ class Camera {
         gl.uniform3fv(shaderVars.u_CameraPosition, this.eye);
     }
 
-    setNewCameraPosition(eye = [0,0,-1], at = [0,0,0], up = [0,1,0]){
+    setNewCameraPosition(eye = [0,0,-1], at = [0,0,0], up = [0,1,0]) {
         this.eye = eye;
         this.at = at;
         this.up = up;
 
         this.setNewLookAt();
+    }
+
+    setNewEye(eye = [0,0,-1]) {
+        this.eye = eye;
+
+        this.setNewLookAt();
+    }
+
+    setNewAt(at = [0,0,0]){
+        this.at = at;
+        
+        this.setNewLookAt();   
     }
 }
 

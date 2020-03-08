@@ -162,12 +162,7 @@ function normalsButton() {
     var normalsButton = document.getElementById('normalsButton');
 
     normalsButton.addEventListener('click', function(){
-        if(enableNormals === 0.0){
-            enableNormals = 1.0;
-        }
-        else{
-            enableNormals = 0.0;
-        }
+        (enableNormals === 0.0) ? enableNormals = 1.0 : enableNormals = 0.0;
         gl.uniform1f(shaderVars.u_NormalSwitch, enableNormals);
     });
 
@@ -178,12 +173,7 @@ function lightButton() {
     var lightButton = document.getElementById('lightButton');
 
     lightButton.addEventListener('click', function(){
-        if(enableLight === 0.0){
-            enableLight = 1.0;
-        }
-        else{
-            enableLight = 0.0;
-        }
+        (enableLight === 0.0) ? enableLight = 1.0 : enableLight = 0.0;
         gl.uniform1f(shaderVars.u_LightSwitch, enableLight);
     });
 

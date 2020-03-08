@@ -31,9 +31,15 @@ class World {
         for(let i = 0; i < this.worldArray.length; i++){
             for(let j = 0; j < this.worldArray[i].length; j++){
                 const elem = this.worldArray[i][j];
-                if(elem === 'c'){
-                    camera.setNewCameraPosition([j*blockSize, 2.25*blockSize, i*blockSize],
-                                                [j*blockSize, blockSize, i*blockSize-1]);
+                if(elem === 'c') {
+                    camera.setNewEye([j*blockSize, 2.25*blockSize, i*blockSize]);
+                }
+                else if(elem === 'a') {
+                    camera.setNewAt([j*blockSize, 2.25*blockSize, i*blockSize]);
+                }
+                else if(elem === 's'){
+                    this.createSphere([j*blockSize, .35, i*blockSize],
+                                      [.1,.1,.1], 'pixel', [1,1], [200,0,0], 30);
                 }
                 else{
                     for(let k = 0; k < elem; k++){
@@ -79,8 +85,6 @@ class World {
         }
 
         this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
-
-        this.createSphere([.25,.15,.25],[.1,.1,.1], 'pixel', [1,1], [200,0,0], 30);
 
         this.createSphere([.5,.15,.5],[.1,.1,.1], 'pixel', [1,1], [200,0,0], 30);
 

@@ -168,11 +168,9 @@ function graph_dungeon (params) {
     key.x = rooms[keyRoom].x + randInt(rooms[keyRoom].width - 1);
     key.y = rooms[keyRoom].y + randInt(rooms[keyRoom].height - 1);
 
-    console.log(start);
-    console.log(end);
-    console.log(key);
-
-    dungeon.set(start.x,start.y,'c');
+    dungeon.set(start.x, start.y, 'c');
+    dungeon.set(end.x, end.y, 'a');
+    dungeon.set(key.x, key.y, 's');
 
     for(let i = 0; i < width; i++){
         for(let j = 0; j < height; j++){
