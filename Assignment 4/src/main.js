@@ -22,6 +22,9 @@ var enableAnim = true;
 var enableNormals = 0.0;
 var enableLight = 1.0;
 
+var texturesLoaded = false;
+var mainFinished = false;
+
 function main() {
     // Retrieve HTML elements
     var canvas = document.getElementById('webgl');
@@ -59,7 +62,12 @@ function main() {
     gl.enable(gl.DEPTH_TEST);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    update();
+    mainFinished = true;
+    checkToBeginUpdate();
+}
+
+function checkToBeginUpdate(){
+    if(mainFinished && texturesLoaded) update();
 }
 
 function update() {

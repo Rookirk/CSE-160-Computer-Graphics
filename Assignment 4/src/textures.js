@@ -1,11 +1,15 @@
 function initAllTextures() {
     const path = "img/";
     textures = {
+        totalTextures: 4,
+        currTexAmount: 0,
+
         currUnit: 0,
         indexNames: new Object(),
         texObj: [],
         imgObj: []
     }
+
     initTexture(path, 'WhitePixel.png', 'pixel');
     initTexture(path, 'Ground.png', 'ground');
     initTexture(path, 'Wall1.png', 'wall1');
@@ -31,6 +35,11 @@ function initTexture(path, file, indexName, textureParams) {
 
     image.onload = function(){
         loadTexture(texture, image, unit, textureParams);
+        textures.currTexAmount++;
+        if(textures.currTexAmount == textures.totalTextures){
+            texturesLoaded = true;
+            checkToBeginUpdate();
+        }
     };
     image.src = path + file;
 
