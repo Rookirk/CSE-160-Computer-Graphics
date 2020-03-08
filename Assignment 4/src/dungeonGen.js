@@ -157,7 +157,7 @@ function graph_dungeon (params) {
     let endRoom = numRooms - randInt(Math.floor(numRooms*.1)) - 1;
     let keyRoom = randIntRange(Math.floor(numRooms*.4),Math.floor(numRooms*.6));
 
-    console.log(startRoom + " " + endRoom + " " + keyRoom);
+    //console.log(startRoom + " " + endRoom + " " + keyRoom);
 
     start.x = rooms[startRoom].x + randInt(rooms[startRoom].width - 1);
     start.y = rooms[startRoom].y + randInt(rooms[startRoom].height - 1);

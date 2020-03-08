@@ -43,7 +43,7 @@ function normalizeArray(vert) {
     ]
 }
 
-World.prototype.getCubeVertices = function(coords, size, uvSize) {
+World.prototype.getCubeVertices = function(coords, size, uvSize, facesToRender) {
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
     const tl = uvSize[0], tw = uvSize[1];
@@ -89,7 +89,7 @@ World.prototype.getCubeVertices = function(coords, size, uvSize) {
         [0, 3, 4],   [0, 4, 5],    // right
         [0, 5, 6],   [0, 6, 1],    // up
         [1, 6, 7],   [1, 7, 2],    // left
-        //[7, 4, 3],   [7, 3, 2],    // down
+        [7, 4, 3],   [7, 3, 2],    // down
         [4, 7, 6],   [4, 6, 5]     // back
     ];
 
@@ -98,11 +98,13 @@ World.prototype.getCubeVertices = function(coords, size, uvSize) {
         [0, 1, 3],   [0, 3, 2],
         [3, 2, 0],   [3, 0, 1],
         [2, 0, 1],   [2, 1, 3],
-        //[2, 0, 1],   [2, 1, 3],
+        [2, 0, 1],   [2, 1, 3],
         [1, 3, 2],   [1, 2, 0]
     ];
     // Iterate through all triangles
     for(let i = 0; i < trianglesArr.length; i++){
+        if(!facesToRender.some(x => x*2 === i || x*2 + 1 === i)) continue;
+
         const triangle = trianglesArr[i];
         const texTri = texTriangles[i];
         const vert0 = triangle[0];

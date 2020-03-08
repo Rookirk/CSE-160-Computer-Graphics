@@ -27,6 +27,23 @@ class World {
         }
         this.worldArray = new graph_dungeon(params);
 
+        // Check if the column is adjacent to any other column
+        const checkBack = (i,j,k) => i > 0 && !(this.worldArray[i-1][j] > k);
+        const checkLeft = (i,j,k) => j > 0 && !(this.worldArray[i][j-1] > k);
+        const checkFront = (i,j,k) => i < this.worldArray.length - 1 && !(this.worldArray[i+1][j] > k);
+        const checkRight = (i,j,k) => j < this.worldArray.length - 1 && !(this.worldArray[i][j+1] > k);
+
+        let test = 'a';
+        console.log(test < 0);
+        test = 'c';
+        console.log(test < 0);
+        test = 's';
+        console.log(test < 0);
+        test = 0;
+        console.log(test < 0);
+        test = 1;
+        console.log(test < 0);
+
         const blockSize = .1;
         for(let i = 0; i < this.worldArray.length; i++){
             for(let j = 0; j < this.worldArray[i].length; j++){
@@ -43,46 +60,25 @@ class World {
                 }
                 else{
                     for(let k = 0; k < elem; k++){
+                        let facesToRender = [];
+                        if( checkBack(i,j,k) ) facesToRender.push(5);
+                        if( checkLeft(i,j,k) ) facesToRender.push(3);
+                        if( checkFront(i,j,k) ) facesToRender.push(0);
+                        if( checkRight(i,j,k) ) facesToRender.push(1);
+                        if( k === elem - 1 ) facesToRender.push(2);
+
                         this.createCube([j*blockSize, blockSize*k + blockSize/2, i*blockSize],
                                         [blockSize/2, blockSize/2, blockSize/2],
                                         'wall1',
                                         [1,1],
-                                        [255,255,255]);
+                                        [255,255,255],
+                                        facesToRender);
                     }
                 }
             }
         }
-        // Outer walls
-        for(let i = 0; i < this.worldArray.length + 1; i++){
-            for(let k = 0; k < 4; k++){
-                this.createCube([-1*blockSize, blockSize*k + blockSize/2, i*blockSize],
-                                            [blockSize/2, blockSize/2, blockSize/2],
-                                            'ground',
-                                            [1,1],
-                                            [255,255,255]);
-            }
-            for(let k = 0; k < 4; k++){
-                this.createCube([i*blockSize, blockSize*k + blockSize/2, -1*blockSize],
-                                            [blockSize/2, blockSize/2, blockSize/2],
-                                            'ground',
-                                            [1,1],
-                                            [255,255,255]);
-            }
-            for(let k = 0; k < 4; k++){
-                this.createCube([(this.worldArray.length)*blockSize, blockSize*k + blockSize/2, i*blockSize],
-                                            [blockSize/2, blockSize/2, blockSize/2],
-                                            'ground',
-                                            [1,1],
-                                            [255,255,255]);
-            }
-            for(let k = 0; k < 4; k++){
-                this.createCube([i*blockSize, blockSize*k + blockSize/2, (this.worldArray.length)*blockSize],
-                                            [blockSize/2, blockSize/2, blockSize/2],
-                                            'ground',
-                                            [1,1],
-                                            [255,255,255]);
-            }
-        }
+
+        this.drawOuterWalls(blockSize, this.worldArray.length);
 
         this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
 
@@ -149,8 +145,10 @@ class World {
         this.partData[endIndex].texUnit = textures.indexNames[texName];
     }
 
-    createCube(coords, size, texName, uvSize, color, transformFunc){
-        const vertices = this.getCubeVertices(coords, size, uvSize);
+    createCube(coords, size, texName, uvSize, color, facesToRender, transformFunc){
+        let facesArr;
+        (facesToRender == null) ? facesArr = [0,1,2,3,4,5] : facesArr = facesToRender;
+        const vertices = this.getCubeVertices(coords, size, uvSize, facesArr);
 
         this.createShape(vertices, texName, color, transformFunc);
     }
@@ -176,5 +174,38 @@ class World {
         const vertices = this.getSphereVertices(coords, size, uvSize, segments);
 
         this.createShape(vertices, texName, color, transformFunc);
+    }
+
+    drawOuterWalls(blockSize, length){
+        for(let i = 0; i < length + 1; i++){
+            for(let k = 0; k < 4; k++){
+                this.createCube([-1*blockSize, blockSize*k + blockSize/2, i*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255]);
+            }
+            for(let k = 0; k < 4; k++){
+                this.createCube([i*blockSize, blockSize*k + blockSize/2, -1*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255]);
+            }
+            for(let k = 0; k < 4; k++){
+                this.createCube([length*blockSize, blockSize*k + blockSize/2, i*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255]);
+            }
+            for(let k = 0; k < 4; k++){
+                this.createCube([i*blockSize, blockSize*k + blockSize/2, length*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255]);
+            }
+        }
     }
 }
