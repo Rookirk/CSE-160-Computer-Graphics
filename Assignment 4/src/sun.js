@@ -1,35 +1,42 @@
 class Sun {
-	constructor(centerCoords, radius, rate){
+	constructor(centerCoords, radius, rate, color){
 		this.centerX = centerCoords[0];
 		this.centerY = centerCoords[1];
 		this.centerZ = centerCoords[2];
+
+		this.color = color;
 
 		this.radius = radius;
 		this.rate = rate * (Math.PI/180);
 
 		this.angle = 0;
 
-		this.reposition();
-		this.updateShader();
+		this.calcPosition();
+		this.updateColor();
+		this.updatePosition();
 	}
 
 	update(){
 		this.rotate();
-		this.reposition();
-		this.updateShader();
+		this.calcPosition();
+		this.updatePosition();
 	}
 
 	rotate(){
 		this.angle = (this.angle + this.rate) % (2*Math.PI);
 	}
 
-	reposition(){
+	calcPosition(){
 		this.x = Math.sin(this.angle) * this.radius;
 		this.y = Math.cos(this.angle) * this.radius;
 		this.z = 0;
 	}
 
-	updateShader(){
-		gl.uniform4f(shaderVars.u_SunPosition, this.x, this.y, this.z, 0);
+	updateColor(){
+		gl.uniform3f(shaderVars.u_SunColor, this.color[0]/255, this.color[1]/255, this.color[2]/255);
+	}
+
+	updatePosition(){
+		gl.uniform3f(shaderVars.u_SunPosition, this.x, this.y, this.z);
 	}
 }

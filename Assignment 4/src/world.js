@@ -78,9 +78,9 @@ class World {
             }
         }
 
-        //this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
+        this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
 
-        this.createSphere([.25,.35,.25],[.1,.1,.1], 'debug', [1,1], [255,255,255], 8);
+        this.createSphere([.25,.15,.25],[.1,.1,.1], 'pixel', [1,1], [200,0,0], 30);
 
         this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
                           0,

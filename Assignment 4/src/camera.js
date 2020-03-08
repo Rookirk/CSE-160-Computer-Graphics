@@ -63,6 +63,7 @@ class Camera {
                           this.at[0], this.at[1], this.at[2],
                           this.up[0], this.up[1], this.up[2]);
         gl.uniformMatrix4fv(shaderVars.u_ViewMatrix, false, viewMatrix.elements);
+        gl.uniform3fv(shaderVars.u_CameraPosition, this.eye);
     }
 
     setNewCameraPosition(eye = [0,0,-1], at = [0,0,0], up = [0,1,0]){

@@ -259,7 +259,7 @@ World.prototype.getPlaneVertices = function(coords, size, uvSize) {
              z + squareVertices[indexVal][2] * h],
             [texCoords[texIndices[i]][0] * tl,
              texCoords[texIndices[i]][1] * tw],
-            [1,1,0]
+            [0,1,0]
         );
 
         vertices.push(vertex);

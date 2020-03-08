@@ -12,62 +12,88 @@
 	"buffers":
 	[
 		{
-			"file": "Assignment 3/README",
+			"file": "Assignment 4/README",
 			"settings":
 			{
-				"buffer_size": 239,
+				"buffer_size": 59,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 3/drive.html",
+			"file": "Assignment 4/drive.html",
 			"settings":
 			{
-				"buffer_size": 694,
+				"buffer_size": 1033,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 3/src/main.js",
+			"file": "Assignment 4/src/camera.js",
 			"settings":
 			{
-				"buffer_size": 6306,
+				"buffer_size": 4899,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 3/src/camera.js",
+			"file": "Assignment 4/src/render.js",
 			"settings":
 			{
-				"buffer_size": 4839,
+				"buffer_size": 1211,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 3/src/world.js",
+			"file": "Assignment 4/src/shaders.js",
 			"settings":
 			{
-				"buffer_size": 12221,
-				"encoding": "UTF-8",
-				"line_ending": "Windows",
-				"name": "class World {"
-			}
-		},
-		{
-			"file": "Assignment 3/src/render.js",
-			"settings":
-			{
-				"buffer_size": 1189,
+				"buffer_size": 1900,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 3/lib/cuon-matrix.js",
+			"file": "Assignment 4/src/main.js",
+			"settings":
+			{
+				"buffer_size": 6346,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 4/src/sun.js",
+			"settings":
+			{
+				"buffer_size": 648,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 4/src/world.js",
+			"settings":
+			{
+				"buffer_size": 6729,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 4/src/shapes.js",
+			"settings":
+			{
+				"buffer_size": 11725,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 4/lib/cuon-matrix.js",
 			"settings":
 			{
 				"buffer_size": 21233,
@@ -108,36 +134,39 @@
 	"expanded_folders":
 	[
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/src",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src"
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src"
 	],
 	"file_history":
 	[
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/shapes.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/main.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/drive.html",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/main.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/armature.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/shapes",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/src/main.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/cuon-matrix.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/render.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/world.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/camera.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/drive.html",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/README",
 		"/C/Users/Herman/Documents/Unity Projects/Assist Lab Test/Assets/Scripts/soundEfx.cs",
 		"/C/Users/Herman/AppData/Local/Temp/Temp1_Herman_Wu_Assignment_3.zip/Assignment 3/src/main.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/array2d.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/random.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/dungeonGen.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/lib/cuon-matrix.js",
 		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/src/tests/room_generation_test.js",
 		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/src/generators/room_generator.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/src/main.js",
 		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/config/config.yaml",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/dragon.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/render.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/armature.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/shapes.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/animal.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/shapes.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/dragon.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/lib/cuon-matrix.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/animFuncs.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/main.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/drive.html",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/README",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/test.js",
@@ -237,23 +266,15 @@
 		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/States/Fences.js",
 		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/States/Cradle.js",
 		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/States/Clouds.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/States/Cats.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/YarnVisual.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/Yarn.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/WindowMask.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/TextBubble.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/PlayerFSM.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/Player.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/PlayButton.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/Prefabs/MovePlatformLimiter.js"
+		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/States/Cats.js"
 	],
 	"find":
 	{
-		"height": 40.0
+		"height": 28.0
 	},
 	"find_in_files":
 	{
-		"height": 647.0,
+		"height": 104.0,
 		"where_history":
 		[
 			"",
@@ -276,6 +297,20 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"sunPosition",
+			"Camera",
+			"Vector3",
+			"normalize",
+			"cross product",
+			"Vector3",
+			"enableNormals",
+			"DebugNormal",
+			"NormalSwitch",
+			"defaultVars",
+			"u_Sampler",
+			"normalProgram",
+			"defaultProgram",
+			"pushvert",
 			"concat",
 			"lookat",
 			"pointerlock",
@@ -359,6 +394,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"programs.normal",
+			"programs.default",
 			"setNewLookAt",
 			"bs",
 			"    ",
@@ -388,24 +425,24 @@
 	"groups":
 	[
 		{
-			"selected": 2,
+			"selected": 8,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "Assignment 3/README",
+					"file": "Assignment 4/README",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 239,
+						"buffer_size": 59,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								239,
-								239
+								59,
+								59
 							]
 						],
 						"settings":
@@ -419,24 +456,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 9,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "Assignment 3/drive.html",
+					"file": "Assignment 4/drive.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 694,
+						"buffer_size": 1033,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								460,
-								460
+								1004,
+								1004
 							]
 						],
 						"settings":
@@ -457,19 +494,19 @@
 				},
 				{
 					"buffer": 2,
-					"file": "Assignment 3/src/main.js",
+					"file": "Assignment 4/src/camera.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6306,
+						"buffer_size": 4899,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1247,
-								1247
+								1741,
+								1813
 							]
 						],
 						"settings":
@@ -481,28 +518,28 @@
 							"tab_size": 4,
 							"translate_tabs_to_spaces": true
 						},
-						"translation.x": 0.0,
-						"translation.y": 749.0,
+						"translation.x": 100.0,
+						"translation.y": 570.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "Assignment 3/src/camera.js",
+					"file": "Assignment 4/src/render.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4839,
+						"buffer_size": 1211,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1683,
-								1683
+								717,
+								717
 							]
 						],
 						"settings":
@@ -515,61 +552,60 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 741.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Assignment 3/src/world.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 12221,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3321,
-								3321
-							]
-						],
-						"settings":
-						{
-							"auto_name": "class World {",
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 769.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "Assignment 3/src/render.js",
+					"buffer": 4,
+					"file": "Assignment 4/src/shaders.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1189,
+						"buffer_size": 1900,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								602,
-								602
+								788,
+								788
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 228.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Assignment 4/src/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6346,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2064,
+								2064
 							]
 						],
 						"settings":
@@ -590,7 +626,105 @@
 				},
 				{
 					"buffer": 6,
-					"file": "Assignment 3/lib/cuon-matrix.js",
+					"file": "Assignment 4/src/sun.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 648,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								588,
+								588
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 10.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "Assignment 4/src/world.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6729,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								42,
+								42
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "Assignment 4/src/shapes.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11725,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11695,
+								11695
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 4055.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "Assignment 4/lib/cuon-matrix.js",
 					"semi_transient": false,
 					"settings":
 					{
@@ -601,8 +735,8 @@
 						"selection":
 						[
 							[
-								1619,
-								1625
+								20314,
+								20321
 							]
 						],
 						"settings":
@@ -615,10 +749,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 977.0,
+						"translation.y": 12821.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 8,
 					"type": "text"
 				}
 			]
@@ -630,7 +764,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 40.0
 	},
 	"layout":
 	{
