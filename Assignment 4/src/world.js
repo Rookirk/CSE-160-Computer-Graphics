@@ -172,7 +172,7 @@ class World {
     }
 
     drawOuterWalls(blockSize, length){
-        for(let i = 0; i < length + 1; i++){
+        for(let i = -1; i < length + 1; i++){
             for(let k = 0; k < 4; k++){
                 this.createCube([-1*blockSize, blockSize*k + blockSize/2, i*blockSize],
                                             [blockSize/2, blockSize/2, blockSize/2],
