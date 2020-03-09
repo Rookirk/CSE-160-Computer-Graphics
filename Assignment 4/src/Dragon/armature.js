@@ -14,11 +14,21 @@ class Armature{
         this.partName = [];
         this.world = world;
     }
+
+    initBuild(){
+        this.world.buildingRig = true;
+        this.beginIndex = this.world.partData.length;
+    }
+
+    endBuild(){
+        this.world.buildingRig = false;
+        this.endIndex = this.world.partData.length - 1;
+        console.log(this);
+    }
     
     addBodyPart(part, shapeFunc, initMatrixFunc, animMatrixFunc){
         this.partData.push(part);
         this.partName.push(part.name);
-        console.log(part.name);
 
         if(typeof animMatrixFunc !== 'undefined'){
             part.animMatrixFunc = animMatrixFunc;
@@ -28,6 +38,13 @@ class Armature{
 
         // shapes should be drawn at 0,0,0
         shapeFunc(this, this.world);
+
+        let totalVerts = 0;
+        for(let i = 0; i < part.vertsPerShape.length; i++){
+            totalVerts += part.vertsPerShape[i];
+        }
+        part.totalVerts = totalVerts;
+        part.totalShapes = part.vertsPerShape.length
 
         // then the shapes are reoriented in local space
         // origin is the offset in the parent's local space
@@ -56,16 +73,16 @@ class Armature{
         part.animMatrix.multiply(part.initMatrix);
     }
 
-    modifyVerticesWithInit(){
+    update() {
         for(let i = 0; i < this.partData.length; i++){
-            const part = this.partData[i];
+            let part = this.partData[i];
 
             // set the parentMatrix
             if(part.parentIndex != -1)
                 part.parentMatrix.set(this.partData[part.parentIndex].animMatrix);
 
             // read in reverse
-            // bodyPark then undergoes parent transformations
+            // bodyPart then undergoes parent transformations
             part.animMatrix.set(part.parentMatrix);
             // bodyPart then offsets itself to parent
             part.animMatrix.translate(part.origin[0],part.origin[1],part.origin[2]);

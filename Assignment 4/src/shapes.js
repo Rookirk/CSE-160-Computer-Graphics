@@ -487,7 +487,7 @@ World.prototype.getCylinderVertices = function(coords, sizeBase, sizeTop, uvSize
         vertices.push(new Vertex(
             [x + xcoordsT[i + 1], y + ycoordsT[i + 1], z + h],
             [0.0*tl,0.0*tw],
-            normalizeArray( xcoordsT[i+1], ycoordsT[i+1], 0 )
+            normalizeArray( [xcoordsT[i + 1], ycoordsT[i + 1], 0] )
         ));
         vertices.push(new Vertex(
             [x + xcoordsB[i], y + ycoordsB[i], z - h],
