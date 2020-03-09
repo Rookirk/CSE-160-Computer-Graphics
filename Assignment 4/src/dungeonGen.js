@@ -149,13 +149,15 @@ function graph_dungeon (params) {
     }
 
     // Pick end and start rooms
-    let start = {x: -1, y: -1};
-    let end = {x: -1, y: -1};
-    let key = {x: -1, y: -1};
+    const start = {x: -1, y: -1};
+    const end = {x: -1, y: -1};
+    const sphere1 = {x: -1, y: -1};
+    const sphere2 = {x: -1, y: -1};
 
-    let startRoom = randInt(Math.floor(numRooms*.1));
-    let endRoom = numRooms - randInt(Math.floor(numRooms*.1)) - 1;
-    let keyRoom = randIntRange(Math.floor(numRooms*.4),Math.floor(numRooms*.6));
+    const startRoom = randInt(Math.floor(numRooms*.1));
+    const endRoom = numRooms - randInt(Math.floor(numRooms*.1)) - 1;
+    const s1Room = randIntRange(Math.floor(numRooms*.3),Math.floor(numRooms*.5));
+    const s2Room = randIntRange(Math.floor(numRooms*.5),Math.floor(numRooms*.7));
 
     //console.log(startRoom + " " + endRoom + " " + keyRoom);
 
@@ -165,17 +167,21 @@ function graph_dungeon (params) {
     end.x = rooms[endRoom].x + randInt(rooms[endRoom].width - 1);
     end.y = rooms[endRoom].y + randInt(rooms[endRoom].height - 1);
 
-    key.x = rooms[keyRoom].x + randInt(rooms[keyRoom].width - 1);
-    key.y = rooms[keyRoom].y + randInt(rooms[keyRoom].height - 1);
+    sphere1.x = rooms[s1Room].x + randInt(rooms[s1Room].width - 1);
+    sphere1.y = rooms[s1Room].y + randInt(rooms[s1Room].height - 1);
+
+    sphere2.x = rooms[s2Room].x + randInt(rooms[s2Room].width - 1);
+    sphere2.y = rooms[s2Room].y + randInt(rooms[s2Room].height - 1);
 
     dungeon.set(start.x, start.y, 'c');
     dungeon.set(end.x, end.y, 'a');
-    dungeon.set(key.x, key.y, 's');
+    dungeon.set(sphere1.x, sphere1.y, 's1');
+    dungeon.set(sphere2.x, sphere2.y, 's2');
 
     for(let i = 0; i < width; i++){
         for(let j = 0; j < height; j++){
             if(dungeon.get(i,j) === 1){
-                dungeon.set(i,j,randIntRange(1,4));
+                dungeon.set(i,j,randIntRange(1,3));
             }
         }
     }

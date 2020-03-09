@@ -43,9 +43,13 @@ class World {
                 else if(elem === 'a') {
                     camera.setNewAt([j*blockSize, 2.25*blockSize, i*blockSize]);
                 }
-                else if(elem === 's'){
+                else if(elem === 's1'){
                     this.createSphere([j*blockSize, .35, i*blockSize],
                                       [.1,.1,.1], 'pixel', [1,1], [200,0,0], 30);
+                }
+                else if(elem === 's2'){
+                    this.createSphere([j*blockSize, .35, i*blockSize],
+                                      [.1,.1,.1], 'pixel', [1,1], [0,0,200], 30);
                 }
                 else{
                     for(let k = 0; k < elem; k++){
@@ -68,13 +72,10 @@ class World {
                 }
             }
         }
-        console.log(this.partData.length);
 
         this.drawOuterWalls(blockSize, this.worldArray.length);
 
         this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
-
-        this.createSphere([.5,.15,.5],[.1,.1,.1], 'pixel', [1,1], [200,0,0], 30);
 
         this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
                           0,
