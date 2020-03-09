@@ -8,10 +8,11 @@
 */
 
 class Armature{
-    constructor(){
+    constructor(world){
         this.vertexArr = [];
         this.partData = [];
         this.partName = [];
+        this.world = world;
     }
     
     addBodyPart(part, shapeFunc, initMatrixFunc, animMatrixFunc){
@@ -26,7 +27,7 @@ class Armature{
         part.vertsPerShape = [];
 
         // shapes should be drawn at 0,0,0
-        shapeFunc(this);
+        shapeFunc(this, this.world);
 
         // then the shapes are reoriented in local space
         // origin is the offset in the parent's local space

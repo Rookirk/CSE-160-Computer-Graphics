@@ -113,15 +113,13 @@ class World {
             const vertex = vertices[i];
             const xyzVertex = [vertex[0],vertex[1],vertex[2]];
 
-            let newVertex;
             if(typeof transformFunc === "function"){
                 const transformMatrix = new Matrix4();
                 transformFunc(transformMatrix);
 
-                newVertex = transformVert(xyzVertex, transformMatrix);
-                const elem = newVertex.elements;
+                const newVertex = transformVert(xyzVertex, transformMatrix);
                 
-                this.pushVert([elem[0], elem[1], elem[2]],
+                this.pushVert(newVertex,
                               vertex.texCoords,
                               vertex.normCoords,
                               color);
@@ -136,39 +134,6 @@ class World {
 
         this.partData[endIndex].amountOfVerts = vertices.length;
         this.partData[endIndex].texUnit = textures.indexNames[texName];
-    }
-
-    createCube(coords, size, texName, uvSize, color, facesToRender, transformFunc){
-        let facesArr;
-        (facesToRender == null) ? facesArr = [0,1,2,3,4,5] : facesArr = facesToRender;
-        if(facesArr[0] === "empty") return;
-
-        const vertices = this.getCubeVertices(coords, size, uvSize, facesArr);
-
-        this.createShape(vertices, texName, color, transformFunc);
-    }
-
-    createInvertedCube(coords, size, texName, uvSize, color, transformFunc){
-        const vertices = this.getInvertedCubeVertices(coords, size, uvSize);
-
-        this.createShape(vertices, texName, color, transformFunc);
-    }
-
-    createPlane(coords, size, texName, uvSize, color, transformFunc){
-        const vertices = this.getPlaneVertices(coords, size, uvSize);
-
-        this.createShape(vertices, texName, color, transformFunc);
-    }
-
-    createSphere(coords, size, texName, uvSize, color, segments, transformFunc){
-        if(segments < 3){
-            console.log("Cannot have less than 3 segments in sphere");
-            return;
-        }
-
-        const vertices = this.getSphereVertices(coords, size, uvSize, segments);
-
-        this.createShape(vertices, texName, color, transformFunc);
     }
 
     drawOuterWalls(blockSize, length){

@@ -40,7 +40,207 @@ function normalizeArray(vert) {
         vector.elements[0],
         vector.elements[1],
         vector.elements[2]
-    ]
+    ];
+}
+
+function transformVert(vertex, transformMatrix){
+    const oldVertex = new Vector3(vertex);
+    const newMatrix = new Matrix4();
+    newMatrix.set(transformMatrix);
+    newMatrix.multiplyVector3(oldVertex);
+
+    return [newMatrix.elements[0],
+            newMatrix.elements[1],
+            newMatrix.elements[2]
+    ];
+}
+
+World.prototype.createCone = function(coords, tipCoords, size, texName, uvSize, color, segments, transformFunc){
+    const vertices = this.getConeVertices(coords, tipCoords, size, uvSize, segments);
+    
+    this.createShape(vertices, texName, color, transformFunc);
+}
+
+World.prototype.createCube = function(coords, size, texName, uvSize, color, facesToRender, transformFunc){
+    let facesArr;
+    (facesToRender == null) ? facesArr = [0,1,2,3,4,5] : facesArr = facesToRender;
+    if(facesArr[0] === "empty") return;
+
+    const vertices = this.getCubeVertices(coords, size, uvSize, facesArr);
+
+    this.createShape(vertices, texName, color, transformFunc);
+}
+
+World.prototype.createInvertedCube = function(coords, size, texName, uvSize, color, transformFunc){
+    const vertices = this.getInvertedCubeVertices(coords, size, uvSize);
+
+    this.createShape(vertices, texName, color, transformFunc);
+}
+
+World.prototype.createXCylinder = function(coords, size, texName, uvSize, color, segments, tube, transformFunc){
+    const x = coords[0], y = coords[1], z = coords[2];
+    const l = size[0], w = size[1], h = size[2];
+
+    const vertices = this.getCylinderVertices([z,y,x],[h,w,l],[h,w,l], uvSize, segments, tube);
+
+    let transformedVerts = [];
+    for(let i = 0; i < vertices.length; i++){
+        const vertex = vertices[i];
+
+        let transformMatrix = new Matrix4();
+        transformMatrix.setRotate(90,0,1,0);
+
+        transformedVerts.push(new Vertex(
+            transformVert(vertex.coords, transformMatrix),
+            vertex.texCoords,
+            transformVert(vertex.normCoords, transformMatrix)
+        ));
+    }
+    
+    this.createShape(transformedVerts, texName, color, transformFunc);
+}
+
+World.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, texName, uvSize, color, segments, tube, transformFunc){
+    const x = coords[0], y = coords[1], z = coords[2];
+    const lb = sizeB[0], wb = sizeB[1], hb = sizeB[2];
+    const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
+
+    const vertices = this.getCylinderVertices([z,y,x],[hb,wb,lb],[ht,wt,lt], uvSize, segments, tube);
+
+    let transformedVerts = [];
+    for(let i = 0; i < vertices.length; i++){
+        const vertex = vertices[i];
+
+        let transformMatrix = new Matrix4();
+        transformMatrix.setRotate(90,0,1,0);
+
+        transformedVerts.push(new Vertex(
+            transformVert(vertex.coords, transformMatrix),
+            vertex.texCoords,
+            transformVert(vertex.normCoords, transformMatrix)
+        ));
+    }
+
+    this.createShape(transformedVerts, texName, color, transformFunc);
+}
+
+World.prototype.createYCylinder = function(coords, size, texName, uvSize, color, segments, tube, transformFunc){
+    const x = coords[0], y = coords[1], z = coords[2];
+    const l = size[0], w = size[1], h = size[2];
+
+    const vertices = this.getCylinderVertices([x,z,y],[l,h,w],[l,h,w], uvSize, segments, tube);
+
+    let transformedVerts = [];
+    for(let i = 0; i < vertices.length; i++){
+        const vertex = vertices[i];
+
+        let transformMatrix = new Matrix4();
+        transformMatrix.setRotate(90,1,0,0);
+
+        transformedVerts.push(new Vertex(
+            transformVert(vertex.coords, transformMatrix),
+            vertex.texCoords,
+            transformVert(vertex.normCoords, transformMatrix)
+        ));
+    }
+
+    this.createShape(transformedVerts, texName, color, transformFunc);
+}
+
+World.prototype.createYTruncCylinder = function(coords, sizeB, sizeT, texName, uvSize, color, segments, tube, transformFunc){
+    const x = coords[0], y = coords[1], z = coords[2];
+    const lb = sizeB[0], wb = sizeB[1], hb = sizeB[2];
+    const lt = sizeT[0], wt = sizeT[1], ht = sizeT[2];
+
+    const vertices = this.getCylinderVertices([x,z,y],[lb,hb,wb],[lt,ht,wt], uvSize, segments, tube);
+
+    let transformedVerts = [];
+    for(let i = 0; i < vertices.length; i++){
+        const vertex = vertices[i];
+
+        let transformMatrix = new Matrix4();
+        transformMatrix.setRotate(90,1,0,0);
+
+        transformedVerts.push(new Vertex(
+            transformVert(vertex.coords, transformMatrix),
+            vertex.texCoords,
+            transformVert(vertex.normCoords, transformMatrix)
+        ));
+    }
+
+    this.createShape(transformedVerts, texName, color, transformFunc);
+}
+
+World.prototype.createZCylinder = function(coords, size, texName, uvSize, color, segments, tube, transformFunc){
+    const vertices = this.getCylinderVertices(coords, size, size, uvSize, segments, tube);
+
+    this.createShape(vertices, texName, color, transformFunc);
+}
+
+World.prototype.createZTruncCylinder = function(coords, sizeB, sizeT, texName, uvSize, color, segments, tube, transformFunc){
+    const vertices = this.getCylinderVertices(coords, sizeB, sizeT, uvSize, segments, tube);
+
+    this.createShape(vertices, texName, color, transformFunc);
+}
+
+World.prototype.createPlane = function(coords, size, texName, uvSize, color, transformFunc){
+    const vertices = this.getPlaneVertices(coords, size, uvSize);
+
+    this.createShape(vertices, texName, color, transformFunc);
+}
+
+World.prototype.createSphere = function(coords, size, texName, uvSize, color, segments, transformFunc){
+    if(segments < 3){
+        console.log("Cannot have less than 3 segments in sphere");
+        return;
+    }
+
+    const vertices = this.getSphereVertices(coords, size, uvSize, segments);
+
+    this.createShape(vertices, texName, color, transformFunc);
+}
+
+World.prototype.getConeVertices = function(coords, tipCoords, size, uvSize, segments) {
+    const x = coords[0], y = coords[1], z = coords[2];
+    const xtip = tipCoords[0], ztip = tipCoords[1];
+    const l = size[0], w = size[1], h = size[2];
+    const tl = uvSize[0], tw = uvSize[1];
+
+    const xcoords = [];
+    const zcoords = [];
+    const vertices = [];
+
+    // Finds the coords of the circle
+    let circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments; i++){
+        xcoords[i] = l*Math.cos(i*circleRotationTheta);
+        zcoords[i] = h*Math.sin(i*circleRotationTheta);
+    }
+
+    // Add one more at the end so that it is circular
+    xcoords.push(xcoords[0]);
+    zcoords.push(zcoords[0]);
+
+    // Iterate through the top
+    for(let i = 0; i < xcoords.length - 1; i++){
+        vertices.push( new Vertex(
+            [x + xcoords[i], y - w , z + zcoords[i]],
+            [0.0*tl,0.0*tw],
+            normalizeArray( [xcoords[i], 0, zcoords[i]] )
+        ));
+        vertices.push( new Vertex(
+            [x + xcoords[i + 1], y - w, z + zcoords[i + 1]],
+            [1.0*tl,0.0*tw],
+            normalizeArray( [xcoords[i + 1], 0, zcoords[i + 1]] )
+        ));
+        vertices.push( new Vertex(
+            [x + l*xtip, y + w, z + h*ztip],
+            [0.5*tl,1.0*tw],
+            normalizeArray( [l*xtip, 0, h*ztip] )
+        ));
+    }
+
+    return vertices;
 }
 
 World.prototype.getCubeVertices = function(coords, size, uvSize, facesToRender) {
@@ -214,6 +414,117 @@ World.prototype.getInvertedCubeVertices = function(coords, size, uvSize) {
     return vertices;
 }
 
+World.prototype.getCylinderVertices = function(coords, sizeBase, sizeTop, uvSize, segments, tube){
+    const endIndex = this.partData.length - 1;
+
+    const x = coords[0], y = coords[1], z = coords[2];
+    const lb = sizeBase[0], wb = sizeBase[1], h = sizeBase[2];
+    const lt = sizeTop[0], wt = sizeTop[1];
+    const tl = uvSize[0], tw = uvSize[1];
+
+    let xcoordsB = [];
+    let ycoordsB = [];
+    let xcoordsT = [];
+    let ycoordsT = [];
+    let vertices = [];
+
+    // Finds the coords of the circle
+    let circleRotationTheta = 2*Math.PI/segments;
+    for(let i = 0; i < segments; i++){
+        xcoordsB[i] = lb*Math.cos(i*circleRotationTheta);
+        ycoordsB[i] = wb*Math.sin(i*circleRotationTheta);
+
+        xcoordsT[i] = lt*Math.cos(i*circleRotationTheta);
+        ycoordsT[i] = wt*Math.sin(i*circleRotationTheta);
+    }
+
+    // Add one more at the end so that it is circular
+    xcoordsB.push(xcoordsB[0]);
+    ycoordsB.push(ycoordsB[0]);
+    xcoordsT.push(xcoordsT[0]);
+    ycoordsT.push(ycoordsT[0]);
+
+    if(!tube){
+        // Iterate through the top
+        for(let i = 0; i < xcoordsT.length - 1; i++){
+            vertices.push(new Vertex(
+                [x + xcoordsT[i], y + ycoordsT[i], z + h],
+                [0.0*tl, 0.0*tw],
+                [0,0,1]
+            ));
+            vertices.push(new Vertex(
+                [x + xcoordsT[i + 1], y + ycoordsT[i + 1], z + h],
+                [1.0*tl, 0.0*tw],
+                [0,0,1]
+            ));
+            vertices.push(new Vertex(
+                [x, y, z + h],
+                [0.5*tl, 1.0*tw],
+                [0,0,1]
+            ));
+        }
+    }
+    // Iterate through the sides
+    for(let i = 0; i < xcoordsT.length - 1; i++){
+        //top left triangle
+        vertices.push(new Vertex(
+            [x + xcoordsT[i + 1], y + ycoordsT[i + 1], z + h],
+            [0.0*tl,0.0*tw],
+            normalizeArray( [xcoordsT[i + 1], ycoordsT[i + 1], 0] )
+        ));
+        vertices.push(new Vertex(
+            [x + xcoordsT[i], y + ycoordsT[i], z + h],
+            [1.0*tl,0.0*tw],
+            normalizeArray( [xcoordsT[i], ycoordsT[i], 0] )
+        ));
+        vertices.push(new Vertex(
+            [x + xcoordsB[i], y + ycoordsB[i], z - h],
+            [1.0*tl,1.0*tw],
+            normalizeArray( [xcoordsB[i], ycoordsB[i], 0] )
+        ));
+
+        // bottom right triangle
+        vertices.push(new Vertex(
+            [x + xcoordsT[i + 1], y + ycoordsT[i + 1], z + h],
+            [0.0*tl,0.0*tw],
+            normalizeArray( xcoordsT[i+1], ycoordsT[i+1], 0 )
+        ));
+        vertices.push(new Vertex(
+            [x + xcoordsB[i], y + ycoordsB[i], z - h],
+            [1.0*tl,1.0*tw],
+            normalizeArray( [xcoordsB[i], ycoordsB[i], 0] )
+        ));
+        vertices.push(new Vertex(
+            [x + xcoordsB[i + 1], y + ycoordsB[i + 1], z - h],
+            [0.0*tl,1.0*tw],
+            normalizeArray( [xcoordsB[i+1], ycoordsB[i+1], 0] )
+        ));
+    }
+
+    if(!tube){
+        // Iterate through the bottom
+        for(let i = 0; i < xcoordsT.length - 1; i++){
+            vertices.push(new Vertex(
+                [x + xcoordsB[i + 1], y + ycoordsB[i + 1], z - h],
+                [0.0*tl,0.0*tw],
+                [0,0,-1]
+            ));
+            vertices.push(new Vertex(
+                [x + xcoordsB[i], y + ycoordsB[i], z - h],
+                [1.0*tl,0.0*tw],
+                [0,0,-1]
+            ));
+            vertices.push(new Vertex(
+                [x, y, z - h],
+                [0.5*tl,1.0*tw],
+                [0,0,-1]
+            ));
+        }
+    }
+
+    return vertices;
+}
+
 World.prototype.getPlaneVertices = function(coords, size, uvSize) {
     const x = coords[0], y = coords[1], z = coords[2];
     const l = size[0], w = size[1], h = size[2];
@@ -299,17 +610,17 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
     for(let i = 0; i < xcoords.length - 1; i++){
         vertices.push(new Vertex(
             [ x + horizRadius*xcoords[i], y + yHeight , z + horizRadius*zcoords[i] ],
-            [1.0,0.0],
+            [1.0*tl,0.0*tw],
             normalizeArray( [ horizRadius*xcoords[i], yHeight , horizRadius*zcoords[i] ] )
         ));
         vertices.push(new Vertex(
             [ x + horizRadius*xcoords[i + 1], y + yHeight, z + horizRadius*zcoords[i + 1] ],
-            [0.0,0.0],
+            [0.0*tl,0.0*tw],
             normalizeArray( [ horizRadius*xcoords[i + 1], yHeight, horizRadius*zcoords[i + 1] ] )
         ));
         vertices.push(new Vertex(
             [ x, y + w, z ],
-            [0.5,1.0],
+            [0.5*tl,1.0*tw],
             normalizeArray( 0, w, 0 )
         ));
     }
@@ -324,34 +635,34 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
             //top right trjangle
             vertices.push(new Vertex(
                 [ x + horizRadius*xcoords[j + 1], y + yHeight, z + horizRadius*zcoords[j + 1] ],
-                [0.0,1.0],
+                [0.0*tl,1.0*tw],
                 normalizeArray( [ horizRadius*xcoords[j + 1], yHeight, horizRadius*zcoords[j + 1] ] )
             ));
             vertices.push(new Vertex(
                 [ x + horizRadius*xcoords[j], y + yHeight, z + horizRadius*zcoords[j] ],
-                [1.0,1.0],
+                [1.0*tl,1.0*tw],
                 normalizeArray( [ horizRadius*xcoords[j], yHeight, horizRadius*zcoords[j] ] )
             ));
             vertices.push(new Vertex(
                 [ x + horizRadius2*xcoords[j], y + yHeight2, z + horizRadius2*zcoords[j] ],
-                [1.0,0.0],
+                [1.0*tl,0.0*tw],
                 normalizeArray( [ horizRadius2*xcoords[j], yHeight2, horizRadius2*zcoords[j] ] )
             ));
 
             // bottom left trjangle
             vertices.push(new Vertex(
                 [ x + horizRadius*xcoords[j + 1], y + yHeight, z + horizRadius*zcoords[j + 1] ],
-                [0.0,1.0],
+                [0.0*tl,1.0*tw],
                 normalizeArray( [ horizRadius*xcoords[j + 1], yHeight, horizRadius*zcoords[j + 1] ] )
             ));
             vertices.push(new Vertex(
                 [ x + horizRadius2*xcoords[j], y + yHeight2, z + horizRadius2*zcoords[j] ],
-                [1.0,0.0],
+                [1.0*tl,0.0*tw],
                 normalizeArray( [ horizRadius2*xcoords[j], yHeight2, horizRadius2*zcoords[j] ] )
             ));
             vertices.push(new Vertex(
                 [ x + horizRadius2*xcoords[j + 1], y + yHeight2, z + horizRadius2*zcoords[j + 1] ],
-                [0.0,0.0],
+                [0.0*tl,0.0*tw],
                 normalizeArray( [ horizRadius2*xcoords[j + 1], yHeight2, horizRadius2*zcoords[j + 1] ] )
             ));
         }
@@ -363,17 +674,17 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
     for(let i = 0; i < xcoords.length - 1; i++){
         vertices.push(new Vertex(
             [ x + horizRadius*xcoords[i + 1], y - yHeight, z + horizRadius*zcoords[i + 1] ],
-            [0.0,1.0],
+            [0.0*tl,1.0*tw],
             normalizeArray( [ horizRadius*xcoords[i + 1], -yHeight, horizRadius*zcoords[i + 1] ] )
         ));
         vertices.push(new Vertex(
             [x + horizRadius*xcoords[i], y - yHeight, z + horizRadius*zcoords[i] ],
-            [1.0,1.0],
+            [1.0*tl,1.0*tw],
             normalizeArray( [horizRadius*xcoords[i], -yHeight, horizRadius*zcoords[i] ] )
         ));
         vertices.push(new Vertex(
             [x, y - w, z],
-            [0.5,0.0],
+            [0.5*tl,0.0*tw],
             normalizeArray( [0, -w, 0] )
         ));
     }
