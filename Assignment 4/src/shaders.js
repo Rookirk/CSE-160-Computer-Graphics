@@ -1,5 +1,5 @@
 // Vertex shader program
-var VSHADER_SOURCE = `
+const VSHADER_SOURCE = `
     attribute vec4 a_Position;
     attribute vec2 a_TexCoord;
     attribute vec4 a_NormalCoord;
@@ -29,7 +29,7 @@ var VSHADER_SOURCE = `
 */
 
 // Fragment shader program
-var FSHADER_SOURCE = `
+const FSHADER_SOURCE = `
     precision mediump float;
 
     uniform sampler2D u_Sampler;
@@ -69,7 +69,7 @@ var FSHADER_SOURCE = `
         gl_FragColor = u_LightSwitch * lighting * texture + (1.0 - u_LightSwitch) * texture + normal;
     }`;
 
-var shaderVars = {
+const shaderVars = {
     a_Position: -1,
     a_TexCoord: -1,
     a_NormalCoord: -1,

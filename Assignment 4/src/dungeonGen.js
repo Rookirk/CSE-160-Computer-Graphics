@@ -464,7 +464,7 @@ function partition_rooms(array, X0,Y0,X,Y,ROOMS){
         return;
     }
 
-    var part1, part2
+    let part1, part2
 
     if(randInt(1) % 2 == 0){
         part1 = Math.floor(ROOMS/2);
@@ -479,7 +479,7 @@ function partition_rooms(array, X0,Y0,X,Y,ROOMS){
 
     // Splits into left/right rooms
     if(pWidth > pLength){
-        var split = divide_partition(X0,X,part1,part2)
+        const split = divide_partition(X0,X,part1,part2)
         if(split === -1){
             let cell = {
                 x1: X0,
@@ -496,7 +496,7 @@ function partition_rooms(array, X0,Y0,X,Y,ROOMS){
     }
     // Splits into up/down rooms
     else{
-        var split = divide_partition(Y0,Y,part1,part2);
+        const split = divide_partition(Y0,Y,part1,part2);
         if(split === -1){
             let cell = {
                 x1: X0,
@@ -514,9 +514,9 @@ function partition_rooms(array, X0,Y0,X,Y,ROOMS){
 }
 
 function divide_partition (low,high,rooms1,rooms2){
-    var lower_bound = low;
-    var upper_bound = high;
-    var diff = Math.abs(high-low);
+    let lower_bound = low;
+    let upper_bound = high;
+    const diff = Math.abs(high-low);
     if(diff > 4){
         lower_bound += Math.floor(diff*.25);
         upper_bound -= Math.floor(diff*.25);

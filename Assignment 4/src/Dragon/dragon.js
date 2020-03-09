@@ -1,11 +1,11 @@
-var antlerColor = [255,213,147];
-var bellyColor = [239, 219, 131];
-var eyeColor = [21, 63, 46];
-var finColor = [19, 84, 22];
-var scaleColor = [204, 140, 20];
-var armColor = [188,129,18];
-var armColor2 = [173,118,17];
-var armColor3 = [153,104,15];
+const antlerColor = [255,213,147];
+const bellyColor = [239, 219, 131];
+const eyeColor = [21, 63, 46];
+const finColor = [19, 84, 22];
+const scaleColor = [204, 140, 20];
+const armColor = [188,129,18];
+const armColor2 = [173,118,17];
+const armColor3 = [153,104,15];
 
 function createDragon(){
     rig.addBodyPart(

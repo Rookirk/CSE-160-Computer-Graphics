@@ -120,7 +120,7 @@ function assignUniformLocation(uniform){
 }
 
 function initVertexBuffers() {
-    var vertexBuffer = gl.createBuffer();
+    const vertexBuffer = gl.createBuffer();
     if(!vertexBuffer){
         console.log('Failed to create the buffer object ');
         return;
@@ -145,7 +145,7 @@ function initVertexBuffers() {
 }
 
 function normalsButton() {
-    var normalsButton = document.getElementById('normalsButton');
+    const normalsButton = document.getElementById('normalsButton');
 
     normalsButton.addEventListener('click', function(){
         (enableNormals === 0.0) ? enableNormals = 1.0 : enableNormals = 0.0;
@@ -156,7 +156,7 @@ function normalsButton() {
 }
 
 function lightButton() {
-    var lightButton = document.getElementById('lightButton');
+    const lightButton = document.getElementById('lightButton');
 
     lightButton.addEventListener('click', function(){
         (enableLight === 0.0) ? enableLight = 1.0 : enableLight = 0.0;
