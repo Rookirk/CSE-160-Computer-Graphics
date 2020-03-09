@@ -23,20 +23,20 @@ function createDragon(){
         }
     );
 
-    let totalSpineSegs = 7;
+    const totalSpineSegs = 7;
     rig.drawDragonTail(totalSpineSegs);
     rig.drawDragonTailPlume(totalSpineSegs);
 
     rig.drawDragonLegs("left");
     rig.drawDragonLegs("right");
     
-    let totalChestSegsPerS = 4;
+    const totalChestSegsPerS = 4;
     rig.drawDragonBody(totalChestSegsPerS);
 
     rig.drawDragonArms("left");
     rig.drawDragonArms("right");
 
-    let lastChest = (2*totalChestSegsPerS)+1;
+    const lastChest = (2*totalChestSegsPerS)+1;
     rig.addBodyPart(
         {
             name: "Head",
@@ -83,7 +83,7 @@ Armature.prototype.createDragonAntlers = function(side){
         return;
     }
 
-    let transformMatrix = new Matrix4();
+    const transformMatrix = new Matrix4();
 
     // Antler1
     transformMatrix.translate(.1*scaleOrientation,.1,.1);
@@ -680,7 +680,7 @@ Armature.prototype.drawDragonTail = function(totalSpineSegs){
 }
 
 Armature.prototype.drawDragonTailPlume = function(totalSpineSegs){
-    let lastTailSeg = totalSpineSegs + 1;
+    const lastTailSeg = totalSpineSegs + 1;
     rig.addBodyPart(
         {
             name: "TailPlume1",
@@ -696,7 +696,7 @@ Armature.prototype.drawDragonTailPlume = function(totalSpineSegs){
 
             const totalFins = 8;
 
-            let transformMatrix = new Matrix4();
+            const transformMatrix = new Matrix4();
             for(let i = 0; i < totalFins; i++){
                 transformMatrix.rotate(360/totalFins, 0,0,1);
                 armature.createCone([0, .13, .03], [0, 1], [.07, .13, .08], finColor, 6, function(matrix){

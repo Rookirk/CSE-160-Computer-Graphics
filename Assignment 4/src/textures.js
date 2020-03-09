@@ -17,13 +17,13 @@ function initAllTextures() {
 }
 
 function initTexture(path, file, indexName, textureParams) {
-    let texture = gl.createTexture();
+    const texture = gl.createTexture();
     if(!texture){
         console.log('Failed to create the texture object');
         return;
     }
 
-    let image = new Image();
+    const image = new Image();
     if(!image){
         console.log('Failed to create the image object');
         return;

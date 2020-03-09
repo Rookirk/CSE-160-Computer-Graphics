@@ -54,29 +54,29 @@ Matrix4.prototype.transformSpine = function(angle, offset) {
 }
 
 Matrix4.prototype.templateLevitate = function(rate, offset, axis, height1, height2) {
-    let x = axis[0], y = axis[1], z = axis[2];
-    let influence = Math.cos(rate*globalTime + offset);
-    let height = linearMap(influence, -1, 1, height2, height1);
+    const x = axis[0], y = axis[1], z = axis[2];
+    const influence = Math.cos(rate*globalTime + offset);
+    const height = linearMap(influence, -1, 1, height2, height1);
 
     return this.translate(height*x,height*y,height*z);
 }
 
 Matrix4.prototype.templateOscillate = function(rate, offset, axis, angle1, angle2) {
-    let x = axis[0], y = axis[1], z = axis[2];
-    let influence = Math.cos(rate*globalTime + offset);
-    let angle = linearMap(influence, -1, 1, angle2, angle1);
+    const x = axis[0], y = axis[1], z = axis[2];
+    const influence = Math.cos(rate*globalTime + offset);
+    const angle = linearMap(influence, -1, 1, angle2, angle1);
 
     return this.rotate(angle,x,y,z);
 }
 
 Matrix4.prototype.templateSpin = function(rate, axis){
-    let x = axis[0], y = axis[1], z = axis[2];
-    let angle = (rate*globalTime) % 360;
+    const x = axis[0], y = axis[1], z = axis[2];
+    const angle = (rate*globalTime) % 360;
     return this.rotate(angle,x,y,z);
 }
 
 function testMatrices(value, value2){
-    let part = rig.partData[0];
+    const part = rig.partData[0];
     part.initMatrix.setRotate(value*360,1,0,0);
     part.animMatrix.set(part.initMatrix);
 }

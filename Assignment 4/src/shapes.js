@@ -34,7 +34,7 @@ function getCrossProduct(vert0, vert1, vert2) {
 }
 
 function normalizeArray(vert) {
-    let vector = new Vector3(vert);
+    const vector = new Vector3(vert);
     vector.normalize();
     return [
         vector.elements[0],
@@ -48,7 +48,7 @@ World.prototype.getCubeVertices = function(coords, size, uvSize, facesToRender) 
     const l = size[0], w = size[1], h = size[2];
     const tl = uvSize[0], tw = uvSize[1];
 
-    let vertices = [];
+    const vertices = [];
 
     /*    v6----- v5
          /|      /|
@@ -122,7 +122,7 @@ World.prototype.getCubeVertices = function(coords, size, uvSize, facesToRender) 
             const vertex = triangle[i];
             const texVertex = texTri[i];
 
-            let newVertex = new Vertex(
+            const newVertex = new Vertex(
                 [x + cubeVertices[vertex].x * l,
                  y + cubeVertices[vertex].y * w,
                  z + cubeVertices[vertex].z * h],
@@ -143,7 +143,7 @@ World.prototype.getInvertedCubeVertices = function(coords, size, uvSize) {
     const l = size[0], w = size[1], h = size[2];
     const tl = uvSize[0], tw = uvSize[1];
 
-    let vertices = [];
+    const vertices = [];
     //    v6----- v5
     //   /|      /|
     //  v1------v0|
@@ -195,9 +195,9 @@ World.prototype.getInvertedCubeVertices = function(coords, size, uvSize) {
     ]);
     // Iterate through all vertices
     for(let i = 0; i < cubeIndices.length; i++){
-        let indexVal = cubeIndices[i];
+        const indexVal = cubeIndices[i];
         // push the x, y, z, tx, ty with appropriate transforms
-        let vertex = new Vertex(
+        const vertex = new Vertex(
             [x + cubeVertices[indexVal][0] * l,
              y + cubeVertices[indexVal][1] * w,
              z + cubeVertices[indexVal][2] * h],
@@ -219,7 +219,7 @@ World.prototype.getPlaneVertices = function(coords, size, uvSize) {
     const l = size[0], w = size[1], h = size[2];
     const tl = uvSize[0], tw = uvSize[1];
 
-    let vertices = [];
+    const vertices = [];
     //  v0------v2
     //  |       |
     //  |       |
@@ -255,9 +255,9 @@ World.prototype.getPlaneVertices = function(coords, size, uvSize) {
     ]);
     // Iterate through all vertices
     for(let i = 0; i < squareIndices.length; i++){
-        let indexVal = squareIndices[i];
+        const indexVal = squareIndices[i];
         // push the x, y, z, tx, ty with appropriate transforms
-        let vertex = new Vertex(
+        const vertex = new Vertex(
             [x + squareVertices[indexVal][0] * l,
              y + squareVertices[indexVal][1] * w,
              z + squareVertices[indexVal][2] * h],
@@ -277,12 +277,12 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
     const l = size[0], w = size[1], h = size[2];
     const tl = uvSize[0], tw = uvSize[1];
 
-    let xcoords = [];
-    let zcoords = [];
-    let vertices = [];
+    const xcoords = [];
+    const zcoords = [];
+    const vertices = [];
 
     // Finds the coords of the circle
-    let circleRotationTheta = 2*Math.PI/segments;
+    const circleRotationTheta = 2*Math.PI/segments;
     for(let i = 0; i < segments; i++){
         xcoords[i] = l*Math.cos(i*circleRotationTheta);
         zcoords[i] = h*Math.sin(i*circleRotationTheta);
@@ -292,7 +292,7 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
     xcoords.push(xcoords[0]);
     zcoords.push(zcoords[0]);
 
-    let hemisphereTheta = Math.PI/segments;
+    const hemisphereTheta = Math.PI/segments;
     // Iterate through the top
     let yHeight = w*Math.cos(hemisphereTheta);
     let horizRadius = Math.sin(hemisphereTheta);
@@ -317,9 +317,9 @@ World.prototype.getSphereVertices = function(coords, size, uvSize, segments) {
     // Iterate through horizontal rings
     for(let i = 1; i < segments - 1; i++){
         yHeight = w*Math.cos(i*hemisphereTheta);
-        let yHeight2 = w*Math.cos((i+1)*hemisphereTheta);
+        const yHeight2 = w*Math.cos((i+1)*hemisphereTheta);
         horizRadius = Math.sin(i*hemisphereTheta);
-        let horizRadius2 = Math.sin((i+1)*hemisphereTheta);
+        const horizRadius2 = Math.sin((i+1)*hemisphereTheta);
         for(let j = 0; j < xcoords.length - 1; j++){
             //top right trjangle
             vertices.push(new Vertex(

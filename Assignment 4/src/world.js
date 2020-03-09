@@ -20,7 +20,7 @@ class World {
         [0,2,0,3],
         ];*/
 
-        let params = {
+        const params = {
             width: this.width,
             height: this.height,
             numberOfRooms: this.rooms
@@ -53,7 +53,7 @@ class World {
                 }
                 else{
                     for(let k = 0; k < elem; k++){
-                        let facesToRender = [];
+                        const facesToRender = [];
                         if( checkBack(i,j,k) ) facesToRender.push(5);
                         if( checkLeft(i,j,k) ) facesToRender.push(3);
                         if( checkFront(i,j,k) ) facesToRender.push(0);
@@ -115,11 +115,11 @@ class World {
 
             let newVertex;
             if(typeof transformFunc === "function"){
-                let transformMatrix = new Matrix4();
+                const transformMatrix = new Matrix4();
                 transformFunc(transformMatrix);
 
                 newVertex = transformVert(xyzVertex, transformMatrix);
-                let elem = newVertex.elements;
+                const elem = newVertex.elements;
                 
                 this.pushVert([elem[0], elem[1], elem[2]],
                               vertex.texCoords,

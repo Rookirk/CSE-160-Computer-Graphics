@@ -14,7 +14,7 @@ function drawGeometry() {
 
     let beginningIndex = 0;
     for(let i = 0; i < world.partData.length; i++){
-        let part = world.partData[i];
+        const part = world.partData[i];
         // Enable texture unit0
         gl.activeTexture(gl['TEXTURE' + part.texUnit]);
         // Bind the texture object to the target
@@ -48,6 +48,6 @@ function transformModelMatrix() {
 }
 
 function updateTime() {
-    let now = performance.now();
+    const now = performance.now();
     globalTime = now - startTime;
 }

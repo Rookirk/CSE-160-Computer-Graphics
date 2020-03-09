@@ -41,7 +41,7 @@ class Armature{
         if(part.parent !== -1){
             part.parentIndex = this.partName.indexOf(part.parent);
 
-            let parent = this.partData[part.parentIndex];
+            const parent = this.partData[part.parentIndex];
             part.parentMatrix.set(parent.animMatrix);
         }
         else{
@@ -57,7 +57,7 @@ class Armature{
 
     modifyVerticesWithInit(){
         for(let i = 0; i < this.partData.length; i++){
-            let part = this.partData[i];
+            const part = this.partData[i];
 
             // set the parentMatrix
             if(part.parentIndex != -1)

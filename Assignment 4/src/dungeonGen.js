@@ -6,9 +6,9 @@
 function graph_dungeon (params) {
     const { width, height, numberOfRooms } = params;
 
-    let rooms = [];
+    const rooms = [];
 
-    let dungeon = new Array2d(width,height);
+    const dungeon = new Array2d(width,height);
 
     dungeon.fill((x,y) => {
         return 1;
@@ -16,11 +16,11 @@ function graph_dungeon (params) {
 
     // Multiply each coord by some multiplier
     // Populate partitions rooms
-    let partitions = [];
+    const partitions = [];
     partition_rooms(partitions,0,0,width - 1,height - 1,numberOfRooms);
 
     // If the partitions comes out to less than the desired number
-    let numRooms = partitions.length;
+    const numRooms = partitions.length;
 
     // Pick random locations for room
     for(let i = 0; i < numRooms; ++i){
@@ -34,8 +34,8 @@ function graph_dungeon (params) {
             tunnels: [],
         };
 
-        let r = rooms[i];
-        let p = partitions[i];
+        const r = rooms[i];
+        const p = partitions[i];
         // temp solution to control whether we want max size or not
         if(false){
             r.width = Math.abs(p.x1-p.x2)-1;
@@ -44,8 +44,8 @@ function graph_dungeon (params) {
             r.y = p.y1 + 1;
         }
         else{
-            let minXSize = Math.min(3,Math.abs(p.x1-p.x2)-1);
-            let minYSize = Math.min(3,Math.abs(p.y1-p.y2)-1);
+            const minXSize = Math.min(3,Math.abs(p.x1-p.x2)-1);
+            const minYSize = Math.min(3,Math.abs(p.y1-p.y2)-1);
             r.width = randIntRange(minXSize,Math.abs(p.x1-p.x2)-1);
             r.height = randIntRange(minYSize,Math.abs(p.y1-p.y2)-1);
             r.x = randIntRange(p.x1 + 1,p.x2 - r.width - 1);
@@ -60,8 +60,8 @@ function graph_dungeon (params) {
     // Create graph alg here
     for(let i = 0; i < numRooms; ++i){
         for(let j = i + 1; j < numRooms; ++j){
-            let thisP = partitions[i];
-            let thatP = partitions[j];
+            const thisP = partitions[i];
+            const thatP = partitions[j];
             if(partition_adj_check(thisP.x1,thatP.x2,thisP.y1,thisP.y2,thatP.y1,thatP.y2) ||
                partition_adj_check(thisP.y1,thatP.y2,thisP.x1,thisP.x2,thatP.x1,thatP.x2) ||
                partition_adj_check(thisP.x2,thatP.x1,thisP.y1,thisP.y2,thatP.y1,thatP.y2) ||
@@ -74,15 +74,15 @@ function graph_dungeon (params) {
     }
     // expand room alg here
     for(let i = 0; i < numRooms; ++i){
-        let r = rooms[i];
+        const r = rooms[i];
         create_room(dungeon,r.x,r.y,r.width,r.height);
     }
 
     // Pick connections
     for(let i = 0; i < numRooms; ++i){
-        let r = rooms[i];
+        const r = rooms[i];
 
-        let tempArr = r.edges.slice(0);
+        const tempArr = r.edges.slice(0);
 
         // Only consider new tunnels
         // Trim current tunnels out of possible candidates
@@ -94,13 +94,13 @@ function graph_dungeon (params) {
             }
         }
 
-        let totalEdges = Math.max(1, tempArr.length - 1);
-        let numTunnels = randIntRange(0,totalEdges);
+        const totalEdges = Math.max(1, tempArr.length - 1);
+        const numTunnels = randIntRange(0,totalEdges);
 
         // Pick new tunnels
         for(let j = 0; j < numTunnels; ++j){
-            let chosenIndex = randInt(tempArr.length-1);
-            let chosenValue = tempArr[chosenIndex];
+            const chosenIndex = randInt(tempArr.length-1);
+            const chosenValue = tempArr[chosenIndex];
 
             r.tunnels.push(chosenValue);
             rooms[chosenValue].tunnels.push(i);
@@ -113,10 +113,10 @@ function graph_dungeon (params) {
     while(true){
         // Run dfs
         // each index of dfs_result corresponds to rooms
-        let dfs_result = dfs(rooms);
+        const dfs_result = dfs(rooms);
 
         // Log which rooms were unvisited in dfs
-        let incomplete = [];
+        const incomplete = [];
         for(let i = 0; i < numRooms; ++i){
             if(dfs_result[i] === false){
                 incomplete.push(i);
@@ -133,15 +133,15 @@ function graph_dungeon (params) {
 
     // Dig tunnels
     for(let i = 0; i < numRooms; ++i){
-        let t = rooms[i].tunnels;
+        const t = rooms[i].tunnels;
         //if(i < 25 || i > 25) continue;
         for(let j = 0; j < t.length; ++j){
             // any index t[j] is less than i has already been dug
             if(i < t[j]){
-                let xmidRoom1 = Math.floor(rooms[i].x + rooms[i].width/2);
-                let ymidRoom1 = Math.floor(rooms[i].y + rooms[i].height/2);
-                let xmidRoom2 = Math.floor(rooms[t[j]].x + rooms[t[j]].width/2);
-                let ymidRoom2 = Math.floor(rooms[t[j]].y + rooms[t[j]].height/2);
+                const xmidRoom1 = Math.floor(rooms[i].x + rooms[i].width/2);
+                const ymidRoom1 = Math.floor(rooms[i].y + rooms[i].height/2);
+                const xmidRoom2 = Math.floor(rooms[t[j]].x + rooms[t[j]].width/2);
+                const ymidRoom2 = Math.floor(rooms[t[j]].y + rooms[t[j]].height/2);
                 //create_bend(dungeon, xmidRoom1, ymidRoom1, xmidRoom2, ymidRoom2);
                 create_smart_tunnel(dungeon, partitions, rooms, i, t[j]);
             }
@@ -191,15 +191,15 @@ function graph_dungeon (params) {
 
 // Adds a new tunnel to a room's tunnels array
 function carve_new_tunnel(incomplete, rooms, dfs_result) {
-    let chosenIndex = randInt(incomplete.length - 1); // index of incomplete
-    let chosenRoom = incomplete[chosenIndex]; // index of rooms
+    const chosenIndex = randInt(incomplete.length - 1); // index of incomplete
+    const chosenRoom = incomplete[chosenIndex]; // index of rooms
 
-    let r = rooms[chosenRoom];
-    let e = r.edges;
+    const r = rooms[chosenRoom];
+    const e = r.edges;
     // We iterate through the edges of an unvisited room
     for(let i = 0; i < e.length; ++i){
         // to find another room that has been visited
-        let otherRoom = e[i];
+        const otherRoom = e[i];
         if(dfs_result[otherRoom] === true){
             // if it has, then we push in our tunnels that connection
             r.tunnels.push(e[i]);
@@ -214,7 +214,7 @@ function create_gradual_tunnel_base(array, direction,
                                     firstCoordX, firstCoordY,
                                     secondCoordX, secondCoordY,
                                     room2X, room2Y){
-    let seenWalls = {status: false,};
+    const seenWalls = {status: false,};
     let wallStatus;
 
     // So I can make use of break
@@ -257,8 +257,8 @@ function create_gradual_tunnel (array, xOrigin, yOrigin, xEnd, yEnd, seenWalls){
 
     if(xOrigin === xEnd && yOrigin === yEnd) return 0;
 
-    let xtunnel = Math.min(xOrigin,xEnd);
-    let ytunnel = Math.min(yOrigin,yEnd);
+    const xtunnel = Math.min(xOrigin,xEnd);
+    const ytunnel = Math.min(yOrigin,yEnd);
 
     let tunnelLength;
     let tunnelDir;
@@ -312,11 +312,11 @@ function create_gradual_tunnel (array, xOrigin, yOrigin, xEnd, yEnd, seenWalls){
 
 // Creates tunnels that do not intersect with rooms
 function create_smart_tunnel(array, partitions, rooms, firstRoom, secondRoom){
-    let thisP = partitions[firstRoom];
-    let thatP = partitions[secondRoom];
+    const thisP = partitions[firstRoom];
+    const thatP = partitions[secondRoom];
 
-    let firstCoord = {x: -1, y: -1};
-    let secondCoord = {x: -1, y: -1};
+    const firstCoord = {x: -1, y: -1};
+    const secondCoord = {x: -1, y: -1};
 
     let coordArr = [];
     // axisAdj is adjacent coords, axisOffset are offset coords
@@ -345,7 +345,7 @@ function create_smart_tunnel(array, partitions, rooms, firstRoom, secondRoom){
 
     coordArr.sort();
 
-    let chosenAxisOffset = randIntRange(coordArr[1], coordArr[2]);
+    const chosenAxisOffset = randIntRange(coordArr[1], coordArr[2]);
 
     firstCoord[axisOffset] = chosenAxisOffset;
     secondCoord[axisOffset] = chosenAxisOffset;
@@ -371,8 +371,7 @@ function create_smart_tunnel(array, partitions, rooms, firstRoom, secondRoom){
 }
 
 function create_bend (array, xroom1, yroom1, xroom2, yroom2){
-    let xtunnel;
-    let ytunnel;
+    let xtunnel, ytunnel;
     if(randInt(1) == 0){
         xtunnel = Math.floor(xroom1);
         ytunnel = Math.floor(yroom2);
@@ -399,11 +398,10 @@ function create_room (array, xOrigin, yOrigin,width,height) {
 function create_tunnel (array, xOrigin, yOrigin, xEnd, yEnd){
     //console.log("tunnel: (" + xOrigin + ", " + yOrigin + ") , (" + xroom + ", " + yroom + ")");
 
-    let xtunnel = Math.min(xOrigin,xEnd);
-    let ytunnel = Math.min(yOrigin,yEnd);
+    const xtunnel = Math.min(xOrigin,xEnd);
+    const ytunnel = Math.min(yOrigin,yEnd);
 
-    let xwidth;
-    let yheight;
+    let xwidth, yheight;
     if(xOrigin != xEnd){
         xwidth = Math.abs(xOrigin - xEnd) + 1;
         yheight = 1;
@@ -422,7 +420,7 @@ function delete_arr_elem(array,position){
 }
 
 function dfs(rooms){
-    let visited = [];
+    const visited = [];
     for(let i = 0; i < rooms.length; ++i)
         visited[i] = false;
     dfs_recursive(rooms, visited, 0);
@@ -432,7 +430,7 @@ function dfs(rooms){
 
 function dfs_recursive(rooms, visited, position){
     visited[position] = true;
-    let t = rooms[position].tunnels;
+    const t = rooms[position].tunnels;
     for(let i = 0; i < t.length; ++i){
         if(visited[t[i]] === false){
             dfs_recursive(rooms, visited, t[i]);
@@ -454,7 +452,7 @@ function partition_rooms(array, X0,Y0,X,Y,ROOMS){
         return;
     }
     if(ROOMS == 1){
-        let cell = {
+        const cell = {
             x1: X0,
             y1: Y0,
             x2: X,
@@ -474,14 +472,14 @@ function partition_rooms(array, X0,Y0,X,Y,ROOMS){
     }
     part2 = ROOMS - part1;
 
-    let pWidth = Math.abs(X0 - X);
-    let pLength = Math.abs(Y0 - Y);
+    const pWidth = Math.abs(X0 - X);
+    const pLength = Math.abs(Y0 - Y);
 
     // Splits into left/right rooms
     if(pWidth > pLength){
         const split = divide_partition(X0,X,part1,part2)
         if(split === -1){
-            let cell = {
+            const cell = {
                 x1: X0,
                 y1: Y0,
                 x2: X,
@@ -498,7 +496,7 @@ function partition_rooms(array, X0,Y0,X,Y,ROOMS){
     else{
         const split = divide_partition(Y0,Y,part1,part2);
         if(split === -1){
-            let cell = {
+            const cell = {
                 x1: X0,
                 y1: Y0,
                 x2: X,
