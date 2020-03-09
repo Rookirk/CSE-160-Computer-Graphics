@@ -18,7 +18,7 @@ function getCrossProduct(vert0, vert1, vert2) {
         vert2.z - vert0.z,
     ];
 
-    let crossVec = new Vector3([
+    const crossVec = new Vector3([
         vec1[1]*vec2[2] - vec1[2]*vec2[1],
         vec1[2]*vec2[0] - vec1[0]*vec2[2],
         vec1[0]*vec2[1] - vec1[1]*vec2[0]

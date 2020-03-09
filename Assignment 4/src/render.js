@@ -1,9 +1,9 @@
-var modelMatrix;
-var viewMatrix;
-var projMatrix;
+let modelMatrix;
+let viewMatrix;
+let projMatrix;
 
-var startTime = performance.now();
-var globalTime = 0;
+const startTime = performance.now();
+let globalTime = 0;
 
 function drawGeometry() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -25,6 +25,17 @@ function drawGeometry() {
         gl.drawArrays(gl.TRIANGLES, beginningIndex, part.amountOfVerts);
         beginningIndex += part.amountOfVerts;
     }
+}
+
+function initMVPMatrices(canvas) {
+    modelMatrix = new Matrix4();
+    modelMatrix.setIdentity();
+
+    viewMatrix = new Matrix4();
+
+    projMatrix = new Matrix4();
+    projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
+    gl.uniformMatrix4fv(shaderVars.u_ProjMatrix, false, projMatrix.elements);
 }
 
 function transformModelMatrix() {

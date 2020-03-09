@@ -5,29 +5,26 @@
 // Shape refers to primitives
 // Part refers to collection of parts to form a limb
 
-var gl;
+let gl;
 
-var world;
-var camera;
-var sun;
+let world;
+let camera;
+let sun;
+let rig;
 
-var projMatrix;
-var viewMatrix;
-var modelMatrix;
+let textures;
 
-var textures;
+const enableInit = true;
+const enableAnim = true;
+let enableNormals = 0.0;
+let enableLight = 1.0;
 
-var enableInit = true;
-var enableAnim = true;
-var enableNormals = 0.0;
-var enableLight = 1.0;
-
-var texturesLoaded = false;
-var mainFinished = false;
+let texturesLoaded = false;
+let mainFinished = false;
 
 function main() {
     // Retrieve HTML elements
-    var canvas = document.getElementById('webgl');
+    const canvas = document.getElementById('webgl');
 
     // Get the rendering context for WebGL
     gl = getWebGLContext(canvas, false);
@@ -120,17 +117,6 @@ function assignUniformLocation(uniform){
         console.log('Failed to get the storage location of ' + uniform);
         return;
     }
-}
-
-function initMVPMatrices(canvas) {
-    modelMatrix = new Matrix4();
-    modelMatrix.setIdentity();
-
-    viewMatrix = new Matrix4();
-
-    projMatrix = new Matrix4();
-    projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
-    gl.uniformMatrix4fv(shaderVars.u_ProjMatrix, false, projMatrix.elements);
 }
 
 function initVertexBuffers() {
