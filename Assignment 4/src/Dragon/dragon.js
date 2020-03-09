@@ -8,6 +8,8 @@ const armColor2 = [173,118,17];
 const armColor3 = [153,104,15];
 
 Armature.prototype.createDragon = function(){
+    this.initBuild();
+
     this.addBodyPart(
         {
             name: "Base",
@@ -15,7 +17,7 @@ Armature.prototype.createDragon = function(){
             origin: [0,0,0]
         },
         function(armature, world) {
-            world.createCube([0,0,0],[0,0,0],"pixel",[1.0,1.0],[255,255,255],["empty"]);
+            world.createCube([0,0,0],[0,0,0],"pixel",[1.0,1.0],[255,255,255],[1]);
         },
         function(initMatrix) {},
         function(animMatrix) {
@@ -72,6 +74,7 @@ Armature.prototype.createDragon = function(){
     );
     //this.drawDragonAntlers("left");
     //this.drawDragonAntlers("right");
+    this.endBuild();
 }
 
 Armature.prototype.createDragonAntlers = function(side){

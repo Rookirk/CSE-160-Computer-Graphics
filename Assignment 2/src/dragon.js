@@ -72,6 +72,7 @@ function createDragon(){
     );
     //rig.drawDragonAntlers("left");
     //rig.drawDragonAntlers("right");
+    console.log(rig);
 }
 
 Armature.prototype.createDragonAntlers = function(side){
