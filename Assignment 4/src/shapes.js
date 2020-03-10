@@ -88,7 +88,6 @@ World.prototype.createXCylinder = function(coords, size, texName, uvSize, color,
         const vertex = vertices[i];
 
         let transformMatrix = new Matrix4();
-        //transformMatrix.setIdentity();
         transformMatrix.setRotate(90,0,1,0);
 
         transformedVerts.push(new Vertex(

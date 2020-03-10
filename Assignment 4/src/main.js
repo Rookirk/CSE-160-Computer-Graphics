@@ -17,7 +17,7 @@ let textures;
 const enableInit = true;
 const enableAnim = true;
 let enableNormals = 0.0;
-let enableLight = 0.0;
+let enableLight = 1.0;
 
 let texturesLoaded = false;
 let mainFinished = false;
@@ -49,8 +49,6 @@ function main() {
 
     camera = new Camera(canvas);
     world = new World(20,20, 15);
-    rig = new Armature(world);
-    rig.createDragon();
     sun = new Sun( [0.0,0.0,0.0], 10, 5, [255,255,255] );
 
     normalsButton();

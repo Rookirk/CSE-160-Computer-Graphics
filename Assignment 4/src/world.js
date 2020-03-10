@@ -11,6 +11,8 @@ class World {
         this.buildingRig = false;
         this.drawingRig = false;
 
+        rig = new Armature(this);
+
         /*this.worldArray = [
         [0,0,0,0],
         [0,0,1,0],
@@ -73,17 +75,14 @@ class World {
 
         for(let i = 0; i < vertices.length; i++){
             const vertex = vertices[i];
-            const xyzVertex = [vertex[0],vertex[1],vertex[2]];
 
             if(typeof transformFunc === "function"){
                 const transformMatrix = new Matrix4();
                 transformFunc(transformMatrix);
-
-                const newVertex = transformVert(xyzVertex, transformMatrix);
                 
-                this.pushVert(newVertex,
+                this.pushVert(transformVert(vertex.coords, transformMatrix),
                               vertex.texCoords,
-                              vertex.normCoords,
+                              transformVert(vertex.normCoords, transformMatrix),
                               color);
             }
             else{
@@ -118,6 +117,7 @@ class World {
                 }
                 else if(elem === 'a') {
                     camera.setNewAt([j*blockSize, 2.25*blockSize, i*blockSize]);
+                    rig.createDragon([j*blockSize, 3*blockSize, i*blockSize], 0, [.2,.2,.2]);
                 }
                 else if(elem === 's1'){
                     this.createSphere([j*blockSize, .35, i*blockSize],

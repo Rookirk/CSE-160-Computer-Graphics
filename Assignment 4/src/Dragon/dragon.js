@@ -7,19 +7,21 @@ const armColor = [188,129,18];
 const armColor2 = [173,118,17];
 const armColor3 = [153,104,15];
 
-Armature.prototype.createDragon = function(){
+Armature.prototype.createDragon = function(location, rotation, scale){
     this.initBuild();
 
     this.addBodyPart(
         {
             name: "Base",
             parent: -1,
-            origin: [0,0,0]
+            origin: location
         },
         function(armature, world) {
             world.createCube([0,0,0],[0,0,0],"pixel",[1.0,1.0],[255,255,255],[1]);
         },
-        function(initMatrix) {},
+        function(initMatrix) {
+            initMatrix.scale(...scale);
+        },
         function(animMatrix) {
             animMatrix.transformBody();
         }
