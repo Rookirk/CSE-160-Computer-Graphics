@@ -47,11 +47,11 @@ function transformVert(vertex, transformMatrix){
     const oldVertex = new Vector3(vertex);
     const newMatrix = new Matrix4();
     newMatrix.set(transformMatrix);
-    newMatrix.multiplyVector3(oldVertex);
+    const returnMatrix = newMatrix.multiplyVector3(oldVertex);
 
-    return [newMatrix.elements[0],
-            newMatrix.elements[1],
-            newMatrix.elements[2]
+    return [returnMatrix.elements[0],
+            returnMatrix.elements[1],
+            returnMatrix.elements[2]
     ];
 }
 
@@ -88,12 +88,13 @@ World.prototype.createXCylinder = function(coords, size, texName, uvSize, color,
         const vertex = vertices[i];
 
         let transformMatrix = new Matrix4();
+        //transformMatrix.setIdentity();
         transformMatrix.setRotate(90,0,1,0);
 
         transformedVerts.push(new Vertex(
             transformVert(vertex.coords, transformMatrix),
             vertex.texCoords,
-            transformVert(vertex.normCoords, transformMatrix)
+            normalizeArray( transformVert(vertex.normCoords, transformMatrix) )
         ));
     }
     
@@ -117,7 +118,7 @@ World.prototype.createXTruncCylinder = function(coords, sizeB, sizeT, texName, u
         transformedVerts.push(new Vertex(
             transformVert(vertex.coords, transformMatrix),
             vertex.texCoords,
-            transformVert(vertex.normCoords, transformMatrix)
+            normalizeArray( transformVert(vertex.normCoords, transformMatrix) )
         ));
     }
 

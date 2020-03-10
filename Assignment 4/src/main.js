@@ -50,7 +50,7 @@ function main() {
     camera = new Camera(canvas);
     world = new World(20,20, 15);
     rig = new Armature(world);
-    //rig.createDragon();
+    rig.createDragon();
     sun = new Sun( [0.0,0.0,0.0], 10, 5, [255,255,255] );
 
     normalsButton();
@@ -62,7 +62,7 @@ function main() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     mainFinished = true;
-    //rig.update();
+    rig.update();
     checkToBeginUpdate();
 }
 
@@ -77,7 +77,7 @@ function update() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     sun.update();
-    //rig.update();
+    rig.update();
 
     drawGeometry();
 

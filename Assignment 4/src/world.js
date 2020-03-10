@@ -31,15 +31,13 @@ class World {
         this.worldArray = new graph_dungeon(params);
 
         const blockSize = .1;
-        //this.drawDungeon(blockSize, this.worldArray);
+        this.drawDungeon(blockSize, this.worldArray);
 
-        //this.drawOuterWalls(blockSize, this.worldArray.length);
+        this.drawOuterWalls(blockSize, this.worldArray.length);
 
-        //this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
+        this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
 
-        this.createZCylinder([0,0,.2], [.1,.1,.1], 'pixel', [1,1], [255,0,0], 3, false);
-
-        /*this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
+        this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
                           0,
                           blockSize*this.worldArray.length/2 - blockSize/2],
                          [blockSize*this.worldArray.length/2,
@@ -47,7 +45,7 @@ class World {
                           blockSize*this.worldArray.length/2],
                           'ground',
                           [this.worldArray.length,this.worldArray.length],
-                          [255,255,255]);*/
+                          [255,255,255]);
         console.log(this.partData);
         console.log(this.vertexArr);
     }
