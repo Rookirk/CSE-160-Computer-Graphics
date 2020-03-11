@@ -48,7 +48,7 @@ function main() {
     initMVPMatrices(canvas);
 
     camera = new Camera(canvas);
-    world = new World(20,20, 15);
+    world = new World(40,40, 20);
     sun = new Sun( [0.0,0.0,0.0], 10, 5, [255,255,255] );
 
     normalsButton();
