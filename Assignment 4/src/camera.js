@@ -70,8 +70,18 @@ class Camera {
         this.moveCamera(movementVector);
     }
 
-    rotate(angle){
+    rotateYaw(angle){
+        const forwardVec = this.getForwardVector();
 
+        const newVector = transformVector(forwardVec, (matrix) => {
+            matrix.rotate(angle,0,1,0);
+        });
+
+        this.at[0] = this.eye[0] + newVector.elements[0];
+        this.at[1] = this.eye[1] + newVector.elements[1];
+        this.at[2] = this.eye[2] + newVector.elements[2];
+
+        this.setNewLookAt();
     }
 
     setNewLookAt() {
@@ -165,10 +175,10 @@ document.addEventListener( 'keydown', function(event) {
         camera.moveInDirection(newVector, camera.walkVel);
     }
     else if(event.keyCode === getEventKey('Q')) {
-        camera.rotate(-camera.rotateVel);
+        camera.rotateYaw(camera.rotateVel);
     }
     else if(event.keyCode === getEventKey('E')) {
-        camera.rotate(camera.rotateVel);
+        camera.rotateYaw(-camera.rotateVel);
     }
 });
 // https://stackoverflow.com/questions/9047600/how-to-determine-the-direction-on-onmousemove-event
