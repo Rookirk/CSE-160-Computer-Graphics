@@ -50,7 +50,24 @@
 			"file": "Assignment 4/src/camera.js",
 			"settings":
 			{
-				"buffer_size": 5156,
+				"buffer_size": 5571,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 4/src/Dragon/armature.js",
+			"settings":
+			{
+				"buffer_size": 3293,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Assignment 4/lib/cuon-matrix.js",
+			"settings":
+			{
+				"buffer_size": 21233,
 				"line_ending": "Windows"
 			}
 		},
@@ -75,6 +92,7 @@
 			"settings":
 			{
 				"buffer_size": 22854,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -114,7 +132,9 @@
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src"
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/lib",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/Dragon"
 	],
 	"file_history":
 	[
@@ -249,7 +269,7 @@
 	],
 	"find":
 	{
-		"height": 40.0
+		"height": 28.0
 	},
 	"find_in_files":
 	{
@@ -282,6 +302,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Vector3",
+			"getYaw",
+			"Vector3",
 			"armature.create",
 			"drawDragonTruncSpineSeg",
 			"multiplyVector3",
@@ -424,7 +447,7 @@
 	"groups":
 	[
 		{
-			"selected": 5,
+			"selected": 6,
 			"sheets":
 			[
 				{
@@ -455,7 +478,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
@@ -488,7 +511,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 8,
 					"type": "text"
 				},
 				{
@@ -504,8 +527,8 @@
 						"selection":
 						[
 							[
-								416,
-								416
+								1105,
+								1105
 							]
 						],
 						"settings":
@@ -518,7 +541,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 513.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
@@ -530,15 +553,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 5156,
+						"buffer_size": 5571,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								5149,
+								5149
 							]
 						],
 						"settings":
@@ -551,14 +574,80 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2337.0,
+						"translation.y": 1995.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "Assignment 4/src/Dragon/armature.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3293,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								845,
+								859
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 399.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "Assignment 4/lib/cuon-matrix.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 21233,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2539,
+								2546
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"remote_loading": false,
+							"synced": false,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1478.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 6,
 					"file": "Assignment 4/src/shaders.js",
 					"semi_transient": false,
 					"settings":
@@ -584,14 +673,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 767.0,
+						"translation.y": 653.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 7,
 					"file": "Assignment 4/src/render.js",
 					"semi_transient": false,
 					"settings":
@@ -620,11 +709,11 @@
 						"translation.y": 114.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 8,
 					"file": "Assignment 4/src/shapes.js",
 					"semi_transient": false,
 					"settings":
@@ -636,8 +725,8 @@
 						"selection":
 						[
 							[
-								0,
-								0
+								2798,
+								2798
 							]
 						],
 						"settings":
@@ -650,10 +739,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 513.0,
+						"translation.y": 1425.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 5,
 					"type": "text"
 				}
 			]
@@ -661,7 +750,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 209.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -702,7 +791,7 @@
 	"project": "CSE 160.sublime-project",
 	"replace":
 	{
-		"height": 414.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":

@@ -53,6 +53,7 @@ function main() {
 
     normalsButton();
     lightButton();
+    shaderSliders();
 
     // Specify the color for clearing <canvas>
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -82,70 +83,6 @@ function update() {
     requestAnimationFrame(update);
 }
 
-function assignStorageLocations() {
-    // Get the storage location of attributes
-    assignAttribLocation('a_Position');
-    assignAttribLocation('a_TexCoord');
-    assignAttribLocation('a_NormalCoord');
-    assignAttribLocation('a_Color');
-
-    // Get the storage location of uniforms
-    assignUniformLocation('u_ProjMatrix');
-    assignUniformLocation('u_ViewMatrix');
-    assignUniformLocation('u_ModelMatrix');
-
-    assignUniformLocation('u_NormalSwitch');
-    assignUniformLocation('u_LightSwitch');
-
-    assignUniformLocation('u_SunPosition');
-    assignUniformLocation('u_SunColor');
-
-    assignUniformLocation('u_CameraPosition');
-
-    assignUniformLocation('u_Sampler');
-}
-
-function assignAttribLocation(attrib){
-    shaderVars[attrib] = gl.getAttribLocation(gl.program, attrib);
-    if(shaderVars[attrib] < 0){
-        console.log('Failed to get the storage location of ' + attrib);
-        return;
-    }
-}
-
-function assignUniformLocation(uniform){
-    shaderVars[uniform] = gl.getUniformLocation(gl.program, uniform);
-    if(!shaderVars[uniform]){
-        console.log('Failed to get the storage location of ' + uniform);
-        return;
-    }
-}
-
-function initVertexBuffers() {
-    const vertexBuffer = gl.createBuffer();
-    if(!vertexBuffer){
-        console.log('Failed to create the buffer object ');
-        return;
-    }
-
-    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
-
-    const FSIZE = Float32Array.BYTES_PER_ELEMENT;
-    const totalUnits = FSIZE * 11;
-
-    gl.vertexAttribPointer(shaderVars.a_Position, 3, gl.FLOAT, false, totalUnits, 0);
-    gl.enableVertexAttribArray(shaderVars.a_Position);
-
-    gl.vertexAttribPointer(shaderVars.a_TexCoord, 2, gl.FLOAT, false, totalUnits, FSIZE * 3);
-    gl.enableVertexAttribArray(shaderVars.a_TexCoord);
-
-    gl.vertexAttribPointer(shaderVars.a_NormalCoord, 3, gl.FLOAT, false, totalUnits, FSIZE * 5);
-    gl.enableVertexAttribArray(shaderVars.a_NormalCoord);
-
-    gl.vertexAttribPointer(shaderVars.a_Color, 3, gl.FLOAT, false, totalUnits, FSIZE * 8);
-    gl.enableVertexAttribArray(shaderVars.a_Color);
-}
-
 function normalsButton() {
     const normalsButton = document.getElementById('normalsButton');
 
@@ -166,4 +103,15 @@ function lightButton() {
     });
 
     gl.uniform1f(shaderVars.u_LightSwitch, enableLight);
+}
+
+function shaderSliders() {
+    const ambientSlider = document.getElementById('ambientSlider');
+    const diffuseSlider = document.getElementById('diffuseSlider');
+    const specularSlider = document.getElementById('specularSlider');
+
+    ambientSlider.oninput = (ev) => {
+        brushSettings.r = Number(ambientSlider.value);
+        //redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
+    };
 }
