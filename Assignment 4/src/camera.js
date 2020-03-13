@@ -13,9 +13,21 @@ class Camera {
 
         // https://developer.mozilla.org/en-US/docs/Web/API/Element/requestPointerLock
         canvas.requestPointerLock = canvas.requestPointerLock || canvas.mozRequestPointerLock;
-        canvas.onclick = function() {
+        canvas.onclick = () => {
             canvas.requestPointerLock();
         };
+
+        // https://stackoverflow.com/questions/9047600/how-to-determine-the-direction-on-onmousemove-event
+        //https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/movementX
+        canvas.onmousemove = (ev) => {
+            if (!(document.pointerLockElement === canvas ||
+                document.mozPointerLockElement === canvas)) {
+                return;
+            }
+
+            const x = ev.clientX;
+            const y = ev.clientY;
+        }
     }
 
     getForwardVector(){
@@ -39,18 +51,24 @@ class Camera {
         return lookAt;
     }
 
-    moveCamera(vector) {
-        const x = vector.elements[0],
-              y = vector.elements[1],
-              z = vector.elements[2];
+    setNewLookAt() {
+        viewMatrix.setLookAt(this.eye[0], this.eye[1], this.eye[2],
+                             this.at[0],  this.at[1],  this.at[2],
+                             this.up[0],  this.up[1],  this.up[2]);
+        gl.uniformMatrix4fv(shaderVars.u_ViewMatrix, false, viewMatrix.elements);
+        gl.uniform3fv(shaderVars.u_CameraPosition, this.eye);
+    }
 
-        this.eye[0] += x;
-        this.eye[1] += y;
-        this.eye[2] += z;
+    rotateYaw(angle){
+        const forwardVec = this.getForwardVector();
 
-        this.at[0] += x;
-        this.at[1] += y;
-        this.at[2] += z;
+        const newVector = transformVector(forwardVec, (matrix) => {
+            matrix.rotate(angle,0,1,0);
+        });
+
+        this.at[0] = this.eye[0] + newVector.elements[0];
+        this.at[1] = this.eye[1] + newVector.elements[1];
+        this.at[2] = this.eye[2] + newVector.elements[2];
 
         this.setNewLookAt();
     }
@@ -70,26 +88,20 @@ class Camera {
         this.moveCamera(movementVector);
     }
 
-    rotateYaw(angle){
-        const forwardVec = this.getForwardVector();
+    moveCamera(vector) {
+        const x = vector.elements[0],
+              y = vector.elements[1],
+              z = vector.elements[2];
 
-        const newVector = transformVector(forwardVec, (matrix) => {
-            matrix.rotate(angle,0,1,0);
-        });
+        this.eye[0] += x;
+        this.eye[1] += y;
+        this.eye[2] += z;
 
-        this.at[0] = this.eye[0] + newVector.elements[0];
-        this.at[1] = this.eye[1] + newVector.elements[1];
-        this.at[2] = this.eye[2] + newVector.elements[2];
+        this.at[0] += x;
+        this.at[1] += y;
+        this.at[2] += z;
 
         this.setNewLookAt();
-    }
-
-    setNewLookAt() {
-        viewMatrix.setLookAt(this.eye[0], this.eye[1], this.eye[2],
-                             this.at[0],  this.at[1],  this.at[2],
-                             this.up[0],  this.up[1],  this.up[2]);
-        gl.uniformMatrix4fv(shaderVars.u_ViewMatrix, false, viewMatrix.elements);
-        gl.uniform3fv(shaderVars.u_CameraPosition, this.eye);
     }
 
     setNewCameraPosition(eye = [0,0,-1], at = [0,0,0], up = [0,1,0]) {
@@ -181,14 +193,3 @@ document.addEventListener( 'keydown', function(event) {
         camera.rotateYaw(-camera.rotateVel);
     }
 });
-// https://stackoverflow.com/questions/9047600/how-to-determine-the-direction-on-onmousemove-event
-//https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/movementX
-/*canvas.onmousemove = function(ev) {
-    if (!(document.pointerLockElement === canvas ||
-        document.mozPointerLockElement === canvas)) {
-        return;
-    }
-
-    const x = ev.clientX;
-    const y = ev.clientY;
-}*/
