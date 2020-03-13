@@ -6,6 +6,8 @@ class Camera {
         this.at = at;
         this.up = up;
 
+        this.pitch = 0;
+
         this.rotateVel = 2;
         this.walkVel = .02;
         this.mouseSensitivity = .03;
@@ -56,8 +58,14 @@ class Camera {
     }
 
     rotatePitch(angle){
+        if(this.pitch + angle >= 90 || this.pitch + angle <= -90) return;
+
+        this.pitch += angle;
+        console.log(this.pitch);
+
         const eyeVec = this.getLookAtVector();
         const forwardVec = this.getForwardVector();
+
         const rotateVector = transformVector(forwardVec, (matrix) => {
             matrix.rotate(90,0,1,0);
         });
