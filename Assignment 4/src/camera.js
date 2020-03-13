@@ -7,10 +7,11 @@ class Camera {
         this.up = up;
 
         this.pitch = 0;
+        this.keysDown = {};
 
         this.rotateVel = 2;
-        this.walkVel = .02;
-        this.mouseSensitivity = .03;
+        this.walkVel = .0006;
+        this.mouseSensitivity = .05;
 
         this.setNewLookAt();
 
@@ -34,6 +35,38 @@ class Camera {
             this.rotateYaw(mouseX * this.mouseSensitivity);
             this.rotatePitch(mouseY * this.mouseSensitivity);
         }
+
+        // https://stackoverflow.com/questions/16089421/simplest-way-to-detect-keypresses-in-javascript
+        document.onkeypress = ev => {
+            ev = ev || window.event;
+            this.keysDown[ev.key] = true;
+        }
+
+        document.onkeyup = ev => {
+            ev = ev || window.event;
+            this.keysDown[ev.key] = false;
+        }
+    }
+
+    // Method for smooth movement inspired by Lucas Simon
+    update(){
+        const movementVector = [0,0];
+        if ( this.keysDown['w'] ) movementVector[1]++;
+        if ( this.keysDown['s'] ) movementVector[1]--;
+        if ( this.keysDown['a'] ) movementVector[0]--;
+        if ( this.keysDown['d'] ) movementVector[0]++;
+
+        if( movementVector[0] === 0 && movementVector[1] === 0) return;
+
+        const angle = getAngle(movementVector[1], -movementVector[0]);
+
+        console.log(angle);
+
+        const forwardVec = camera.getForwardVector();
+        const newVector = transformVector(forwardVec, (matrix) => {
+            matrix.rotate(angle,0,1,0);
+        });
+        camera.moveInDirection(newVector, camera.walkVel * delta);
     }
 
     getForwardVector(){
@@ -57,10 +90,9 @@ class Camera {
         return lookAt;
     }
 
-    rotatePitch(inputAngle){
-        let angle = inputAngle;
-        if(this.pitch + inputAngle >= 89.99) angle = 89.99 - this.pitch;
-        else if(this.pitch + inputAngle <= -89.99) angle = -89.99 - this.pitch;
+    rotatePitch(angle){
+        if(this.pitch + angle >= 89.99) angle = 89.99 - this.pitch;
+        else if(this.pitch + angle <= -89.99) angle = -89.99 - this.pitch;
         this.pitch += angle;
 
         const eyeVec = this.getLookAtVector();
@@ -154,6 +186,24 @@ class Camera {
     }
 }
 
+function getAngle(x,y){
+    if(x === 0){
+        return (y > 0 ? 90 : 270);
+    }
+    else if(x >= 0 && y >= 0){
+        return (180/Math.PI) * Math.atan(y/x);
+    }
+    else if(x < 0 && y >= 0){
+        return 180 + ((180/Math.PI) * Math.atan(y/x));
+    }
+    else if(x < 0 && y < 0){
+        return 180 + ((180/Math.PI) * Math.atan(y/x));
+    }
+    else{
+        return 360 + ((180/Math.PI) * Math.atan(y/x));
+    }
+}
+
 function transformVector(vector, transformFunc){
     const transformMatrix = new Matrix4();
     transformFunc(transformMatrix);
@@ -194,7 +244,7 @@ function getEventKey(key) {
             return 67;
     }
 }
-
+/*
 document.addEventListener( 'keydown', function(event) {
     if(event.keyCode === getEventKey('W')) {
         const vector = camera.getForwardVector();
@@ -233,4 +283,4 @@ document.addEventListener( 'keydown', function(event) {
     else if(event.keyCode === getEventKey('C')) {
         camera.rotatePitch(-camera.rotateVel);
     }
-});
+});*/

@@ -1,5 +1,7 @@
 const startTime = Date.now();
 let globalTime = 0;
+let delta = 0;
+let lastTime = 0;
 
 let texturesLoaded = false;
 let mainFinished = false;
@@ -16,6 +18,7 @@ function update() {
 
     sun.update();
     rig.update();
+    camera.update();
 
     drawGeometry();
 
@@ -24,5 +27,7 @@ function update() {
 
 function updateTime() {
     const now = Date.now();
+    lastTime = globalTime;
     globalTime = now - startTime;
+    delta = globalTime - lastTime;
 }
