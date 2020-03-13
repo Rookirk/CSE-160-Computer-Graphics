@@ -8,6 +8,7 @@ class Camera {
 
         this.rotateVel = 2;
         this.walkVel = .02;
+        this.mouseSensitivity = .03;
 
         this.setNewLookAt();
 
@@ -18,15 +19,18 @@ class Camera {
         };
 
         // https://stackoverflow.com/questions/9047600/how-to-determine-the-direction-on-onmousemove-event
-        //https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/movementX
+        // https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent/movementX
         canvas.onmousemove = (ev) => {
             if (!(document.pointerLockElement === canvas ||
                 document.mozPointerLockElement === canvas)) {
                 return;
             }
 
-            const x = ev.clientX;
-            const y = ev.clientY;
+            const mouseX = -ev.movementX;
+            const mouseY = ev.movementY;
+
+            this.rotateYaw(mouseX * this.mouseSensitivity);
+            this.rotatePitch(mouseY * this.mouseSensitivity);
         }
     }
 
@@ -51,18 +55,27 @@ class Camera {
         return lookAt;
     }
 
-    setNewLookAt() {
-        viewMatrix.setLookAt(this.eye[0], this.eye[1], this.eye[2],
-                             this.at[0],  this.at[1],  this.at[2],
-                             this.up[0],  this.up[1],  this.up[2]);
-        gl.uniformMatrix4fv(shaderVars.u_ViewMatrix, false, viewMatrix.elements);
-        gl.uniform3fv(shaderVars.u_CameraPosition, this.eye);
+    rotatePitch(angle){
+        const eyeVec = this.getLookAtVector();
+        const forwardVec = this.getForwardVector();
+        const rotateVector = transformVector(forwardVec, (matrix) => {
+            matrix.rotate(90,0,1,0);
+        });
+        const newVector = transformVector(eyeVec, (matrix) => {
+            matrix.rotate(angle,rotateVector.elements[0],0,rotateVector.elements[2]);
+        });
+
+        this.at[0] = this.eye[0] + newVector.elements[0];
+        this.at[1] = this.eye[1] + newVector.elements[1];
+        this.at[2] = this.eye[2] + newVector.elements[2];
+
+        this.setNewLookAt();
     }
 
     rotateYaw(angle){
-        const forwardVec = this.getForwardVector();
+        const eyeVec = this.getLookAtVector();
 
-        const newVector = transformVector(forwardVec, (matrix) => {
+        const newVector = transformVector(eyeVec, (matrix) => {
             matrix.rotate(angle,0,1,0);
         });
 
@@ -102,6 +115,14 @@ class Camera {
         this.at[2] += z;
 
         this.setNewLookAt();
+    }
+
+    setNewLookAt() {
+        viewMatrix.setLookAt(this.eye[0], this.eye[1], this.eye[2],
+                             this.at[0],  this.at[1],  this.at[2],
+                             this.up[0],  this.up[1],  this.up[2]);
+        gl.uniformMatrix4fv(shaderVars.u_ViewMatrix, false, viewMatrix.elements);
+        gl.uniform3fv(shaderVars.u_CameraPosition, this.eye);
     }
 
     setNewCameraPosition(eye = [0,0,-1], at = [0,0,0], up = [0,1,0]) {
@@ -157,6 +178,12 @@ function getEventKey(key) {
         case 'E':
         case 'e':
             return 69;
+        case 'Z':
+        case 'z':
+            return 90;
+        case 'C':
+        case 'c':
+            return 67;
     }
 }
 
@@ -191,5 +218,11 @@ document.addEventListener( 'keydown', function(event) {
     }
     else if(event.keyCode === getEventKey('E')) {
         camera.rotateYaw(-camera.rotateVel);
+    }
+    else if(event.keyCode === getEventKey('Z')) {
+        camera.rotatePitch(camera.rotateVel);
+    }
+    else if(event.keyCode === getEventKey('C')) {
+        camera.rotatePitch(-camera.rotateVel);
     }
 });
