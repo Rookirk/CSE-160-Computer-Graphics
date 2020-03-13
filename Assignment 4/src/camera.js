@@ -61,9 +61,7 @@ class Camera {
         let angle = inputAngle;
         if(this.pitch + inputAngle >= 89.99) angle = 89.99 - this.pitch;
         else if(this.pitch + inputAngle <= -89.99) angle = -89.99 - this.pitch;
-
         this.pitch += angle;
-        console.log(this.pitch);
 
         const eyeVec = this.getLookAtVector();
         const forwardVec = this.getForwardVector();

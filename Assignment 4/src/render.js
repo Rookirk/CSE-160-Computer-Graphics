@@ -2,9 +2,6 @@ let modelMatrix;
 let viewMatrix;
 let projMatrix;
 
-const startTime = performance.now();
-let globalTime = 0;
-
 function drawGeometry() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -62,9 +59,4 @@ function initMVPMatrices(canvas) {
     projMatrix = new Matrix4();
     projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
     gl.uniformMatrix4fv(shaderVars.u_ProjMatrix, false, projMatrix.elements);
-}
-
-function updateTime() {
-    const now = performance.now();
-    globalTime = now - startTime;
 }
