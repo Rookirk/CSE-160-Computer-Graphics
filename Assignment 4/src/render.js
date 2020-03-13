@@ -5,8 +5,6 @@ let projMatrix;
 const startTime = performance.now();
 let globalTime = 0;
 
-let printDebug = false;
-
 function drawGeometry() {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
@@ -53,7 +51,6 @@ function drawGeometry() {
         gl.drawArrays(gl.TRIANGLES, beginningIndex, part.amountOfVerts);
         beginningIndex += part.amountOfVerts;
     }
-    printDebug = true;
 }
 
 function initMVPMatrices(canvas) {
@@ -65,15 +62,6 @@ function initMVPMatrices(canvas) {
     projMatrix = new Matrix4();
     projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
     gl.uniformMatrix4fv(shaderVars.u_ProjMatrix, false, projMatrix.elements);
-}
-
-function transformModelMatrix() {
-    modelMatrix.setIdentity();
-    modelMatrix.rotate(-15,1,0,0);
-    modelMatrix.scale(.6,.6,.6);
-    //modelMatrix.translate(0,-.6,.4);
-    modelMatrix.rotate(25,0,1,0);
-    //modelMatrix.translate(0,0,-.4);
 }
 
 function updateTime() {
