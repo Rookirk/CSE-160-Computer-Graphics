@@ -9,7 +9,7 @@ class Camera {
         this.pitch = 0;
         this.keysDown = {};
 
-        this.rotateVel = 2;
+        this.rotateVel = .05;
         this.walkVel = .0006;
         this.mouseSensitivity = .05;
 
@@ -39,17 +39,23 @@ class Camera {
         // https://stackoverflow.com/questions/16089421/simplest-way-to-detect-keypresses-in-javascript
         document.onkeypress = ev => {
             ev = ev || window.event;
-            this.keysDown[ev.key] = true;
+            this.keysDown[ev.key.toLowerCase()] = true;
         }
 
         document.onkeyup = ev => {
             ev = ev || window.event;
-            this.keysDown[ev.key] = false;
+            this.keysDown[ev.key.toLowerCase()] = false;
         }
     }
 
     // Method for smooth movement inspired by Lucas Simon
     update(){
+        this.checkDirectionalInput();
+        this.checkPitchInput();
+        this.checkYawInput();
+    }
+
+    checkDirectionalInput(){
         const movementVector = [0,0];
         if ( this.keysDown['w'] ) movementVector[1]++;
         if ( this.keysDown['s'] ) movementVector[1]--;
@@ -60,13 +66,31 @@ class Camera {
 
         const angle = getAngle(movementVector[1], -movementVector[0]);
 
-        console.log(angle);
-
         const forwardVec = camera.getForwardVector();
         const newVector = transformVector(forwardVec, (matrix) => {
             matrix.rotate(angle,0,1,0);
         });
         camera.moveInDirection(newVector, camera.walkVel * delta);
+    }
+
+    checkPitchInput(){
+        let angle = 0;
+        if ( this.keysDown['z'] ) angle++;
+        if ( this.keysDown['c'] ) angle--;
+
+        if ( angle === 0 ) return;
+
+        camera.rotatePitch(angle * camera.rotateVel * delta);
+    }
+
+    checkYawInput(){
+        let angle = 0;
+        if ( this.keysDown['q'] ) angle++;
+        if ( this.keysDown['e'] ) angle--;
+
+        if ( angle === 0 ) return;
+
+        camera.rotateYaw(angle * camera.rotateVel * delta);
     }
 
     getForwardVector(){
