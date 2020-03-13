@@ -4,7 +4,8 @@ function linearMap(value, low1, high1, low2, high2) {
 }
 
 Matrix4.prototype.transformBody = function(){
-    return this.templateLevitate(.002, .35*Math.PI, [0, 1, 0], 0, .2);
+    this.templateLevitate(.002, .35*Math.PI, [0, 1, 0], 0, .15);
+    return this.templateRotateInCircle(.02, 0.0, [0,1,0], [.3,0,0]);
 }
 
 Matrix4.prototype.transformChest = function(angle, offset) {
@@ -67,6 +68,14 @@ Matrix4.prototype.templateOscillate = function(rate, offset, axis, angle1, angle
     const angle = linearMap(influence, -1, 1, angle2, angle1);
 
     return this.rotate(angle,x,y,z);
+}
+
+Matrix4.prototype.templateRotateInCircle = function(rate, timeOffset, spinAxis, distanceOffset){
+    const influence = Math.cos(rate*globalTime + timeOffset);
+    const angle = (rate*globalTime) % 360;
+
+    this.rotate(angle,...spinAxis);
+    return this.translate(...distanceOffset);
 }
 
 Matrix4.prototype.templateSpin = function(rate, axis){

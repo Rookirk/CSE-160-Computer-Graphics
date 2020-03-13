@@ -47,9 +47,9 @@ const FSHADER_SOURCE = `
 
     uniform vec3 u_CameraPosition;
 
-    float ambientConst = 0.4;
-    float diffuseConst = 0.6;
-    float specularConst = 0.8;
+    uniform float u_AmbientConst;
+    uniform float u_DiffuseConst;
+    uniform float u_SpecularConst;
 
     void main() {
         float nDotL = max( dot( normalize(-u_SunPosition), normalize( vec3(v_NormalCoord) ) ), 0.0 );
@@ -64,7 +64,7 @@ const FSHADER_SOURCE = `
 
         vec4 normal = u_NormalSwitch * (v_NormalCoord + vec4(1.0,1.0,1.0,1.0)) / 2.0;
         vec4 texture = (1.0 - u_NormalSwitch) * texture2D(u_Sampler, v_TexCoord) * v_Color;
-        vec4 lighting = vec4(ambient * ambientConst + diffuse * diffuseConst + specular * specularConst, 1.0);
+        vec4 lighting = vec4(ambient * u_AmbientConst + diffuse * u_DiffuseConst + specular * u_SpecularConst, 1.0);
         
         gl_FragColor = u_LightSwitch * lighting * texture + (1.0 - u_LightSwitch) * texture + normal;
     }`;
@@ -87,7 +87,11 @@ const shaderVars = {
 
     u_CameraPosition: -1,
 
-    u_Sampler: -1
+    u_Sampler: -1,
+
+    u_AmbientConst: -1,
+    u_DiffuseConst: -1,
+    u_SpecularConst: -1
 };
 
 function assignStorageLocations() {
@@ -111,6 +115,10 @@ function assignStorageLocations() {
     assignUniformLocation('u_CameraPosition');
 
     assignUniformLocation('u_Sampler');
+
+    assignUniformLocation('u_AmbientConst');
+    assignUniformLocation('u_DiffuseConst');
+    assignUniformLocation('u_SpecularConst');
 }
 
 function assignAttribLocation(attrib){

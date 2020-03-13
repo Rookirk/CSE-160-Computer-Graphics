@@ -49,7 +49,7 @@ function main() {
 
     camera = new Camera(canvas);
     world = new World(40,40, 20);
-    sun = new Sun( [0.0,0.0,0.0], 10, 5, [255,255,255] );
+    sun = new Sun( [0.0,0.0,0.0], 10, 1, [255,255,255] );
 
     normalsButton();
     lightButton();
@@ -110,8 +110,20 @@ function shaderSliders() {
     const diffuseSlider = document.getElementById('diffuseSlider');
     const specularSlider = document.getElementById('specularSlider');
 
+    gl.uniform1f(shaderVars.u_AmbientConst, Number(ambientSlider.value));
+    gl.uniform1f(shaderVars.u_DiffuseConst, Number(diffuseSlider.value));
+    gl.uniform1f(shaderVars.u_SpecularConst, Number(specularSlider.value));
+
     ambientSlider.oninput = (ev) => {
-        brushSettings.r = Number(ambientSlider.value);
+        gl.uniform1f(shaderVars.u_AmbientConst, Number(ambientSlider.value));
+        //redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
+    };
+    diffuseSlider.oninput = (ev) => {
+        gl.uniform1f(shaderVars.u_DiffuseConst, Number(diffuseSlider.value));
+        //redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
+    };
+    specularSlider.oninput = (ev) => {
+        gl.uniform1f(shaderVars.u_SpecularConst, Number(specularSlider.value));
         //redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
     };
 }

@@ -48,8 +48,6 @@ class World {
                           'ground',
                           [this.worldArray.length,this.worldArray.length],
                           [255,255,255]);
-        console.log(this.partData);
-        console.log(this.vertexArr);
     }
 
     pushVert(coords, texCoords, normCoords, color){
@@ -117,7 +115,7 @@ class World {
                 }
                 else if(elem === 'a') {
                     camera.setNewAt([j*blockSize, 2.25*blockSize, i*blockSize]);
-                    rig.createDragon([j*blockSize, 3*blockSize, i*blockSize], 0, [.2,.2,.2]);
+                    rig.createDragon([j*blockSize, 4.5*blockSize, i*blockSize], 0, [.2,.2,.2]);
                 }
                 else if(elem === 's1'){
                     this.createSphere([j*blockSize, .35, i*blockSize],
