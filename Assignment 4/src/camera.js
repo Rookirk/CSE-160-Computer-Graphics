@@ -57,8 +57,10 @@ class Camera {
         return lookAt;
     }
 
-    rotatePitch(angle){
-        if(this.pitch + angle >= 90 || this.pitch + angle <= -90) return;
+    rotatePitch(inputAngle){
+        let angle = inputAngle;
+        if(this.pitch + inputAngle >= 89.99) angle = 89.99 - this.pitch;
+        else if(this.pitch + inputAngle <= -89.99) angle = -89.99 - this.pitch;
 
         this.pitch += angle;
         console.log(this.pitch);
