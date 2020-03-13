@@ -1,6 +1,9 @@
 const startTime = Date.now();
 let globalTime = 0;
 
+let texturesLoaded = false;
+let mainFinished = false;
+
 function checkToBeginUpdate(){
     if(mainFinished && texturesLoaded) update();
 }

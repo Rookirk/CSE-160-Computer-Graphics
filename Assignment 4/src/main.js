@@ -19,9 +19,6 @@ const enableAnim = true;
 let enableNormals = 0.0;
 let enableLight = 1.0;
 
-let texturesLoaded = false;
-let mainFinished = false;
-
 function main() {
     // Retrieve HTML elements
     const canvas = document.getElementById('webgl');
