@@ -9,5 +9,6 @@ const initValues = {
 
 	dungeonWidth: 40,
 	dungeonHeight: 40,
-	dungeonRooms: 20
+	dungeonRooms: 20,
+	dragonHeight: 4.5
 };
