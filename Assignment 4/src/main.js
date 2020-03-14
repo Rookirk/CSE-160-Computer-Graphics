@@ -48,7 +48,7 @@ function main() {
     world = new World( initValues.dungeonWidth,
                        initValues.dungeonHeight,
                        initValues.dungeonRooms);
-    sun = new Sun( [0.0,0.0,0.0], 10, 1, [255,255,255] );
+    sun = new Sun( [0.0,0.0,0.0], 10, initValues.sunSpeed, [255,255,255] );
 
     enableUI();
 

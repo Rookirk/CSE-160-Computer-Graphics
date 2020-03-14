@@ -35,6 +35,18 @@
     <canvas id="webgl" width="800" height="800">
     </canvas>
     <br>
+    Controls:
+    <br>
+    WASD for movement
+    <br>
+    Q E for rotating yaw
+    <br>
+    Z C for rotating pitch
+    <br>
+    Click on the canvas for mouse Control
+    <br>
+    ESC to exit mouse Control
+    <br>
     <div>
     <input id="normalsButton"
            type="button"
@@ -59,7 +71,13 @@
     <div>
         <label for="mouseSensitivity">Mouse Sensitivity</label>
         <input type="range" id="mouseSensitivitySlider" name="mouseSensitivity"
-            min="0.0" max=".5" step=".01" value="0.05">
+            min="0.0" max=".5" step=".01" value="0.0">
+    </div>
+    <br>
+    <div>
+        <label for="sunSpeed">Sun Speed</label>
+        <input type="range" id="sunSpeedSlider" name="sunSpeed"
+            min="0.0" max="10" step=".1" value="0.0">
     </div>
     <br>
     Dungeon Controls:

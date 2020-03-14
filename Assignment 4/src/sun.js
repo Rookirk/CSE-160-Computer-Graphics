@@ -7,7 +7,7 @@ class Sun {
 		this.color = color;
 
 		this.radius = radius;
-		this.rate = rate * (Math.PI/180);
+		this.setRate(rate);
 
 		this.angle = 0;
 
@@ -20,6 +20,10 @@ class Sun {
 		this.rotate();
 		this.calcPosition();
 		this.updatePosition();
+	}
+
+	setRate(rate){
+		this.rate = rate * (Math.PI/180);
 	}
 
 	rotate(){

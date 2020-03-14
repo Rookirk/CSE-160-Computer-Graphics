@@ -2,6 +2,7 @@ function enableUI() {
     normalsButton();
     lightButton();
     shaderSliders();
+    sunSpeedSlider();
     mouseSensitivitySlider();
 
     dungeonButtons();
@@ -85,6 +86,19 @@ function shaderSliders() {
     };
     specularSlider.oninput = (ev) => {
         gl.uniform1f(shaderVars.u_SpecularConst, Number(specularSlider.value));
+        //redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
+    };
+}
+
+function sunSpeedSlider() {
+    const sunSpeedSlider = document.getElementById('sunSpeedSlider');
+
+    sun.setRate(initValues.sunSpeed);
+
+    sunSpeedSlider.value = initValues.sunSpeed;
+
+    sunSpeedSlider.oninput = (ev) => {
+        sun.setRate(Number(sunSpeedSlider.value));
         //redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
     };
 }

@@ -5,7 +5,9 @@ const initValues = {
 
 	mouseSensitivity: 0.05,
 
-	dungeonWidth: 10,
+	sunSpeed: 1.0,
+
+	dungeonWidth: 40,
 	dungeonHeight: 40,
 	dungeonRooms: 20
 };
