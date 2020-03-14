@@ -57,6 +57,6 @@ function initMVPMatrices(canvas) {
     viewMatrix = new Matrix4();
 
     projMatrix = new Matrix4();
-    projMatrix.setPerspective(60,canvas.width/canvas.height,.02,10);
+    projMatrix.setPerspective(60,canvas.width/canvas.height,.02,20);
     gl.uniformMatrix4fv(shaderVars.u_ProjMatrix, false, projMatrix.elements);
 }

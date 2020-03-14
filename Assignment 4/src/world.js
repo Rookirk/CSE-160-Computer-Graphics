@@ -1,17 +1,28 @@
 // Camera needs to be created before world
 class World {
     constructor(width, height, rooms) {
-        this.width = width;
-        this.height = height;
-        this.rooms = rooms;
+        rig = new Armature(this);
+
+        const params = {
+            width: width,
+            height: height,
+            numberOfRooms: rooms
+        }
+
+        this.buildDungeon(params);
+    }
+
+    buildDungeon(params){
+        this.width = params.width;
+        this.height = params.height;
+        this.rooms = params.numberOfRooms;
 
         this.vertexArr = [];
         this.partData = [];
+        rig.reset();
 
         this.buildingRig = false;
         this.drawingRig = false;
-
-        rig = new Armature(this);
 
         /*this.worldArray = [
         [0,0,0,0],
@@ -25,12 +36,12 @@ class World {
         [0,2,0,3],
         ];*/
 
-        const params = {
+        const dungeonParams = {
             width: this.width,
             height: this.height,
             numberOfRooms: this.rooms
         }
-        this.worldArray = new graph_dungeon(params);
+        this.worldArray = new graph_dungeon(dungeonParams);
 
         const blockSize = .1;
         this.drawDungeon(blockSize, this.worldArray);
@@ -48,6 +59,8 @@ class World {
                           'ground',
                           [this.worldArray.length,this.worldArray.length],
                           [255,255,255]);
+        console.log(this);
+        console.log(rig);
     }
 
     pushVert(coords, texCoords, normCoords, color){

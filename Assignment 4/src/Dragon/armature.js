@@ -23,7 +23,6 @@ class Armature{
     endBuild(){
         this.world.buildingRig = false;
         this.endIndex = this.world.partData.length - 1;
-        console.log(this);
     }
     
     addBodyPart(part, shapeFunc, initMatrixFunc, animMatrixFunc){
@@ -71,6 +70,12 @@ class Armature{
         part.animMatrix.set(part.parentMatrix);
         part.animMatrix.translate(part.origin[0],part.origin[1],part.origin[2]);
         part.animMatrix.multiply(part.initMatrix);
+    }
+
+    reset() {
+        this.vertexArr = [];
+        this.partData = [];
+        this.partName = [];
     }
 
     update() {

@@ -48,9 +48,7 @@ function main() {
     world = new World(40,40, 20);
     sun = new Sun( [0.0,0.0,0.0], 10, 1, [255,255,255] );
 
-    normalsButton();
-    lightButton();
-    shaderSliders();
+    enableUI();
 
     // Specify the color for clearing <canvas>
     gl.clearColor(0.0, 0.0, 0.0, 1.0);

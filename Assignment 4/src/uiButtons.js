@@ -1,12 +1,26 @@
-function normalsButton() {
-    const normalsButton = document.getElementById('normalsButton');
+function enableUI() {
+    normalsButton();
+    lightButton();
+    shaderSliders();
+    mouseSensitivitySlider();
 
-    normalsButton.addEventListener('click', function(){
-        (enableNormals === 0.0) ? enableNormals = 1.0 : enableNormals = 0.0;
-        gl.uniform1f(shaderVars.u_NormalSwitch, enableNormals);
+    dungeonButtons();
+}
+
+function dungeonButtons() {
+    const dungeonWidthInput = document.getElementById('dungeonWidthInput');
+    const dungeonHeightInput = document.getElementById('dungeonHeightInput');
+    const dungeonRoomsInput = document.getElementById('dungeonRoomsInput');
+    const dungeonGenerateButton = document.getElementById('dungeonGenerateButton');
+
+    dungeonGenerateButton.addEventListener('click', function(){
+        const params = {
+            width: Number(dungeonWidthInput.value),
+            height: Number(dungeonHeightInput.value),
+            numberOfRooms: Number(dungeonRoomsInput.value)
+        }
+        world.buildDungeon(params);
     });
-
-    gl.uniform1f(shaderVars.u_NormalSwitch, enableNormals);
 }
 
 function lightButton() {
@@ -18,6 +32,28 @@ function lightButton() {
     });
 
     gl.uniform1f(shaderVars.u_LightSwitch, enableLight);
+}
+
+function mouseSensitivitySlider() {
+    const mouseSensitivitySlider = document.getElementById('mouseSensitivitySlider');
+
+    camera.mouseSensitivity = Number(mouseSensitivitySlider.value);
+
+    mouseSensitivitySlider.oninput = (ev) => {
+        camera.mouseSensitivity = Number(mouseSensitivitySlider.value);
+        //redDisplay.innerHTML = (brushSettings.r*255).toFixed(0);
+    };
+}
+
+function normalsButton() {
+    const normalsButton = document.getElementById('normalsButton');
+
+    normalsButton.addEventListener('click', function(){
+        (enableNormals === 0.0) ? enableNormals = 1.0 : enableNormals = 0.0;
+        gl.uniform1f(shaderVars.u_NormalSwitch, enableNormals);
+    });
+
+    gl.uniform1f(shaderVars.u_NormalSwitch, enableNormals);
 }
 
 function shaderSliders() {

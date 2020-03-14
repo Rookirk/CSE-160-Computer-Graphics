@@ -37,8 +37,6 @@
     <input id="normalsButton"
            type="button"
            value="Normals">
-    </div>
-    <div>
     <input id="lightButton"
            type="button"
            value="Light">
@@ -54,6 +52,31 @@
         <label for="specular">Specular</label>
         <input type="range" id="specularSlider" name="specular"
             min="0.0" max="1.0" step=".01" value="0.8">
+    </div>
+    <br>
+    <div>
+        <label for="mouseSensitivity">Mouse Sensitivity</label>
+        <input type="range" id="mouseSensitivitySlider" name="mouseSensitivity"
+            min="0.0" max=".5" step=".01" value="0.05">
+    </div>
+    <br>
+    Dungeon Controls:
+    These do not do any safety checks. Be careful of what numbers you put.
+    <br>
+    Number of Rooms dictate the maximum number of rooms generated. It's possible for less rooms to be generated.
+    <div>
+        <label for="dungeonWidth">Width</label>
+        <input type="text" id="dungeonWidthInput" name="dungonWidth" value="40"><br>
+
+        <label for="dungeonHeight">Height</label>
+        <input type="text" id="dungeonHeightInput" name="dungonHeight" value="40"> <br>
+
+        <label for="dungeonRooms">Number of Rooms</label>
+        <input type="text" id="dungeonRoomsInput" name="dungonRooms" value="20"> <br>
+
+        <input id="dungeonGenerateButton"
+           type="button"
+           value="Generate!">
     </div>
 </body>
 </html>
