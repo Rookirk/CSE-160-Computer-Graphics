@@ -46,18 +46,18 @@ class World {
         const blockSize = .1;
         this.drawDungeon(blockSize, this.worldArray);
 
-        this.drawOuterWalls(blockSize, this.worldArray.length);
+        this.drawOuterWalls(blockSize, this.width, this.height);
 
         this.createInvertedCube([0,0,0],[5,5,5], 'pixel', [1,1], [126,188,188]);
 
-        this.createPlane([blockSize*this.worldArray.length/2 - blockSize/2,
+        this.createPlane([blockSize*this.height/2 - blockSize/2,
                           0,
-                          blockSize*this.worldArray.length/2 - blockSize/2],
-                         [blockSize*this.worldArray.length/2,
+                          blockSize*this.width/2 - blockSize/2],
+                         [blockSize*this.height/2,
                           1,
-                          blockSize*this.worldArray.length/2],
+                          blockSize*this.width/2],
                           'ground',
-                          [this.worldArray.length,this.worldArray.length],
+                          [this.width,this.height],
                           [255,255,255]);
         console.log(this);
         console.log(rig);
@@ -161,8 +161,8 @@ class World {
         }
     }
 
-    drawOuterWalls(blockSize, length){
-        for(let i = -1; i < length + 1; i++){
+    drawOuterWalls(blockSize, width, height){
+        for(let i = -1; i < width + 1; i++){
             for(let k = 0; k < 4; k++){
                 this.createCube([-1*blockSize, blockSize*k + blockSize/2, i*blockSize],
                                             [blockSize/2, blockSize/2, blockSize/2],
@@ -172,6 +172,17 @@ class World {
                                             [3,1]);
             }
             for(let k = 0; k < 4; k++){
+                this.createCube([height*blockSize, blockSize*k + blockSize/2, i*blockSize],
+                                            [blockSize/2, blockSize/2, blockSize/2],
+                                            'ground',
+                                            [1,1],
+                                            [255,255,255],
+                                            [3,1]);
+            }
+        }
+
+        for(let i = -1; i < height + 1; i++){
+            for(let k = 0; k < 4; k++){
                 this.createCube([i*blockSize, blockSize*k + blockSize/2, -1*blockSize],
                                             [blockSize/2, blockSize/2, blockSize/2],
                                             'ground',
@@ -180,15 +191,7 @@ class World {
                                             [0,5]);
             }
             for(let k = 0; k < 4; k++){
-                this.createCube([length*blockSize, blockSize*k + blockSize/2, i*blockSize],
-                                            [blockSize/2, blockSize/2, blockSize/2],
-                                            'ground',
-                                            [1,1],
-                                            [255,255,255],
-                                            [3,1]);
-            }
-            for(let k = 0; k < 4; k++){
-                this.createCube([i*blockSize, blockSize*k + blockSize/2, length*blockSize],
+                this.createCube([i*blockSize, blockSize*k + blockSize/2, width*blockSize],
                                             [blockSize/2, blockSize/2, blockSize/2],
                                             'ground',
                                             [1,1],

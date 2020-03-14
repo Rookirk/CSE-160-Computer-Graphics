@@ -13,6 +13,10 @@ function dungeonButtons() {
     const dungeonRoomsInput = document.getElementById('dungeonRoomsInput');
     const dungeonGenerateButton = document.getElementById('dungeonGenerateButton');
 
+    dungeonWidthInput.value = initValues.dungeonWidth;
+    dungeonHeightInput.value = initValues.dungeonHeight;
+    dungeonRoomsInput.value = initValues.dungeonRooms;
+
     dungeonGenerateButton.addEventListener('click', function(){
         const params = {
             width: Number(dungeonWidthInput.value),
@@ -37,7 +41,9 @@ function lightButton() {
 function mouseSensitivitySlider() {
     const mouseSensitivitySlider = document.getElementById('mouseSensitivitySlider');
 
-    camera.mouseSensitivity = Number(mouseSensitivitySlider.value);
+    camera.mouseSensitivity = initValues.mouseSensitivity;
+
+    mouseSensitivitySlider.value = initValues.mouseSensitivity;
 
     mouseSensitivitySlider.oninput = (ev) => {
         camera.mouseSensitivity = Number(mouseSensitivitySlider.value);
@@ -61,9 +67,13 @@ function shaderSliders() {
     const diffuseSlider = document.getElementById('diffuseSlider');
     const specularSlider = document.getElementById('specularSlider');
 
-    gl.uniform1f(shaderVars.u_AmbientConst, Number(ambientSlider.value));
-    gl.uniform1f(shaderVars.u_DiffuseConst, Number(diffuseSlider.value));
-    gl.uniform1f(shaderVars.u_SpecularConst, Number(specularSlider.value));
+    gl.uniform1f(shaderVars.u_AmbientConst, initValues.ambient);
+    gl.uniform1f(shaderVars.u_DiffuseConst, initValues.diffuse);
+    gl.uniform1f(shaderVars.u_SpecularConst, initValues.specular);
+
+    ambientSlider.value = initValues.ambient;
+    diffuseSlider.value = initValues.diffuse;
+    specularSlider.value = initValues.specular;
 
     ambientSlider.oninput = (ev) => {
         gl.uniform1f(shaderVars.u_AmbientConst, Number(ambientSlider.value));

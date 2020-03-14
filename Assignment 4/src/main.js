@@ -45,7 +45,9 @@ function main() {
     initMVPMatrices(canvas);
 
     camera = new Camera(canvas);
-    world = new World(40,40, 20);
+    world = new World( initValues.dungeonWidth,
+                       initValues.dungeonHeight,
+                       initValues.dungeonRooms);
     sun = new Sun( [0.0,0.0,0.0], 10, 1, [255,255,255] );
 
     enableUI();
