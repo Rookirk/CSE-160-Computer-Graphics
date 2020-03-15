@@ -1,0 +1,127 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>
+    <meta charset="UTF-8" />
+
+    <script src="lib/webgl-utils.js"></script>
+    <script src="lib/webgl-debug.js"></script>
+    <script src="lib/cuon-utils.js"></script>
+    <script src="lib/cuon-matrix.js"></script>
+    <script src="lib/array2d.js"></script>
+    <script src="lib/random.js"></script>
+
+    <script src="src/initValues.js"></script>
+
+    <script src="src/Dragon/armature.js"></script>
+    <script src="src/Dragon/animFuncs.js"></script>
+    <script src="src/Dragon/dragon.js"></script>
+
+    <script src="src/dungeonGen.js"></script>
+    <script src="src/world.js"></script>
+    <script src="src/shapes.js"></script>
+    <script src="src/camera.js"></script>
+    <script src="src/sun.js"></script>
+
+    <script src="src/shaders.js"></script>
+    <script src="src/textures.js"></script>
+    <script src="src/render.js"></script>
+    <script src="src/uiButtons.js"></script>
+    <script src="src/update.js"></script>
+    <script src="src/main.js"></script>
+
+    <title>3D World</title>
+</head>
+<body onload="main()">
+    <canvas id="webgl" width="800" height="800">
+    </canvas>
+    <br>
+    Controls:
+    <br>
+    WASD for movement
+    <br>
+    Q E for rotating yaw
+    <br>
+    Z C for rotating pitch
+    <br>
+    Click on the canvas for Mouse Control
+    <br>
+    ESC to exit Mouse Control
+    <br>
+    <div>
+    <input id="normalsButton"
+           type="button"
+           value="Normals: Off">
+    <input id="lightButton"
+           type="button"
+           value="Light: On">
+    </div>
+    <br>
+    (
+    <label id="ambientDisplay">0</label>, 
+    <label id="diffuseDisplay">0</label>, 
+    <label id="specularDisplay">0</label>
+    )
+    <br>
+    <div>
+        <label for="ambient">Ambient</label>
+        <input type="range" id="ambientSlider" name="ambient"
+            min="0.0" max="1.0" step=".01" value="0.0">
+
+        <label for="diffuse">Diffuse</label>
+        <input type="range" id="diffuseSlider" name="diffuse"
+            min="0.0" max="1.0" step=".01" value="0.0">
+
+        <label for="specular">Specular</label>
+        <input type="range" id="specularSlider" name="specular"
+            min="0.0" max="1.0" step=".01" value="0.0">
+    </div>
+    <br>
+    <div>
+        <label for="mouseSensitivity">Mouse Sensitivity</label>
+        <input type="range" id="mouseSensitivitySlider" name="mouseSensitivity"
+            min="0.0" max=".5" step=".01" value="0.0">
+        <label id="mouseSensitivityDisplay">0</label>
+    </div>
+    <br>
+    <div>
+        <label for="sunSpeed">Sun Speed</label>
+        <input type="range" id="sunSpeedSlider" name="sunSpeed"
+            min="0.0" max="10" step=".1" value="0.0">
+        <label id="sunSpeedDisplay">0</label>
+    </div>
+    <br>
+    Dungeon Controls:
+    These do not do any safety checks. Be careful of what numbers you put.
+    <br>
+    Number of Rooms dictate the maximum number of rooms generated. It's possible for less rooms to be generated.
+    <div>
+        <label for="dungeonWidth">Width</label>
+        <input type="text" id="dungeonWidthInput" name="dungonWidth" value="0"><br>
+
+        <label for="dungeonHeight">Height</label>
+        <input type="text" id="dungeonHeightInput" name="dungonHeight" value="0"> <br>
+
+        <label for="dungeonRooms">Number of Rooms</label>
+        <input type="text" id="dungeonRoomsInput" name="dungonRooms" value="0"> <br>
+
+        <label for="dragonHeight">Dragon Height</label>
+        <input type="text" id="dragonHeightInput" name="dragonHeight" value="0"> <br>
+
+        <input id="dungeonGenerateButton"
+           type="button"
+           value="Generate!">
+    </div>
+</body>
+</html>
+
+Awesome things I did:
+<br>
+-Dungeon Gen again! (from CMPM 147 (coded by me and Brenden Satake))
+<br>
+-Blocky animal!
+<br>
+-Multiple textures!
+<br>
+-Smooth movement
+<br>
+-Mouse Control
