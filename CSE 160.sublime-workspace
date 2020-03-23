@@ -24,84 +24,37 @@
 	"buffers":
 	[
 		{
-			"file": "Assignment 4/README",
+			"file": "Math/drive.html",
 			"settings":
 			{
-				"buffer_size": 114,
+				"buffer_size": 430,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 4/drive.html",
+			"file": "Math/lib/cuon-matrix.js",
 			"settings":
 			{
-				"buffer_size": 3853,
+				"buffer_size": 21233,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "Math/src/main.js",
+			"settings":
+			{
+				"buffer_size": 5136,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "Assignment 4/src/render.js",
+			"file": "Math/src/matrixFuncs.js",
 			"settings":
 			{
-				"buffer_size": 1925,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 4/src/initValues.js",
-			"settings":
-			{
-				"buffer_size": 191,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 4/src/uiButtons.js",
-			"settings":
-			{
-				"buffer_size": 5236,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 1/src/main.js",
-			"settings":
-			{
-				"buffer_size": 14549,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 4/src/world.js",
-			"settings":
-			{
-				"buffer_size": 8030,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 4/src/textures.js",
-			"settings":
-			{
-				"buffer_size": 1901,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 4/src/sun.js",
-			"settings":
-			{
-				"buffer_size": 867,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "Assignment 4/src/main.js",
-			"settings":
-			{
-				"buffer_size": 1503,
+				"buffer_size": 4605,
+				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
@@ -139,33 +92,33 @@
 	"expanded_folders":
 	[
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/src",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/lib",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/Dragon"
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Math",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Math/lib",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Math/src"
 	],
 	"file_history":
 	[
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/README",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/render.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/uiButtons.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/shapes.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/Dragon/dragon.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/Dragon/animFuncs.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/main.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/sun.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/textures.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/world.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/src/main.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/drive.html",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/initValues.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/render.js",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/drive.html",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/README",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/README",
+		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 1/drive.html",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/dungeonGen.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/camera.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/Dragon/armature.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/world.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/main.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/shapes.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/update.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/Dragon/animFuncs.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/Dragon/dragon.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/sun.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/shaders.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/uiButtons.js",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/src/textures.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 4/lib/cuon-matrix.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/shapes.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/lib/cuon-matrix.js",
@@ -187,7 +140,6 @@
 		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/src/tests/room_generation_test.js",
 		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/src/generators/room_generator.js",
 		"/C/Users/Herman/Documents/Unity Projects/dungeon-generator/config/config.yaml",
-		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/render.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 2/src/animal.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/shapes.js",
 		"/C/Users/Herman/Documents/School/CSE 160/CSE-160-Computer-Graphics/Assignment 3/src/dragon.js",
@@ -273,10 +225,7 @@
 		"/C/Users/Herman/Documents/Unity Projects/Untitled-Sharing-Game/Untitled Sharing Game/Assets/Images/Keys/Not Pressed/Keys copy 6.png.meta",
 		"/C/Users/Herman/Documents/Unity Projects/Untitled-Sharing-Game/Untitled Sharing Game/Assets/Images/Keys/Not Pressed/Keys copy 5.png.meta",
 		"/C/Users/Herman/Documents/Unity Projects/Untitled-Sharing-Game/Untitled Sharing Game/Assets/Images/Keys/Not Pressed/Keys copy 3.png.meta",
-		"/C/Users/Herman/Documents/Unity Projects/Untitled-Sharing-Game/.gitignore",
-		"/C/Users/Herman/Documents/Unity Projects/Untitled-Sharing-Game/Untitled Sharing Game/Assets/Scripts/playButtonHover.cs",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/States/MainMenu.js",
-		"/C/Users/Herman/Documents/Phaser/Project_Gemini/js/States/Theme.js"
+		"/C/Users/Herman/Documents/Unity Projects/Untitled-Sharing-Game/.gitignore"
 	],
 	"find":
 	{
@@ -287,6 +236,8 @@
 		"height": 122.0,
 		"where_history":
 		[
+			"matrixFuncs.js",
+			"matrixFunc.js",
 			"",
 			"dragon.js",
 			"",
@@ -314,6 +265,14 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"getDotProduct",
+			"Vertex",
+			"high2",
+			"low2",
+			"high1",
+			"low1",
+			"linearMap",
+			"Linearmap",
 			"totalTextures",
 			"<!",
 			"init",
@@ -436,6 +395,10 @@
 		"regex": false,
 		"replace_history":
 		[
+			"outputHigh",
+			"outputLow",
+			"inputHigh",
+			"inputLow",
 			"normalizeArray(",
 			"this.",
 			"programs.normal",
@@ -474,50 +437,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "Assignment 4/README",
+					"file": "Math/drive.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 114,
+						"buffer_size": 430,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								114,
-								37
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "Assignment 4/drive.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3853,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3765,
-								3765
+								430,
+								430
 							]
 						],
 						"settings":
@@ -530,202 +462,6 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 16.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "Assignment 4/src/render.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1925,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 827.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "Assignment 4/src/initValues.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 191,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								168,
-								168
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "Assignment 4/src/uiButtons.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5236,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2577,
-								2577
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 512.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "Assignment 1/src/main.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 14549,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2223.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "Assignment 4/src/world.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8030,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								595,
-								595
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2208.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "Assignment 4/src/textures.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1901,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1019,
-								1032
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
@@ -733,20 +469,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "Assignment 4/src/sun.js",
+					"buffer": 1,
+					"file": "Math/lib/cuon-matrix.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 867,
+						"buffer_size": 21233,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								218,
-								218
+								12264,
+								12269
 							]
 						],
 						"settings":
@@ -755,46 +491,74 @@
 							"remote_loading": false,
 							"synced": false,
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "Assignment 4/src/main.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1503,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1222,
-								1222
-							]
-						],
-						"settings":
-						{
-							"incomplete_sync": null,
-							"remote_loading": false,
-							"synced": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
-							"tab_size": 4,
+							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "Math/src/main.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5136,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								795,
+								795
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 181.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "Math/src/matrixFuncs.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4605,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3459,
+								3467
+							]
+						],
+						"settings":
+						{
+							"incomplete_sync": null,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1784.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
@@ -871,7 +635,7 @@
 		"selected_items":
 		[
 		],
-		"width": 592.0
+		"width": 572.0
 	},
 	"selected_group": 0,
 	"settings":
